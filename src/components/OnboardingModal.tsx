@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Sparkles, Upload, CheckCircle, ArrowRight, Brush } from 'lucide-react';
+import { Sparkles, Upload, CheckCircle, ArrowRight, Brush, X } from 'lucide-react';
 import { UserProfile, MediumType, MilestoneArtwork } from '../types/curriculum';
 import { saveProfile, saveMilestone } from '../services/storage';
 import { playCelebrationFanfare } from '../utils/audio';
@@ -9,12 +9,14 @@ interface OnboardingModalProps {
   onComplete: (profile: UserProfile) => void;
   openCanvasForBaseline: () => void;
   temporaryCanvasImage?: string | null;
+  onClose?: () => void;
 }
 
 export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   onComplete,
   openCanvasForBaseline,
   temporaryCanvasImage,
+  onClose,
 }) => {
   const [step, setStep] = useState<1 | 2>(1);
   const [name, setName] = useState('');
@@ -119,33 +121,41 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
       <div className="bg-[#111c30] border border-white/[0.1] w-full max-w-xl rounded-3xl p-6 sm:p-8 shadow-2xl relative my-8">
         {/* Step Indicator / Folio Header */}
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.08]">
-          <div className="flex items-center gap-2 font-display text-xs uppercase font-bold tracking-wider text-fantasy-pink">
+          <div className="flex items-center gap-2 font-mono text-[11px] uppercase font-bold tracking-widest text-fantasy-pink">
             <Sparkles className="w-3.5 h-3.5" />
             <span>PASAPORTE DEL ARTISTA // PASO 0{step} DE 02</span>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="font-display text-[10px] font-bold text-slate-400">FASE</span>
-            <div className="flex gap-1.5">
-              <div className={`w-8 h-2 rounded-full transition-all ${step >= 1 ? 'bg-fantasy-sky' : 'bg-slate-800'}`} />
-              <div className={`w-8 h-2 rounded-full transition-all ${step >= 2 ? 'bg-fantasy-pink' : 'bg-slate-800'}`} />
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <span className="font-mono text-[10px] font-bold text-slate-400 uppercase">FASE</span>
+              <div className="flex gap-1.5">
+                <div className={`w-8 h-1.5 rounded-full transition-all ${step >= 1 ? 'bg-fantasy-sky' : 'bg-slate-800'}`} />
+                <div className={`w-8 h-1.5 rounded-full transition-all ${step >= 2 ? 'bg-fantasy-pink' : 'bg-slate-800'}`} />
+              </div>
             </div>
+            {onClose && (
+              <button
+                onClick={onClose}
+                className="p-1.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white transition-colors"
+                title="Cerrar y explorar"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
         </div>
 
         {step === 1 ? (
           <div>
             <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-fantasy-sky/15 text-fantasy-sky mb-3 border border-fantasy-sky/30 text-3xl">
-                🧙‍♀️
-              </div>
-              <p className="font-display text-xs font-bold tracking-widest uppercase text-fantasy-skyLight mb-1">
-                REGISTRO DEL VIAJERO
-              </p>
-              <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
+              <span className="font-mono text-[10px] tracking-[0.2em] uppercase font-bold text-fantasy-sky bg-fantasy-sky/15 px-3 py-1 rounded-full border border-fantasy-sky/30 inline-block mb-3">
+                REGISTRO DEL VIAJERO // EDICIÓN IN WITCH
+              </span>
+              <h2 className="font-serif italic text-4xl sm:text-5xl text-white tracking-tight leading-none">
                 El Camino del Artista
               </h2>
-              <p className="text-xs text-slate-200 mt-2 max-w-md mx-auto leading-relaxed font-sans font-medium">
-                Currículum estructurado de 9 estaciones basado en la metodología de Alex Huneycutt (@RadioRunner). Desde los primeros bocetos hasta la maestría de la luz.
+              <p className="text-xs sm:text-sm text-slate-300 mt-2.5 max-w-md mx-auto leading-relaxed font-sans font-normal">
+                Currículum estructurado de 9 estaciones basado en la metodología de Alex Huneycutt (@RadioRunner). Desde el dibujo de formas primarias hasta la maestría de la figura viva.
               </p>
             </div>
 
@@ -205,7 +215,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                 </select>
               </div>
 
-              <div className="pt-4">
+              <div className="pt-4 space-y-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -215,11 +225,21 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     }
                     setStep(2);
                   }}
-                  className="w-full bg-gradient-to-r from-fantasy-sky to-fantasy-pink hover:opacity-95 text-white font-display font-black py-4 px-6 rounded-2xl shadow-lg shadow-fantasy-sky/25 flex items-center justify-center gap-2 text-xs uppercase tracking-wider transition-all"
+                  className="w-full bg-gradient-to-r from-fantasy-sky to-fantasy-pink hover:opacity-95 text-white font-mono text-xs font-bold uppercase tracking-wider py-4 px-6 rounded-2xl shadow-lg shadow-fantasy-sky/25 flex items-center justify-center gap-2 transition-all"
                 >
                   <span>Continuar al Punto de Partida</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
+
+                {onClose && (
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="w-full text-slate-400 hover:text-white font-mono text-xs uppercase tracking-wider py-2 transition-colors"
+                  >
+                    [ Explorar la Monografía como Invitado ]
+                  </button>
+                )}
               </div>
             </div>
           </div>

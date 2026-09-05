@@ -3,7 +3,6 @@ import {
   Search, 
   Sparkles, 
   Columns3, 
-  Award, 
   Flame 
 } from 'lucide-react';
 import { 
@@ -277,91 +276,124 @@ export const App: React.FC = () => {
             ) : (
               /* Roadmap Main Overview */
               <div>
-                {/* Local Fantasy Hero Banner */}
-                <div className="relative bg-gradient-to-br from-[#111c30]/95 via-[#14233c]/90 to-[#161d2d]/95 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl overflow-hidden mb-8">
-                  <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-fantasy-sky/20 via-fantasy-pink/15 to-transparent blur-3xl pointer-events-none rounded-full" />
+                {/* Editorial Artbook Masthead Banner */}
+                <div className="relative bg-gradient-to-br from-[#0d1524]/95 via-[#111c30]/90 to-[#0a101d]/95 backdrop-blur-2xl border border-white/[0.1] rounded-3xl p-6 sm:p-10 shadow-[0_20px_50px_rgba(5,9,16,0.7)] overflow-hidden mb-8">
+                  <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-fantasy-sky/15 via-fantasy-pink/10 to-transparent blur-3xl pointer-events-none rounded-full" />
 
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div className="lg:col-span-8">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fantasy-pink/15 border border-fantasy-pink/30 text-fantasy-pink font-display font-bold text-xs uppercase tracking-wider mb-3">
-                        <Sparkles className="w-3.5 h-3.5" />
-                        <span>LOCAL FANTASY // EL CAMINO DEL ARTISTA</span>
+                  {/* Top Monograph Strip */}
+                  <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-6 border-b border-white/[0.08] font-mono text-[10px] tracking-[0.22em] text-slate-400 uppercase">
+                    <span className="flex items-center gap-1.5 text-fantasy-pink font-semibold">
+                      <Sparkles className="w-3.5 h-3.5" />
+                      MONOGRAFÍA DIDÁCTICA // VOL. 01
+                    </span>
+                    <span className="hidden md:inline text-slate-500">
+                      CURRÍCULUM DEL ARTISTA AUTODIDACTA // ALEX HUNEYCUTT
+                    </span>
+                    <span className="px-2 py-0.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-fantasy-skyLight">
+                      EDICIÓN IN WITCH
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                    {/* Left Column: Grand Editorial Typography */}
+                    <div className="lg:col-span-7">
+                      <div className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.2em] uppercase font-bold text-fantasy-sky mb-2">
+                        <span>PLAN DE FORMACIÓN RIGUROSO // 9 FOLIOS</span>
                       </div>
 
-                      <h1 className="font-display font-black text-4xl sm:text-6xl lg:text-7xl text-white tracking-tight leading-[1.05]">
+                      <h1 className="font-serif italic text-5xl sm:text-7xl lg:text-[76px] text-white tracking-tight leading-[0.92]">
                         El Camino del Artista
                       </h1>
-                      <p className="text-xs sm:text-sm text-slate-200 mt-3 max-w-2xl leading-relaxed font-sans font-medium">
-                        ¡Bienvenido a la aventura, <strong>{profile?.name || 'Artista'}</strong>! Recorre las <strong>9 Estaciones</strong> y <strong>27 Módulos</strong> del currículum de RadioRunner. Practica a tu ritmo, guarda tus dibujos de prueba y gradúate en cada estación para ver tu salto técnico.
+
+                      <p className="text-sm sm:text-[15px] text-slate-200 mt-4 leading-relaxed font-sans font-normal max-w-xl">
+                        <span className="float-left text-5xl sm:text-6xl font-serif italic text-fantasy-sky leading-none pr-3 pt-1">E</span>
+                        ste compendio reúne los 9 folios de estudio progresivo adaptados de la legendaria metodología autodidacta de Alex Huneycutt. Diseñado para desarmar la parálisis del lienzo en blanco mediante dibujo gestual cronometrado, perspectiva estructural, anatomía sólida y dominio lumínico.
                       </p>
 
-                      {/* Quick Actions */}
-                      <div className="flex flex-wrap items-center gap-3 mt-6 pt-4 border-t border-white/[0.06] text-xs font-display">
+                      {/* Editorial Actions */}
+                      <div className="flex flex-wrap items-center gap-3 mt-6 pt-5 border-t border-white/[0.08]">
+                        {(!profile || !profile.baselineArtwork) && (
+                          <button
+                            onClick={() => setIsOnboardingOpen(true)}
+                            className="flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-fantasy-sky via-fantasy-pink to-fantasy-ochre text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg shadow-fantasy-sky/20 hover:opacity-95 transition-all"
+                          >
+                            <Sparkles className="w-4 h-4" />
+                            <span>REGISTRAR HITO CERO (NIVEL 0)</span>
+                          </button>
+                        )}
+
                         <button
                           onClick={() => setActiveTab('evolution')}
-                          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#16243d] hover:bg-[#1d3052] text-white font-bold border border-fantasy-sky/30 hover:border-fantasy-sky/60 transition-all shadow-sm"
+                          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0a101d] hover:bg-[#121c30] text-white font-mono text-xs uppercase tracking-wider border border-white/[0.1] hover:border-fantasy-sky/40 transition-all shadow-sm"
                         >
                           <Columns3 className="w-4 h-4 text-fantasy-sky" />
-                          <span>COMPARADOR ANTES / DESPUÉS</span>
+                          <span>ESTUDIO ANTES / DESPUÉS</span>
                         </button>
 
                         <button
                           onClick={() => setActiveTab('timer')}
-                          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#16243d] hover:bg-[#1d3052] text-white font-bold border border-fantasy-ochre/30 hover:border-fantasy-ochre/60 transition-all shadow-sm"
+                          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#0a101d] hover:bg-[#121c30] text-white font-mono text-xs uppercase tracking-wider border border-white/[0.1] hover:border-fantasy-ochre/40 transition-all shadow-sm"
                         >
                           <Flame className="w-4 h-4 text-fantasy-ochre" />
-                          <span>GIMNASIO DE GESTOS RÁPIDOS</span>
+                          <span>CRONÓMETRO GESTUAL</span>
                         </button>
                       </div>
                     </div>
 
-                    {/* Progress Gauge */}
-                    <div className="lg:col-span-4 bg-[#0b1320]/90 p-6 rounded-3xl border border-white/[0.08] flex items-center gap-5 shadow-inner">
-                      <div className="relative w-24 h-24 flex-shrink-0 flex items-center justify-center">
-                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                          <path
-                            className="text-slate-800 stroke-current"
-                            strokeWidth="3.5"
-                            fill="none"
-                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    {/* Right Column: Featured Exhibition Plate with Client Reference Artwork */}
+                    <div className="lg:col-span-5">
+                      <div className="relative rounded-2xl overflow-hidden border border-white/[0.12] bg-[#070b14] shadow-2xl p-3">
+                        <div className="relative rounded-xl overflow-hidden border border-white/[0.08] aspect-[4/3] bg-slate-950">
+                          <img 
+                            src="./client_reference_art.jpg" 
+                            alt="In Witch: Local Fantasy por Luna Bear" 
+                            className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = '/client_reference_art.jpg';
+                            }}
                           />
-                          <path
-                            className="text-fantasy-sky stroke-current transition-all duration-1000 ease-out"
-                            strokeWidth="3.5"
-                            strokeDasharray={`${progressPercent}, 100`}
-                            strokeLinecap="round"
-                            fill="none"
-                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                          />
-                        </svg>
-                        <div className="absolute flex flex-col items-center justify-center">
-                          <span className="font-display font-black text-xl text-white">
-                            {progressPercent}%
-                          </span>
-                          <span className="font-display text-[9px] text-fantasy-skyLight/80 uppercase font-bold tracking-tight">
-                            AVANCE
-                          </span>
-                        </div>
-                      </div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
 
-                      <div>
-                        <p className="font-display text-[10px] font-bold text-fantasy-sky uppercase tracking-wider">
-                          PROGRESO GLOBAL
-                        </p>
-                        <p className="font-display text-sm text-white font-bold mt-1">
-                          {completedChecksCount} / {TOTAL_CHECKS_COUNT}
-                          <span className="text-xs font-normal text-slate-400 ml-1">ejercicios</span>
-                        </p>
-                        <p className="font-display text-[11px] text-fantasy-ochre font-bold mt-1.5 flex items-center gap-1.5">
-                          <Award className="w-3.5 h-3.5" />
-                          <span>{milestones.length} obras registradas</span>
-                        </p>
+                          {/* Progress Badge overlay on top corner */}
+                          <div className="absolute top-2.5 right-2.5 bg-black/75 backdrop-blur-md px-3 py-1 rounded-full border border-white/[0.15] font-mono text-[10px] text-white flex items-center gap-1.5 font-bold">
+                            <span className="w-2 h-2 rounded-full bg-fantasy-lime animate-ping" />
+                            <span>{progressPercent}% AVANCE</span>
+                          </div>
+
+                          {/* Plate label overlay */}
+                          <div className="absolute bottom-2.5 left-3 right-3 text-white">
+                            <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-fantasy-pink font-semibold">
+                              PLACA N° 01 // REFERENCIA ESTILÍSTICA
+                            </p>
+                            <p className="font-serif italic text-lg text-white font-normal leading-tight">
+                              "In Witch — Local Fantasy" · Luna Bear
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Curatorial Plaque below image */}
+                        <div className="mt-3 p-3 bg-[#0a101d] rounded-xl border border-white/[0.06] flex items-center justify-between">
+                          <div>
+                            <p className="font-mono text-[9px] text-slate-400 uppercase tracking-widest">
+                              PROGRESO GLOBAL DEL ATELIER
+                            </p>
+                            <p className="font-mono text-xs text-white font-bold mt-0.5">
+                              {completedChecksCount} / {TOTAL_CHECKS_COUNT} checks validados
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="w-3.5 h-3.5 rounded-full bg-[#5bb2f6] border border-white/20" title="Cielo Cerúleo" />
+                            <span className="w-3.5 h-3.5 rounded-full bg-[#ff8fb4] border border-white/20" title="Rosa Mágico" />
+                            <span className="w-3.5 h-3.5 rounded-full bg-[#f29f38] border border-white/20" title="Ocre Solar" />
+                            <span className="w-3.5 h-3.5 rounded-full bg-[#88dc65] border border-white/20" title="Verde Hoja" />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Filters & Search Toolbar with Storybook Station Tabs */}
+                {/* Filters & Search Toolbar with Editorial Roman Numeral Tabs */}
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
                   {/* Search bar */}
                   <div className="relative w-full sm:w-80">
@@ -371,17 +403,17 @@ export const App: React.FC = () => {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       placeholder="Buscar por Loomis, Drawabox, anatomía..."
-                      className="w-full bg-[#111c30]/90 border border-white/[0.08] rounded-2xl pl-10 pr-4 py-2.5 font-display text-xs text-white placeholder-slate-400 focus:outline-none focus:border-fantasy-sky transition-colors shadow-sm"
+                      className="w-full bg-[#0e1626]/90 border border-white/[0.08] rounded-xl pl-10 pr-4 py-2.5 font-mono text-xs text-white placeholder-slate-400 focus:outline-none focus:border-fantasy-sky transition-colors shadow-sm"
                     />
                   </div>
 
                   {/* Roman Numeral Station Tabs */}
-                  <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 bg-[#111c30]/80 p-1.5 rounded-2xl border border-white/[0.06]">
+                  <div className="flex items-center gap-1 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 bg-[#0a101d] p-1.5 rounded-xl border border-white/[0.08]">
                     <button
                       onClick={() => setTermFilter('all')}
-                      className={`px-3.5 py-1.5 rounded-xl font-display text-xs font-bold transition-all whitespace-nowrap ${
+                      className={`px-3 py-1 rounded-lg font-mono text-xs tracking-wider transition-all whitespace-nowrap ${
                         termFilter === 'all'
-                          ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/20'
+                          ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white font-bold shadow-md shadow-fantasy-sky/20'
                           : 'text-slate-400 hover:text-white'
                       }`}
                     >
@@ -393,13 +425,13 @@ export const App: React.FC = () => {
                         <button
                           key={num}
                           onClick={() => setTermFilter(num)}
-                          className={`px-3 py-1.5 rounded-xl font-display text-xs font-bold transition-all whitespace-nowrap ${
+                          className={`px-3 py-1 rounded-lg font-mono text-xs tracking-wider transition-all whitespace-nowrap ${
                             termFilter === num
-                              ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/20'
-                              : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
+                              ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white font-bold shadow-md shadow-fantasy-sky/20'
+                              : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
                           }`}
                         >
-                          {roman}
+                          FOLIO {roman}
                         </button>
                       );
                     })}
@@ -475,6 +507,7 @@ export const App: React.FC = () => {
           }}
           openCanvasForBaseline={handleOpenCanvasForBaseline}
           temporaryCanvasImage={tempCanvasImage}
+          onClose={() => setIsOnboardingOpen(false)}
         />
       )}
 
