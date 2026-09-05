@@ -95,8 +95,23 @@ export const App: React.FC = () => {
     }
   };
 
+  const [initialSyncCode, setInitialSyncCode] = useState<string>('');
+
   useEffect(() => {
     loadInitialData();
+
+    // Check for sync code in URL params (?sync=... or ?code=...)
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const syncParam = params.get('sync') || params.get('code') || params.get('import');
+      if (syncParam) {
+        setInitialSyncCode(syncParam);
+        setBackupSyncTab('import');
+        setIsBackupSyncOpen(true);
+      }
+    } catch {
+      // Safe fallback
+    }
   }, []);
 
   // Compute Overall Progress
@@ -601,11 +616,16 @@ export const App: React.FC = () => {
       <BackupSyncModal
         isOpen={isBackupSyncOpen}
         initialTab={backupSyncTab}
-        onClose={() => setIsBackupSyncOpen(false)}
+        initialCode={initialSyncCode}
+        onClose={() => {
+          setIsBackupSyncOpen(false);
+          setInitialSyncCode('');
+        }}
         onDataRestored={() => {
           loadInitialData();
           setIsOnboardingOpen(false);
           setIsBackupSyncOpen(false);
+          setInitialSyncCode('');
         }}
       />
     </div>

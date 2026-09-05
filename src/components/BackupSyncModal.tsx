@@ -11,7 +11,9 @@ import {
   RefreshCw, 
   FileJson, 
   ShieldCheck,
-  Zap
+  Zap,
+  Share2,
+  ExternalLink
 } from 'lucide-react';
 import { AppStateData } from '../types/curriculum';
 import { exportAllData, importAllData } from '../services/storage';
@@ -22,6 +24,8 @@ import {
   normalizeCrocInput, 
   getCustomBridgeUrl, 
   setCustomBridgeUrl,
+  generateUniversalSyncCode,
+  UniversalSyncResult,
   CrocBridgeStatus,
   CrocExportResult
 } from '../services/crocService';
@@ -33,6 +37,7 @@ interface BackupSyncModalProps {
   onClose: () => void;
   onDataRestored: () => void;
   initialTab?: 'import' | 'export';
+  initialCode?: string;
 }
 
 export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
@@ -40,6 +45,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
   onClose,
   onDataRestored,
   initialTab = 'import',
+  initialCode = '',
 }) => {
   const [activeTab, setActiveTab] = useState<'import' | 'export'>(initialTab);
   const [bridgeStatus, setBridgeStatus] = useState<CrocBridgeStatus>({ ok: false });
@@ -48,25 +54,32 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
   const [showBridgeSettings, setShowBridgeSettings] = useState(false);
 
   // Import states
-  const [crocInput, setCrocInput] = useState('');
+  const [crocInput, setCrocInput] = useState(initialCode);
   const [isImporting, setIsImporting] = useState(false);
   const [importStatusMessage, setImportStatusMessage] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
 
   // Export states
-  const [isExporting, setIsExporting] = useState(false);
-  const [exportResult, setExportResult] = useState<CrocExportResult | null>(null);
+  const [isExportingUniversal, setIsExportingUniversal] = useState(false);
+  const [universalResult, setUniversalResult] = useState<UniversalSyncResult | null>(null);
+
+  const [isExportingCroc, setIsExportingCroc] = useState(false);
+  const [crocResult, setCrocResult] = useState<CrocExportResult | null>(null);
+
   const [exportError, setExportError] = useState<string | null>(null);
-  const [copiedField, setCopiedField] = useState<'url' | 'code' | null>(null);
+  const [copiedField, setCopiedField] = useState<'url' | 'code' | 'uni_url' | 'uni_code' | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isOpen) {
       setActiveTab(initialTab);
+      if (initialCode) {
+        setCrocInput(initialCode);
+      }
       refreshBridge();
     }
-  }, [isOpen, initialTab]);
+  }, [isOpen, initialTab, initialCode]);
 
   const refreshBridge = async () => {
     setIsCheckingBridge(true);
@@ -82,6 +95,22 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
     setCustomBridgeUrl(customBridge);
     await refreshBridge();
     setShowBridgeSettings(false);
+  };
+
+  // Universal In-Browser Sync Export
+  const handleExportUniversal = async () => {
+    setIsExportingUniversal(true);
+    setExportError(null);
+    try {
+      const data = await exportAllData();
+      const res = await generateUniversalSyncCode(data);
+      setUniversalResult(res);
+    } catch (err: any) {
+      console.error('Error generating universal sync code:', err);
+      setExportError(err.message || 'Error al generar el código universal');
+    } finally {
+      setIsExportingUniversal(false);
+    }
   };
 
   // Local JSON Export
@@ -115,10 +144,6 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
         const text = event.target?.result as string;
         const parsed: AppStateData = JSON.parse(text);
 
-        if (!parsed.profile && !parsed.checks && !parsed.milestones) {
-          throw new Error('El archivo no contiene un formato de respaldo válido de Art Street');
-        }
-
         await importAllData(parsed);
         playCelebrationFanfare();
         confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
@@ -136,39 +161,39 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
     reader.readAsText(file);
   };
 
-  // GetCroc Cloud Export (One-time transfer)
+  // GetCroc Cloud Export (One-time transfer via CLI bridge)
   const handleExportViaCroc = async () => {
-    setIsExporting(true);
+    setIsExportingCroc(true);
     setExportError(null);
-    setExportResult(null);
+    setCrocResult(null);
 
     try {
       const data = await exportAllData();
       const result = await exportViaGetCroc(data);
-      setExportResult(result);
+      setCrocResult(result);
     } catch (err: any) {
       console.error('Error exporting via GetCroc:', err);
-      setExportError(err.message || 'Error al conectar con GetCroc para exportar');
+      setExportError(err.message || 'Error al exportar vía GetCroc');
     } finally {
-      setIsExporting(false);
+      setIsExportingCroc(false);
     }
   };
 
-  // GetCroc Cloud Import
-  const handleImportViaCroc = async () => {
+  // Unified Import (Supports Universal Code, GetCroc URLs, Tokens, or Phrase)
+  const handleImport = async () => {
     if (!crocInput.trim()) {
-      setImportError('Por favor introduce un enlace o código de GetCroc');
+      setImportError('Por favor introduce un enlace o código');
       return;
     }
 
     setIsImporting(true);
     setImportError(null);
-    setImportStatusMessage('Conectando con GetCroc y descargando transferencia...');
+    setImportStatusMessage('Conectando y decodificando transferencia...');
 
     try {
       const res = await importViaGetCroc(crocInput);
       if (!res.data) {
-        throw new Error('No se recibieron datos de respaldo');
+        throw new Error('No se recibieron datos de respaldo válidos');
       }
 
       setImportStatusMessage('Verificando y aplicando datos a la base local...');
@@ -183,18 +208,34 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
         onClose();
       }, 1400);
     } catch (err: any) {
-      console.error('Error importing via GetCroc:', err);
-      setImportError(err.message || 'Error al descargar o aplicar datos desde GetCroc');
+      console.error('Error importing:', err);
+      setImportError(err.message || 'Error al importar datos');
       setImportStatusMessage(null);
     } finally {
       setIsImporting(false);
     }
   };
 
-  const copyToClipboard = (text: string, field: 'url' | 'code') => {
+  const copyToClipboard = (text: string, field: 'url' | 'code' | 'uni_url' | 'uni_code') => {
     navigator.clipboard.writeText(text);
     setCopiedField(field);
     setTimeout(() => setCopiedField(null), 2500);
+  };
+
+  const handleNativeShare = async (url: string) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Art Street — Respaldo de Progreso',
+          text: 'Mi currículum y progreso artístico en Art Street:',
+          url,
+        });
+      } catch {
+        // User cancelled share
+      }
+    } else {
+      copyToClipboard(url, 'uni_url');
+    }
   };
 
   const detectedInputType = normalizeCrocInput(crocInput);
@@ -218,11 +259,11 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                   Sincronización y Respaldo
                 </h3>
                 <span className="font-mono text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-fantasy-pink/15 text-fantasy-pink border border-fantasy-pink/30">
-                  GETCROC + JSON
+                  PORTABILIDAD
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-sans truncate">
-                Portabilidad universal entre PC, tablet y móvil con un solo código
+                Transfiere tu currículum entre PC, tablet y móvil sin perder datos
               </p>
             </div>
           </div>
@@ -275,29 +316,32 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
         {(importError || exportError) && (
           <div className="mb-4 p-3 bg-red-500/15 border border-red-500/30 rounded-2xl text-xs text-red-300 font-sans flex items-start gap-2">
             <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-            <span>{importError || exportError}</span>
+            <span className="leading-relaxed">{importError || exportError}</span>
           </div>
         )}
 
         {/* TAB 1: IMPORT */}
         {activeTab === 'import' && (
           <div className="space-y-4">
-            {/* Primary: GetCroc Import */}
+            {/* Primary: Universal or GetCroc Input */}
             <div className="p-4 sm:p-5 rounded-2xl bg-[#0b1320] border border-white/[0.08] relative overflow-hidden">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-fantasy-sky flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-fantasy-sky" />
-                  MÉTODO 1: IMPORTAR CON CÓDIGO GETCROC
+                  MÉTODO 1: PEGAR ENLACE O CÓDIGO
                 </span>
                 {detectedInputType.type !== 'unknown' && (
                   <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-fantasy-sky/15 text-fantasy-sky border border-fantasy-sky/30 uppercase">
-                    {detectedInputType.type === 'store_url' ? '🔗 URL Detectada' : '🔑 Token Detectado'}
+                    {detectedInputType.type === 'universal_code' && '⚡ Código Universal'}
+                    {detectedInputType.type === 'store_url' && '🔗 URL GetCroc'}
+                    {detectedInputType.type === 'store_token' && '🔑 Token GetCroc'}
+                    {detectedInputType.type === 'relay_code' && '📡 Frase GetCroc'}
                   </span>
                 )}
               </div>
 
               <p className="text-xs text-slate-300 mb-3 font-sans leading-relaxed">
-                Pega el enlace o código que generó otra persona o tu otro dispositivo. Se descargará y aplicará el currículum en tiempo real.
+                Pega el código o enlace directo de sincronización generado por otro dispositivo o navegador. Se decodifica e importa en tiempo real.
               </p>
 
               <div className="space-y-2.5">
@@ -306,7 +350,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                     type="text"
                     value={crocInput}
                     onChange={(e) => setCrocInput(e.target.value)}
-                    placeholder="ej. https://getcroc.com/s/xyz... o código croc-store..."
+                    placeholder="Pega enlace ?sync=..., código ART-SYNC-..., o enlace getcroc.com..."
                     className="w-full bg-[#080d16] border border-white/[0.1] rounded-xl px-3.5 py-3 font-mono text-xs text-white placeholder-slate-500 focus:outline-none focus:border-fantasy-sky transition-colors"
                   />
                   {crocInput && (
@@ -323,13 +367,27 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                 <button
                   type="button"
                   disabled={isImporting || !crocInput.trim()}
-                  onClick={handleImportViaCroc}
+                  onClick={handleImport}
                   className="w-full bg-gradient-to-r from-fantasy-sky to-fantasy-pink hover:opacity-95 disabled:opacity-40 text-white font-mono text-xs font-bold uppercase tracking-wider py-3 px-4 rounded-xl shadow-md shadow-fantasy-sky/20 flex items-center justify-center gap-2 transition-all"
                 >
                   <RefreshCw className={`w-4 h-4 ${isImporting ? 'animate-spin' : ''}`} />
-                  <span>{isImporting ? 'Descargando desde GetCroc...' : 'Decodificar e Importar en Tiempo Real'}</span>
+                  <span>{isImporting ? 'Procesando e Importando...' : 'Decodificar e Importar en Tiempo Real'}</span>
                 </button>
               </div>
+
+              {detectedInputType.type === 'relay_code' && !bridgeStatus.ok && (
+                <div className="mt-3 p-2.5 bg-fantasy-ochre/10 border border-fantasy-ochre/30 rounded-xl text-[11px] text-fantasy-ochre font-sans flex items-center justify-between gap-2">
+                  <span>Código de GetCroc detectado. Puedes abrirlo directamente para descargar el JSON:</span>
+                  <a
+                    href={`https://getcroc.com/?code=${encodeURIComponent(detectedInputType.cleaned)}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline font-bold text-white flex items-center gap-1 flex-shrink-0"
+                  >
+                    Abrir en GetCroc <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              )}
             </div>
 
             {/* Secondary: Local JSON File Import */}
@@ -339,23 +397,23 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                 MÉTODO 2: ARCHIVO JSON LOCAL
               </span>
               <p className="text-xs text-slate-300 mb-3 font-sans leading-relaxed">
-                Selecciona un archivo <code>.json</code> exportado previamente desde tu almacenamiento local.
+                Selecciona un archivo <code>.json</code> exportado previamente desde tu almacenamiento local o descargado de GetCroc.
               </p>
 
               <div
                 onClick={() => fileInputRef.current?.click()}
                 className="border-2 border-dashed border-white/[0.12] hover:border-fantasy-ochre rounded-xl p-3.5 text-center cursor-pointer transition-all bg-[#080d16] hover:bg-[#0d1524] flex items-center justify-center gap-2.5 group"
               >
-                <Upload className="w-4 h-4 text-fantasy-ochre group-hover:scale-110 transition-transform" />
-                <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
-                  Cargar Archivo de Respaldo (.json)
+                <FileJson className="w-5 h-5 text-slate-400 group-hover:text-fantasy-ochre transition-colors" />
+                <span className="font-mono text-xs text-slate-300 group-hover:text-white transition-colors">
+                  Examinar o soltar archivo .json de respaldo
                 </span>
                 <input
                   ref={fileInputRef}
                   type="file"
                   accept=".json"
-                  onChange={handleLocalFileChange}
                   className="hidden"
+                  onChange={handleLocalFileChange}
                 />
               </div>
             </div>
@@ -365,90 +423,100 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
         {/* TAB 2: EXPORT */}
         {activeTab === 'export' && (
           <div className="space-y-4">
-            {/* Primary: GetCroc Cloud Export */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0b1320] border border-white/[0.08]">
-              <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-fantasy-sky flex items-center gap-1.5 mb-2">
-                <Zap className="w-3.5 h-3.5 text-fantasy-sky" />
-                MÉTODO 1: EXPORTAR A LA NUBE VÍA GETCROC (1 SOLO USO)
-              </span>
+            {/* Primary: Universal In-Browser Sync (Zero-Server / Mobile Friendly) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#0b1320] border border-white/[0.08] relative overflow-hidden">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-fantasy-sky flex items-center gap-1.5">
+                  <Zap className="w-3.5 h-3.5 text-fantasy-sky" />
+                  MÉTODO 1: CÓDIGO Y ENLACE RÁPIDO (RECOMENDADO)
+                </span>
+                <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-fantasy-lime/15 text-fantasy-lime border border-fantasy-lime/30 uppercase">
+                  ⚡ 100% NAVEGADOR // SIN SERVIDOR
+                </span>
+              </div>
+
               <p className="text-xs text-slate-300 mb-3 font-sans leading-relaxed">
-                Crea un paquete cifrado en GetCroc para transferir tu progreso a otro dispositivo. Se genera una URL y código de un solo uso.
+                Genera un enlace y código portable al instante. Puedes copiarlo o enviarlo por WhatsApp / Telegram a tu otro dispositivo para sincronizar tu progreso en 1 clic.
               </p>
 
-              {!exportResult ? (
+              {!universalResult ? (
                 <button
                   type="button"
-                  disabled={isExporting}
-                  onClick={handleExportViaCroc}
+                  disabled={isExportingUniversal}
+                  onClick={handleExportUniversal}
                   className="w-full bg-gradient-to-r from-fantasy-sky via-fantasy-pink to-fantasy-ochre hover:opacity-95 disabled:opacity-40 text-white font-mono text-xs font-bold uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-lg shadow-fantasy-sky/20 flex items-center justify-center gap-2 transition-all"
                 >
-                  <Cloud className={`w-4 h-4 ${isExporting ? 'animate-spin' : ''}`} />
-                  <span>{isExporting ? 'Generando Paquete GetCroc...' : 'Subir a GetCroc y Obtener Código'}</span>
+                  <Sparkles className={`w-4 h-4 ${isExportingUniversal ? 'animate-spin' : ''}`} />
+                  <span>{isExportingUniversal ? 'Generando Código...' : 'Generar Enlace y Código de Sincronización'}</span>
                 </button>
               ) : (
                 <div className="mt-3 p-3.5 rounded-xl bg-[#080d16] border border-fantasy-sky/30 space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[10px] font-bold uppercase text-fantasy-lime flex items-center gap-1">
                       <ShieldCheck className="w-3.5 h-3.5" />
-                      TRANSFERENCIA LISTA // 1 USO
+                      CÓDIGO DE SINCRONIZACIÓN LISTO
                     </span>
                     <span className="font-mono text-[9px] text-slate-400">
-                      {exportResult.expires}
+                      {Math.round(universalResult.sizeBytes / 1024 * 10) / 10} KB
                     </span>
                   </div>
 
-                  {/* Browser URL copy */}
-                  {exportResult.browserUrl && (
-                    <div>
-                      <label className="block font-mono text-[9px] uppercase text-slate-400 mb-1">
-                        Enlace para el Navegador:
-                      </label>
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="text"
-                          readOnly
-                          value={exportResult.browserUrl}
-                          className="flex-1 bg-[#040810] border border-white/[0.08] rounded-lg px-2.5 py-1.5 font-mono text-xs text-fantasy-sky select-all truncate"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => copyToClipboard(exportResult.browserUrl, 'url')}
-                          className="px-3 py-1.5 rounded-lg bg-fantasy-sky/20 hover:bg-fantasy-sky/30 border border-fantasy-sky/40 text-fantasy-sky font-mono text-xs font-bold uppercase flex items-center gap-1 transition-colors flex-shrink-0"
-                        >
-                          {copiedField === 'url' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                          <span>{copiedField === 'url' ? 'Copiado' : 'Copiar URL'}</span>
-                        </button>
-                      </div>
+                  {/* Direct 1-Click Sync URL */}
+                  <div>
+                    <label className="block font-mono text-[9px] uppercase text-slate-400 mb-1">
+                      Enlace Directo para Abrir en Otro Dispositivo:
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        readOnly
+                        value={universalResult.url}
+                        className="flex-1 bg-[#040810] border border-white/[0.08] rounded-lg px-2.5 py-1.5 font-mono text-xs text-fantasy-sky select-all truncate"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => copyToClipboard(universalResult.url, 'uni_url')}
+                        className="px-3 py-1.5 rounded-lg bg-fantasy-sky/20 hover:bg-fantasy-sky/30 border border-fantasy-sky/40 text-fantasy-sky font-mono text-xs font-bold uppercase flex items-center gap-1 transition-colors flex-shrink-0"
+                      >
+                        {copiedField === 'uni_url' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                        <span>{copiedField === 'uni_url' ? 'Copiado' : 'Copiar'}</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleNativeShare(universalResult.url)}
+                        className="p-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 hover:text-white border border-white/[0.1] transition-colors flex-shrink-0"
+                        title="Compartir"
+                      >
+                        <Share2 className="w-4 h-4" />
+                      </button>
                     </div>
-                  )}
+                  </div>
 
-                  {/* Token copy */}
-                  {exportResult.token && (
-                    <div>
-                      <label className="block font-mono text-[9px] uppercase text-slate-400 mb-1">
-                        Token Directo para CLI o App:
-                      </label>
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="text"
-                          readOnly
-                          value={exportResult.token}
-                          className="flex-1 bg-[#040810] border border-white/[0.08] rounded-lg px-2.5 py-1.5 font-mono text-xs text-fantasy-pink select-all truncate"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => copyToClipboard(exportResult.token, 'code')}
-                          className="px-3 py-1.5 rounded-lg bg-fantasy-pink/20 hover:bg-fantasy-pink/30 border border-fantasy-pink/40 text-fantasy-pink font-mono text-xs font-bold uppercase flex items-center gap-1 transition-colors flex-shrink-0"
-                        >
-                          {copiedField === 'code' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-                          <span>{copiedField === 'code' ? 'Copiado' : 'Copiar'}</span>
-                        </button>
-                      </div>
+                  {/* Compact Text Code */}
+                  <div>
+                    <label className="block font-mono text-[9px] uppercase text-slate-400 mb-1">
+                      O Código Compacto para Pegar:
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        readOnly
+                        value={universalResult.code}
+                        className="flex-1 bg-[#040810] border border-white/[0.08] rounded-lg px-2.5 py-1.5 font-mono text-xs text-fantasy-pink select-all truncate"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => copyToClipboard(universalResult.code, 'uni_code')}
+                        className="px-3 py-1.5 rounded-lg bg-fantasy-pink/20 hover:bg-fantasy-pink/30 border border-fantasy-pink/40 text-fantasy-pink font-mono text-xs font-bold uppercase flex items-center gap-1 transition-colors flex-shrink-0"
+                      >
+                        {copiedField === 'uni_code' ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                        <span>{copiedField === 'uni_code' ? 'Copiado' : 'Copiar'}</span>
+                      </button>
                     </div>
-                  )}
+                  </div>
 
                   <p className="text-[11px] text-slate-400 font-sans leading-tight pt-1">
-                    💡 Copia la URL o el código y pégalo en tu otro dispositivo en la sección <strong>Importar con Código GetCroc</strong>.
+                    💡 Pega el enlace en cualquier navegador de tu otro dispositivo para restaurar tu currículum sin instalar nada.
                   </p>
                 </div>
               )}
@@ -461,7 +529,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                 MÉTODO 2: DESCARGAR ARCHIVO JSON LOCAL
               </span>
               <p className="text-xs text-slate-300 mb-3 font-sans leading-relaxed">
-                Descarga una copia completa de tu perfil, pruebas fotográficas y checks directamente a tu carpeta de descargas.
+                Descarga una copia completa de tu perfil y checks directamente a tu almacenamiento local.
               </p>
 
               <button
@@ -473,6 +541,74 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                 <span>Descargar Archivo JSON en Dispositivo</span>
               </button>
             </div>
+
+            {/* Tertiary: GetCroc CLI Bridge (Optional) */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#0b1320] border border-white/[0.08]">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                  <Cloud className="w-3.5 h-3.5 text-fantasy-sky" />
+                  MÉTODO 3: NUBE GETCROC (PUENTE CLI)
+                </span>
+                <span className={`font-mono text-[9px] px-2 py-0.5 rounded-full border uppercase ${
+                  bridgeStatus.ok ? 'bg-fantasy-lime/15 text-fantasy-lime border-fantasy-lime/30' : 'bg-slate-800 text-slate-400 border-white/[0.08]'
+                }`}>
+                  {bridgeStatus.ok ? '● Puente Conectado' : '○ Modo Terminal Offline'}
+                </span>
+              </div>
+
+              <p className="text-xs text-slate-300 mb-3 font-sans leading-relaxed">
+                Utiliza la herramienta CLI <code>croc</code> para transferencias temporales de un solo uso en red local o servidor.
+              </p>
+
+              {bridgeStatus.ok ? (
+                !crocResult ? (
+                  <button
+                    type="button"
+                    disabled={isExportingCroc}
+                    onClick={handleExportViaCroc}
+                    className="w-full bg-[#080d16] hover:bg-[#0e1626] border border-fantasy-sky/40 text-fantasy-sky font-mono text-xs uppercase tracking-wider py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"
+                  >
+                    <Cloud className={`w-4 h-4 ${isExportingCroc ? 'animate-spin' : ''}`} />
+                    <span>{isExportingCroc ? 'Subiendo a GetCroc...' : 'Subir a GetCroc y Obtener Enlace'}</span>
+                  </button>
+                ) : (
+                  <div className="p-3 rounded-xl bg-[#080d16] border border-fantasy-sky/30 space-y-2.5">
+                    <div className="flex items-center justify-between text-[10px] font-mono text-fantasy-lime font-bold">
+                      <span>TRANSFERENCIA GETCROC LISTA</span>
+                      <span>{crocResult.expires}</span>
+                    </div>
+                    {crocResult.browserUrl && (
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          readOnly
+                          value={crocResult.browserUrl}
+                          className="flex-1 bg-[#040810] border border-white/[0.08] rounded-lg px-2 py-1 font-mono text-xs text-fantasy-sky truncate"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => copyToClipboard(crocResult.browserUrl, 'url')}
+                          className="px-2.5 py-1 bg-fantasy-sky/20 text-fantasy-sky font-mono text-xs rounded-lg font-bold"
+                        >
+                          {copiedField === 'url' ? 'Copiado' : 'Copiar'}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )
+              ) : (
+                <div className="p-2.5 rounded-xl bg-[#080d16] border border-white/[0.06] text-[11px] text-slate-400 font-sans flex items-center justify-between gap-2">
+                  <span>Puente CLI no detectado en este dispositivo (usa el Método 1 para sincronizar en web/móvil).</span>
+                  <button
+                    type="button"
+                    onClick={() => setShowBridgeSettings(!showBridgeSettings)}
+                    className="text-fantasy-sky underline flex-shrink-0 font-mono text-[10px]"
+                  >
+                    [Configurar]
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -481,20 +617,15 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
           <div className="flex items-center gap-2 font-mono text-[10px]">
             <span
               className={`w-2 h-2 rounded-full ${
-                bridgeStatus.ok ? 'bg-fantasy-lime animate-pulse' : 'bg-fantasy-ochre'
+                bridgeStatus.ok ? 'bg-fantasy-lime animate-pulse' : 'bg-slate-500'
               }`}
             />
             <span className="text-slate-300">
-              PUENTE GETCROC:{' '}
-              <strong className={bridgeStatus.ok ? 'text-fantasy-lime' : 'text-fantasy-ochre'}>
-                {bridgeStatus.ok ? 'CONECTADO' : 'OFFLINE / LOCAL'}
+              PUENTE LOCAL:{' '}
+              <strong className={bridgeStatus.ok ? 'text-fantasy-lime' : 'text-slate-400'}>
+                {bridgeStatus.ok ? 'ACTIVO' : 'OFFLINE (OPCIONAL)'}
               </strong>
             </span>
-            {bridgeStatus.activeUrl && (
-              <span className="text-slate-500 hidden sm:inline truncate max-w-[150px]">
-                ({bridgeStatus.activeUrl})
-              </span>
-            )}
           </div>
 
           <div className="flex items-center gap-2 font-mono text-[10px]">
@@ -512,7 +643,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
               onClick={() => setShowBridgeSettings(!showBridgeSettings)}
               className="text-fantasy-sky hover:text-white underline transition-colors"
             >
-              [Configurar]
+              [Ajustes]
             </button>
           </div>
         </div>
@@ -537,7 +668,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
 
             <div className="pt-2">
               <label className="block font-mono text-[9px] uppercase text-slate-400 mb-1">
-                URL personalizada del puente (ej. para red local):
+                URL personalizada del puente (ej. para red local o túnel):
               </label>
               <div className="flex items-center gap-2">
                 <input

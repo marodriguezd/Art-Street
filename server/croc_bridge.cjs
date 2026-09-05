@@ -50,8 +50,8 @@ function sendJson(res, statusCode, data) {
 function handleExport(body, res) {
   try {
     const { data, downloads = 1, expiration = '1d' } = body;
-    if (!data || (!data.profile && !data.checks && !data.milestones)) {
-      return sendJson(res, 400, { error: 'Datos de respaldo inválidos o incompletos' });
+    if (!data || typeof data !== 'object') {
+      return sendJson(res, 400, { error: 'Datos de respaldo inválidos o vacíos' });
     }
 
     const tempFileId = `art_street_backup_${Date.now()}_${Math.random().toString(36).slice(2, 7)}.json`;
@@ -212,9 +212,9 @@ function handleImport(body, res) {
 
         cleanup();
 
-        if (!parsedData.profile && !parsedData.checks && !parsedData.milestones) {
+        if (!parsedData || typeof parsedData !== 'object') {
           return sendJson(res, 400, {
-            error: 'El archivo descargado no corresponde a un respaldo válido de Art Street',
+            error: 'El archivo descargado no corresponde a un formato de datos válido de Art Street',
           });
         }
 

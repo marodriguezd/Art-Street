@@ -190,10 +190,22 @@ export async function exportAllData(): Promise<AppStateData> {
   const checks = await getAllCheckStates();
   const milestones = await getMilestones();
 
+  // If testing with clean database or no onboarding done yet, provide valid starter profile
+  const fallbackProfile: UserProfile = {
+    id: 'profile_default',
+    name: 'Artista Inicial',
+    medium: 'traditional',
+    goal: 'Comenzar el camino del artista desde cero',
+    createdAt: new Date().toISOString(),
+    xp: 0,
+    streakDays: 1,
+    lastActiveDate: new Date().toISOString(),
+  };
+
   return {
-    profile,
-    checks,
-    milestones,
+    profile: profile || fallbackProfile,
+    checks: checks || {},
+    milestones: milestones || [],
   };
 }
 

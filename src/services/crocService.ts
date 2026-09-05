@@ -46,17 +46,120 @@ export function setCustomBridgeUrl(url: string | null): void {
   }
 }
 
+export interface UniversalSyncResult {
+  code: string;
+  url: string;
+  sizeBytes: number;
+}
+
 /**
- * Normalizes input: handles full GetCroc URLs, store tokens, or simple relay code phrases.
+ * Compresses AppStateData into an ultra-compact base64url string with prefix ART-SYNC-v1.
+ * Works 100% in-browser on mobile, tablet, and PC without any server or terminal requirement.
+ */
+export async function generateUniversalSyncCode(data: AppStateData): Promise<UniversalSyncResult> {
+  const json = JSON.stringify(data);
+  let encodedPayload = '';
+
+  if (typeof CompressionStream !== 'undefined') {
+    try {
+      const stream = new Blob([json]).stream().pipeThrough(new CompressionStream('deflate'));
+      const buffer = await new Response(stream).arrayBuffer();
+      const bytes = new Uint8Array(buffer);
+      let binary = '';
+      for (let i = 0; i < bytes.byteLength; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      encodedPayload = btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    } catch {
+      encodedPayload = btoa(unescape(encodeURIComponent(json))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+  } else {
+    encodedPayload = btoa(unescape(encodeURIComponent(json))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  const code = `ART-SYNC-v1.${encodedPayload}`;
+  const origin = window.location.origin;
+  const pathname = window.location.pathname;
+  const url = `${origin}${pathname}?sync=${encodeURIComponent(code)}`;
+
+  return {
+    code,
+    url,
+    sizeBytes: json.length,
+  };
+}
+
+/**
+ * Decodes an ART-SYNC-v1... code or ?sync=... URL into AppStateData.
+ */
+export async function decodeUniversalSyncCode(input: string): Promise<AppStateData> {
+  let cleaned = input.trim();
+
+  // If full URL with ?sync= or ?code=
+  const urlSyncMatch = cleaned.match(/[?&](?:sync|import|code)=([^&#]+)/);
+  if (urlSyncMatch) {
+    cleaned = decodeURIComponent(urlSyncMatch[1]);
+  }
+
+  if (!cleaned.startsWith('ART-SYNC-v1.') && !cleaned.startsWith('art-sync-v1.')) {
+    throw new Error('El formato no corresponde a un código de sincronización universal');
+  }
+
+  const payload = cleaned.replace(/^art-sync-v1\./i, '');
+  let b64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+  while (b64.length % 4 !== 0) {
+    b64 += '=';
+  }
+
+  const binary = atob(b64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  if (typeof DecompressionStream !== 'undefined') {
+    try {
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate'));
+      const text = await new Response(stream).text();
+      return JSON.parse(text) as AppStateData;
+    } catch {
+      // Fallback
+    }
+  }
+
+  try {
+    const text = decodeURIComponent(escape(binary));
+    return JSON.parse(text) as AppStateData;
+  } catch (e) {
+    throw new Error('No se pudo decodificar el paquete de sincronización universal');
+  }
+}
+
+/**
+ * Normalizes input: handles Universal sync codes, full GetCroc URLs, store tokens, or simple relay code phrases.
  */
 export function normalizeCrocInput(input: string): {
-  type: 'store_url' | 'store_token' | 'relay_code' | 'unknown';
+  type: 'universal_code' | 'store_url' | 'store_token' | 'relay_code' | 'unknown';
   cleaned: string;
   tokenEquivalent?: string;
 } {
   const trimmed = input.trim();
   if (!trimmed) {
     return { type: 'unknown', cleaned: '' };
+  }
+
+  // Case 0: Universal Sync Code or Sync URL (e.g. ART-SYNC-v1... or ?sync=ART-SYNC-v1...)
+  if (
+    trimmed.startsWith('ART-SYNC-v1.') || 
+    trimmed.startsWith('art-sync-v1.') || 
+    trimmed.includes('sync=ART-SYNC') ||
+    trimmed.includes('sync=art-sync')
+  ) {
+    return {
+      type: 'universal_code',
+      cleaned: trimmed,
+      tokenEquivalent: trimmed,
+    };
   }
 
   // Case 1: https://getcroc.com/s/<ID>#v1.<KEY>
@@ -140,7 +243,7 @@ export async function checkBridgeHealth(): Promise<CrocBridgeStatus> {
 
   return {
     ok: false,
-    error: 'No se pudo conectar con el puente de GetCroc. Asegúrate de ejecutar `pnpm run bridge` en tu terminal.',
+    error: 'Puente GetCroc offline (modo terminal local no detectado)',
   };
 }
 
@@ -177,18 +280,27 @@ export async function exportViaGetCroc(data: AppStateData): Promise<CrocExportRe
   };
 }
 
-/**
- * Import and decode data through GetCroc CLI bridge in real-time.
- */
 export async function importViaGetCroc(codeOrUrl: string): Promise<CrocImportResult> {
-  const health = await checkBridgeHealth();
-  if (!health.ok || !health.activeUrl) {
-    throw new Error(health.error || 'Puente GetCroc no disponible');
-  }
-
   const normalized = normalizeCrocInput(codeOrUrl);
   if (normalized.type === 'unknown' || !normalized.cleaned) {
-    throw new Error('Por favor ingresa un código o enlace de GetCroc válido');
+    throw new Error('Por favor ingresa un código o enlace válido');
+  }
+
+  // Fast path: Universal in-browser code requires NO bridge or backend!
+  if (normalized.type === 'universal_code') {
+    const data = await decodeUniversalSyncCode(normalized.cleaned);
+    return {
+      success: true,
+      data,
+      filename: 'universal_sync.json',
+    };
+  }
+
+  const health = await checkBridgeHealth();
+  if (!health.ok || !health.activeUrl) {
+    throw new Error(
+      `El código "${codeOrUrl.trim()}" es una transferencia de GetCroc.com. Para importarlo en la web sin el puente de terminal activo, puedes descargar el archivo JSON directamente desde getcroc.com e importarlo aquí como Archivo JSON.`
+    );
   }
 
   const res = await fetch(`${health.activeUrl}/import`, {
