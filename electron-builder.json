@@ -1,0 +1,23 @@
+{
+  "appId": "app.artstreet.desktop",
+  "productName": "Art Street",
+  "directories": {
+    "output": "release"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*",
+    "package.json"
+  ],
+  "linux": {
+    "target": ["AppImage", "deb"],
+    "category": "Graphics"
+  },
+  "win": {
+    "target": ["nsis", "portable"]
+  },
+  "mac": {
+    "target": ["dmg", "zip"],
+    "category": "public.app-category.graphics-design"
+  }
+}
