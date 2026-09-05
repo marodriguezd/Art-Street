@@ -3,7 +3,8 @@ import {
   Search, 
   Sparkles, 
   Columns3, 
-  Flame 
+  Flame,
+  Cloud 
 } from 'lucide-react';
 import { 
   CURRICULUM_TERMS, 
@@ -37,12 +38,17 @@ import { GestureTimerModal } from './components/GestureTimerModal';
 import { GraduationModal } from './components/GraduationModal';
 import { EvolutionStudio } from './components/EvolutionStudio';
 import { SettingsBackupModal } from './components/SettingsBackupModal';
+import { BackupSyncModal } from './components/BackupSyncModal';
 
 export const App: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [checkStates, setCheckStates] = useState<Record<string, CheckState>>({});
   const [milestones, setMilestones] = useState<MilestoneArtwork[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Backup & Sync with GetCroc and JSON state
+  const [isBackupSyncOpen, setIsBackupSyncOpen] = useState(false);
+  const [backupSyncTab, setBackupSyncTab] = useState<'import' | 'export'>('import');
 
   // Navigation and active views
   const [activeTab, setActiveTab] = useState<'roadmap' | 'evolution' | 'timer' | 'canvas' | 'settings'>('roadmap');
@@ -250,6 +256,10 @@ export const App: React.FC = () => {
         }}
         completedChecksCount={completedChecksCount}
         totalChecksCount={TOTAL_CHECKS_COUNT}
+        onOpenBackupSync={(tab) => {
+          setBackupSyncTab(tab || 'import');
+          setIsBackupSyncOpen(true);
+        }}
       />
 
       {/* Main App Container */}
@@ -321,6 +331,18 @@ export const App: React.FC = () => {
                             <span>REGISTRAR HITO CERO (NIVEL 0)</span>
                           </button>
                         )}
+
+                        <button
+                          onClick={() => {
+                            setBackupSyncTab('import');
+                            setIsBackupSyncOpen(true);
+                          }}
+                          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0a101d] hover:bg-[#121c30] text-white font-mono text-xs uppercase tracking-wider border border-white/[0.1] hover:border-fantasy-pink/40 transition-all shadow-sm"
+                          title="Importar o exportar datos vía GetCroc y JSON"
+                        >
+                          <Cloud className="w-4 h-4 text-fantasy-pink" />
+                          <span>SINCRONIZAR / RESPALDO</span>
+                        </button>
 
                         <button
                           onClick={() => setActiveTab('evolution')}
@@ -496,7 +518,6 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* MODALS */}
       {/* Onboarding Modal */}
       {isOnboardingOpen && (
         <OnboardingModal
@@ -508,6 +529,10 @@ export const App: React.FC = () => {
           openCanvasForBaseline={handleOpenCanvasForBaseline}
           temporaryCanvasImage={tempCanvasImage}
           onClose={() => setIsOnboardingOpen(false)}
+          onOpenBackupSync={(tab) => {
+            setBackupSyncTab(tab || 'import');
+            setIsBackupSyncOpen(true);
+          }}
         />
       )}
 
@@ -564,8 +589,25 @@ export const App: React.FC = () => {
           onClose={() => setIsSettingsOpen(false)}
           onProfileUpdated={(updated) => setProfile(updated)}
           onDataReload={loadInitialData}
+          onOpenBackupSync={(tab) => {
+            setIsSettingsOpen(false);
+            setBackupSyncTab(tab || 'import');
+            setIsBackupSyncOpen(true);
+          }}
         />
       )}
+
+      {/* GetCroc & JSON Backup / Sync Modal */}
+      <BackupSyncModal
+        isOpen={isBackupSyncOpen}
+        initialTab={backupSyncTab}
+        onClose={() => setIsBackupSyncOpen(false)}
+        onDataRestored={() => {
+          loadInitialData();
+          setIsOnboardingOpen(false);
+          setIsBackupSyncOpen(false);
+        }}
+      />
     </div>
   );
 };

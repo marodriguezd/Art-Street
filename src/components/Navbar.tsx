@@ -6,7 +6,8 @@ import {
   Palette, 
   Settings, 
   Columns3, 
-  Award
+  Award,
+  Cloud
 } from 'lucide-react';
 import { UserProfile } from '../types/curriculum';
 
@@ -16,6 +17,7 @@ interface NavbarProps {
   setActiveTab: (tab: 'roadmap' | 'evolution' | 'timer' | 'canvas' | 'settings') => void;
   completedChecksCount: number;
   totalChecksCount: number;
+  onOpenBackupSync?: (tab?: 'import' | 'export') => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -24,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   setActiveTab,
   completedChecksCount,
   totalChecksCount,
+  onOpenBackupSync,
 }) => {
   const level = profile ? Math.floor(profile.xp / 250) + 1 : 1;
   const progressPercent = totalChecksCount > 0 ? Math.round((completedChecksCount / totalChecksCount) * 100) : 0;
@@ -142,6 +145,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
               </div>
             </div>
+
+            {/* Backup & Cloud Sync Trigger */}
+            {onOpenBackupSync && (
+              <button
+                onClick={() => onOpenBackupSync('import')}
+                className="p-2 rounded-xl bg-[#131e33] border border-white/[0.08] hover:border-fantasy-sky/40 text-slate-300 hover:text-white transition-colors group relative"
+                title="Sincronización y Respaldo (GetCroc / JSON)"
+              >
+                <Cloud className="w-4 h-4 text-fantasy-sky group-hover:scale-110 transition-transform" />
+              </button>
+            )}
 
             {/* Settings Trigger */}
             <button

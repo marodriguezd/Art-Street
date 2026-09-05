@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "bridge": "node server/croc_bridge.cjs",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "cap:sync": "cap sync",

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Sparkles, Upload, CheckCircle, ArrowRight, Brush, X } from 'lucide-react';
+import { Sparkles, Upload, CheckCircle, ArrowRight, Brush, X, Cloud } from 'lucide-react';
 import { UserProfile, MediumType, MilestoneArtwork } from '../types/curriculum';
 import { saveProfile, saveMilestone } from '../services/storage';
 import { playCelebrationFanfare } from '../utils/audio';
@@ -10,6 +10,7 @@ interface OnboardingModalProps {
   openCanvasForBaseline: () => void;
   temporaryCanvasImage?: string | null;
   onClose?: () => void;
+  onOpenBackupSync?: (tab?: 'import' | 'export') => void;
 }
 
 export const OnboardingModal: React.FC<OnboardingModalProps> = ({
@@ -17,6 +18,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   openCanvasForBaseline,
   temporaryCanvasImage,
   onClose,
+  onOpenBackupSync,
 }) => {
   const [step, setStep] = useState<1 | 2>(1);
   const [name, setName] = useState('');
@@ -147,6 +149,28 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
         {step === 1 ? (
           <div>
+            {/* Quick Import Banner from the very first moment */}
+            {onOpenBackupSync && (
+              <div className="mb-5 p-3 sm:p-3.5 bg-gradient-to-r from-fantasy-sky/20 via-fantasy-pink/15 to-transparent border border-fantasy-sky/40 rounded-2xl flex items-center justify-between gap-3 shadow-inner">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-fantasy-sky/20 flex items-center justify-center text-fantasy-sky flex-shrink-0 border border-fantasy-sky/30">
+                    <Cloud className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-display text-xs font-bold text-white truncate">¿Tienes un respaldo o cuenta previa?</p>
+                    <p className="font-sans text-[10px] text-slate-300 truncate">Importa vía GetCroc o archivo JSON</p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => onOpenBackupSync('import')}
+                  className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-fantasy-sky to-fantasy-pink hover:opacity-90 text-white font-mono text-[10px] font-black uppercase tracking-wider transition-opacity flex-shrink-0 shadow-sm"
+                >
+                  Importar
+                </button>
+              </div>
+            )}
+
             <div className="text-center mb-5 sm:mb-6">
               <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase font-bold text-fantasy-sky bg-fantasy-sky/15 px-2.5 py-0.5 sm:py-1 rounded-full border border-fantasy-sky/30 inline-block mb-2 sm:mb-3">
                 REGISTRO DEL VIAJERO // EDICIÓN IN WITCH
@@ -235,11 +259,22 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   <ArrowRight className="w-4 h-4" />
                 </button>
 
+                {onOpenBackupSync && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenBackupSync('import')}
+                    className="w-full text-fantasy-sky hover:text-white font-mono text-xs uppercase tracking-wider py-1.5 transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    <Cloud className="w-3.5 h-3.5" />
+                    <span>[ Importar desde JSON o Código GetCroc ]</span>
+                  </button>
+                )}
+
                 {onClose && (
                   <button
                     type="button"
                     onClick={onClose}
-                    className="w-full text-slate-400 hover:text-white font-mono text-xs uppercase tracking-wider py-2 transition-colors"
+                    className="w-full text-slate-400 hover:text-white font-mono text-xs uppercase tracking-wider py-1.5 transition-colors"
                   >
                     [ Explorar la Monografía como Invitado ]
                   </button>

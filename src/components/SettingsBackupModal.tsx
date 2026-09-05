@@ -8,7 +8,9 @@ import {
   Database, 
   ShieldCheck, 
   User, 
-  ExternalLink 
+  ExternalLink,
+  Cloud,
+  Zap
 } from 'lucide-react';
 import { UserProfile, AppStateData } from '../types/curriculum';
 import { exportAllData, importAllData, saveProfile } from '../services/storage';
@@ -18,6 +20,7 @@ interface SettingsBackupModalProps {
   onClose: () => void;
   onProfileUpdated: (updated: UserProfile) => void;
   onDataReload: () => void;
+  onOpenBackupSync?: (tab?: 'import' | 'export') => void;
 }
 
 export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
@@ -25,6 +28,7 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
   onClose,
   onProfileUpdated,
   onDataReload,
+  onOpenBackupSync,
 }) => {
   const [name, setName] = useState(profile?.name || '');
   const [goal, setGoal] = useState(profile?.goal || '');
@@ -194,6 +198,30 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
             <ShieldCheck className="w-4 h-4 text-fantasy-lime" />
             <span>Seguridad y Portabilidad</span>
           </h4>
+
+          {onOpenBackupSync && (
+            <button
+              type="button"
+              onClick={() => onOpenBackupSync('import')}
+              className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-fantasy-sky/20 via-fantasy-pink/15 to-fantasy-ochre/15 border border-fantasy-sky/40 hover:border-fantasy-sky flex items-center justify-between gap-3 text-left transition-all shadow-md group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-fantasy-sky to-fantasy-pink flex items-center justify-center text-white shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">
+                  <Cloud className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs font-display font-bold text-white flex items-center gap-1.5">
+                    <span>Sincronización en la Nube con GetCroc</span>
+                    <span className="font-mono text-[9px] px-1.5 py-0.5 rounded-md bg-fantasy-sky/20 text-fantasy-sky font-bold">1-CLIC</span>
+                  </p>
+                  <p className="text-[11px] font-sans text-slate-300">
+                    Transfiere con un solo código o enlace web temporal en tiempo real
+                  </p>
+                </div>
+              </div>
+              <Zap className="w-4 h-4 text-fantasy-ochre flex-shrink-0" />
+            </button>
+          )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <button
