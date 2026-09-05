@@ -277,123 +277,132 @@ export const App: React.FC = () => {
             ) : (
               /* Roadmap Main Overview */
               <div>
-                {/* Hero Header Card */}
-                <div className="relative bg-gradient-to-br from-studio-900 via-studio-900/90 to-studio-950 border border-studio-800 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden mb-8">
-                  <div className="absolute top-0 right-0 w-96 h-96 bg-orange-500/10 blur-3xl pointer-events-none rounded-full" />
+                {/* Editorial Atelier Hero Card */}
+                <div className="relative bg-atelier-900/70 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl overflow-hidden mb-8 drafting-corner">
+                  <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none rounded-full" />
 
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <div className="lg:col-span-8">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 font-bold text-xs uppercase tracking-wider mb-3">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 font-mono font-bold text-[10px] uppercase tracking-widest mb-3">
                         <Sparkles className="w-3.5 h-3.5" />
-                        <span>Curriculum for the Solo Artist • Reddit</span>
+                        <span>PLAN DE ESTUDIOS // RADIO_RUNNER CURRICULUM</span>
                       </div>
 
-                      <h1 className="font-display font-black text-2xl sm:text-4xl text-white tracking-tight">
-                        El Camino del Artista: De 0 a Profesional
+                      <h1 className="font-serif italic font-normal text-4xl sm:text-6xl lg:text-7xl text-white tracking-tight leading-[1.08]">
+                        El Camino del Artista
                       </h1>
-                      <p className="text-xs sm:text-sm text-studio-300 mt-2 max-w-2xl leading-relaxed">
-                        Bienvenido, <strong>{profile?.name || 'Artista'}</strong>. Sigue la ruta estructurada de 9 términos y 27 unidades. En cada paso completa los ejercicios prácticos, sube tus dibujos como prueba y genera tus obras de graduación para ver tu evolución.
+                      <p className="text-xs sm:text-sm text-atelier-300 mt-3 max-w-2xl leading-relaxed font-sans font-light">
+                        Bienvenido al atelier, <strong>{profile?.name || 'Artista'}</strong>. Navega a través de <strong>9 Folios Académicos</strong> y <strong>27 Módulos</strong>. Completa tus ejercicios deliberados, documenta tus pruebas visuales y entrega tus obras de evaluación técnica para contemplar tu metamorfosis.
                       </p>
 
-                      {/* Quick Action Badges */}
-                      <div className="flex flex-wrap items-center gap-3 mt-4 pt-3 border-t border-studio-800/80 text-xs">
+                      {/* Editorial Quick Actions */}
+                      <div className="flex flex-wrap items-center gap-3 mt-6 pt-4 border-t border-white/[0.06] text-xs font-mono">
                         <button
                           onClick={() => setActiveTab('evolution')}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-studio-800 hover:bg-studio-700 text-studio-200 font-semibold transition-colors"
+                          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-atelier-800/80 hover:bg-atelier-750 text-white font-medium border border-white/[0.08] hover:border-orange-500/40 transition-all shadow-sm"
                         >
-                          <Columns3 className="w-4 h-4 text-orange-400" />
-                          <span>Comparador Antes / Después</span>
+                          <Columns3 className="w-3.5 h-3.5 text-orange-400" />
+                          <span>02. COMPARADOR ANTES / DESPUÉS</span>
                         </button>
 
                         <button
                           onClick={() => setActiveTab('timer')}
-                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-studio-800 hover:bg-studio-700 text-studio-200 font-semibold transition-colors"
+                          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-atelier-800/80 hover:bg-atelier-750 text-white font-medium border border-white/[0.08] hover:border-amber-500/40 transition-all shadow-sm"
                         >
-                          <Flame className="w-4 h-4 text-amber-400" />
-                          <span>Sesión de Gestos 30s-2m</span>
+                          <Flame className="w-3.5 h-3.5 text-amber-400" />
+                          <span>03. TEMPORIZADOR DE GESTOS</span>
                         </button>
                       </div>
                     </div>
 
-                    {/* Progress Circle & Stats Card */}
-                    <div className="lg:col-span-4 bg-studio-950/80 p-5 rounded-2xl border border-studio-800/90 flex items-center gap-4">
-                      <div className="relative w-20 h-20 flex-shrink-0 flex items-center justify-center">
+                    {/* Architectural Compass & Progress Gauge */}
+                    <div className="lg:col-span-4 bg-atelier-950/90 p-6 rounded-3xl border border-white/[0.08] flex items-center gap-5 shadow-inner">
+                      <div className="relative w-24 h-24 flex-shrink-0 flex items-center justify-center">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                           <path
-                            className="text-studio-800 stroke-current"
-                            strokeWidth="3.5"
+                            className="text-atelier-800 stroke-current"
+                            strokeWidth="3"
                             fill="none"
                             d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                           />
                           <path
-                            className="text-orange-500 stroke-current transition-all duration-700"
-                            strokeWidth="3.5"
+                            className="text-orange-500 stroke-current transition-all duration-1000 ease-out"
+                            strokeWidth="3"
                             strokeDasharray={`${progressPercent}, 100`}
                             strokeLinecap="round"
                             fill="none"
                             d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                           />
                         </svg>
-                        <span className="absolute font-black text-sm text-white">
-                          {progressPercent}%
-                        </span>
+                        <div className="absolute flex flex-col items-center justify-center">
+                          <span className="font-mono font-bold text-lg text-white">
+                            {progressPercent}%
+                          </span>
+                          <span className="font-mono text-[8px] text-atelier-400 tracking-tighter uppercase">
+                            DOMINIO
+                          </span>
+                        </div>
                       </div>
 
                       <div>
-                        <p className="text-xs font-bold text-white uppercase tracking-wider">
-                          Progreso Total
+                        <p className="font-mono text-[10px] font-bold text-orange-400 uppercase tracking-widest">
+                          PROGRESO GLOBAL
                         </p>
-                        <p className="text-xs text-studio-400 mt-0.5">
-                          {completedChecksCount} de {TOTAL_CHECKS_COUNT} ejercicios
+                        <p className="font-mono text-sm text-white font-bold mt-1">
+                          {completedChecksCount} / {TOTAL_CHECKS_COUNT}
+                          <span className="text-xs font-normal text-atelier-400 ml-1">ejercicios</span>
                         </p>
-                        <p className="text-[11px] text-emerald-400 font-semibold mt-1 flex items-center gap-1">
-                          <Award className="w-3.5 h-3.5" />
-                          <span>{milestones.length} obras registradas</span>
+                        <p className="font-mono text-[11px] text-amber-300 font-medium mt-1.5 flex items-center gap-1.5">
+                          <Award className="w-3.5 h-3.5 text-amber-400" />
+                          <span>{milestones.length} obras en archivo</span>
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Filters & Search Toolbar */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-6">
+                {/* Filters & Search Toolbar with Architectural Folio Tabs */}
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
                   {/* Search bar */}
                   <div className="relative w-full sm:w-80">
-                    <Search className="w-4 h-4 text-studio-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Search className="w-4 h-4 text-atelier-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      placeholder="Buscar por lección, drawabox, loomis..."
-                      className="w-full bg-studio-900 border border-studio-800 rounded-2xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-studio-500 focus:outline-none focus:border-orange-500 transition-colors"
+                      placeholder="Filtrar por Loomis, Drawabox, gesto..."
+                      className="w-full bg-atelier-900/90 border border-white/[0.08] rounded-2xl pl-10 pr-4 py-2.5 font-mono text-xs text-white placeholder-atelier-500 focus:outline-none focus:border-orange-500/60 transition-colors shadow-sm"
                     />
                   </div>
 
-                  {/* Term filter selector */}
-                  <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+                  {/* Roman Numeral Folio Filter Tabs */}
+                  <div className="flex items-center gap-1 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 bg-atelier-900/80 p-1.5 rounded-2xl border border-white/[0.06]">
                     <button
                       onClick={() => setTermFilter('all')}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                      className={`px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold transition-all whitespace-nowrap ${
                         termFilter === 'all'
-                          ? 'bg-orange-500 text-white shadow-sm'
-                          : 'bg-studio-900 text-studio-400 hover:text-white border border-studio-800'
+                          ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
+                          : 'text-atelier-400 hover:text-white'
                       }`}
                     >
-                      Todos (9)
+                      TODOS
                     </button>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((t) => (
-                      <button
-                        key={t}
-                        onClick={() => setTermFilter(t)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
-                          termFilter === t
-                            ? 'bg-orange-500 text-white shadow-sm'
-                            : 'bg-studio-900 text-studio-400 hover:text-white border border-studio-800'
-                        }`}
-                      >
-                        T{t}
-                      </button>
-                    ))}
+                    {['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'].map((roman, idx) => {
+                      const num = idx + 1;
+                      return (
+                        <button
+                          key={num}
+                          onClick={() => setTermFilter(num)}
+                          className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold transition-all whitespace-nowrap ${
+                            termFilter === num
+                              ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
+                              : 'text-atelier-400 hover:text-white hover:bg-atelier-800/60'
+                          }`}
+                        >
+                          {roman}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 

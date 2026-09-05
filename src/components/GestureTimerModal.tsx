@@ -95,31 +95,31 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-4 px-2 sm:px-4">
+    <div className="max-w-4xl mx-auto py-6 px-2 sm:px-4">
       {/* Title */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 font-bold text-xs uppercase tracking-wider mb-2">
-          <Flame className="w-3.5 h-3.5 fill-orange-500" />
-          <span>Gimnasio de Calentamiento y Gesto</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 font-mono text-[10px] tracking-widest uppercase mb-2">
+          <Flame className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+          <span>GIMNASIO DE RITMO Y DINÁMICA DE FIGURA</span>
         </div>
-        <h2 className="font-display font-black text-2xl sm:text-3xl text-white">
-          Temporizador de Práctica y Gestos
+        <h2 className="font-serif text-3xl sm:text-4xl text-white italic tracking-tight">
+          Cronómetro de Gesto Rápido
         </h2>
-        <p className="text-xs sm:text-sm text-studio-400 mt-1 max-w-lg mx-auto">
-          El gesto rápido (30s a 2m) es la clave para eliminar la rigidez y aprender a capturar el ritmo y la vida de la figura humana.
+        <p className="text-xs sm:text-sm text-studio-300 mt-2 max-w-lg mx-auto leading-relaxed font-sans">
+          El gesto intervalado (30s a 2m) desactiva el juicio racional para capturar la línea de acción, el peso corporal y la vitalidad del modelo.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Left / Center Clock Column */}
-        <div className="md:col-span-7 bg-studio-900/90 border border-studio-800 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center shadow-xl relative overflow-hidden">
+        <div className="md:col-span-7 bg-[#0c0e14] border border-studio-800/80 rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden drafting-corner">
           {/* Sound toggle button */}
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className="absolute top-4 right-4 p-2 rounded-xl bg-studio-800 text-studio-400 hover:text-white"
+            className="absolute top-4 right-4 p-2 rounded-xl bg-studio-800/60 text-studio-400 hover:text-white border border-studio-800/60 transition-colors"
             title={soundEnabled ? 'Silenciar campana' : 'Activar sonido de campana'}
           >
-            {soundEnabled ? <Volume2 className="w-4 h-4 text-orange-400" /> : <VolumeX className="w-4 h-4" />}
+            {soundEnabled ? <Volume2 className="w-4 h-4 text-amber-400" /> : <VolumeX className="w-4 h-4" />}
           </button>
 
           {/* Preset Interval Buttons */}
@@ -128,10 +128,10 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
               <button
                 key={item.seconds}
                 onClick={() => handleSelectInterval(item.seconds)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider border transition-all ${
                   selectedInterval === item.seconds
-                    ? 'bg-orange-500 text-white border-orange-500 shadow-md shadow-orange-500/20'
-                    : 'bg-studio-950 border-studio-800 text-studio-400 hover:border-studio-700'
+                    ? 'bg-amber-500/20 text-amber-300 border-amber-500/60 shadow-sm'
+                    : 'bg-[#08090d] border-studio-800 text-studio-400 hover:border-studio-700'
                 }`}
               >
                 {item.label}
@@ -146,16 +146,16 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
                 cx="50"
                 cy="50"
                 r="45"
-                className="text-studio-800 stroke-current"
-                strokeWidth="6"
+                className="text-studio-850 stroke-current"
+                strokeWidth="4"
                 fill="transparent"
               />
               <circle
                 cx="50"
                 cy="50"
                 r="45"
-                className="text-orange-500 stroke-current transition-all duration-300"
-                strokeWidth="6"
+                className="text-amber-400 stroke-current transition-all duration-300"
+                strokeWidth="4"
                 strokeDasharray="283"
                 strokeDashoffset={strokeDashoffset}
                 strokeLinecap="round"
@@ -164,50 +164,50 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
             </svg>
 
             <div className="absolute flex flex-col items-center">
-              <span className="font-mono font-black text-4xl sm:text-5xl text-white tracking-tight">
+              <span className="font-mono font-bold text-5xl sm:text-6xl text-white tracking-tight">
                 {formatTime(timeLeft)}
               </span>
-              <span className="text-[11px] font-bold text-studio-400 uppercase tracking-wider mt-1">
-                {isRunning ? 'Dibujando...' : 'En pausa'}
+              <span className="font-mono text-[10px] text-studio-400 uppercase tracking-widest mt-1">
+                {isRunning ? 'EN TRAZO ACTIVO' : 'PAUSADO'}
               </span>
             </div>
           </div>
 
           {/* Stats bar */}
-          <div className="flex items-center gap-4 text-xs font-bold text-studio-300 bg-studio-950 px-4 py-2 rounded-xl border border-studio-800 my-4">
-            <span className="flex items-center gap-1.5 text-orange-400">
-              <CheckCircle2 className="w-4 h-4" />
-              <span>{posesCount} poses completadas</span>
+          <div className="flex items-center gap-4 text-xs text-studio-300 bg-[#08090d] px-4 py-2 rounded-xl border border-studio-800 my-4 font-mono text-[11px]">
+            <span className="flex items-center gap-1.5 text-amber-400">
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>{posesCount} POSES CONQUISTADAS</span>
             </span>
-            <span className="text-studio-600">•</span>
-            <span>Total: ~{Math.round((posesCount * selectedInterval) / 60)} min</span>
+            <span className="text-studio-700">•</span>
+            <span className="text-studio-400">TOTAL: ~{Math.round((posesCount * selectedInterval) / 60)} MIN</span>
           </div>
 
           {/* Playback Controls */}
           <div className="flex items-center gap-3 mt-2">
             <button
               onClick={handleReset}
-              className="p-3.5 rounded-2xl bg-studio-800 hover:bg-studio-700 text-studio-400 hover:text-white transition-colors"
-              title="Reiniciar contador"
+              className="p-3.5 rounded-xl bg-studio-800/60 hover:bg-studio-800 text-studio-400 hover:text-white transition-colors border border-studio-800/60"
+              title="Reiniciar cronómetro"
             >
               <RotateCcw className="w-5 h-5" />
             </button>
 
             <button
               onClick={() => setIsRunning(!isRunning)}
-              className={`p-5 rounded-2xl font-bold text-white shadow-xl transition-all flex items-center justify-center ${
+              className={`p-4 sm:p-5 rounded-xl font-bold text-white shadow-xl transition-all flex items-center justify-center ${
                 isRunning
-                  ? 'bg-amber-500 hover:bg-amber-600 shadow-amber-500/25'
-                  : 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 shadow-orange-500/30 scale-105'
+                  ? 'bg-studio-800 hover:bg-studio-700 border border-amber-500/40 text-amber-400'
+                  : 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 shadow-amber-900/20 scale-105'
               }`}
               title={isRunning ? 'Pausar' : 'Iniciar'}
             >
-              {isRunning ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
+              {isRunning ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5 fill-white" />}
             </button>
 
             <button
               onClick={handleNextPose}
-              className="p-3.5 rounded-2xl bg-studio-800 hover:bg-studio-700 text-studio-400 hover:text-white transition-colors"
+              className="p-3.5 rounded-xl bg-studio-800/60 hover:bg-studio-800 text-studio-400 hover:text-white transition-colors border border-studio-800/60"
               title="Siguiente pose"
             >
               <SkipForward className="w-5 h-5" />
@@ -218,33 +218,33 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
         {/* Right Recommended Resources and Canvas Opener */}
         <div className="md:col-span-5 space-y-4">
           {/* Direct Canvas Launch Card */}
-          <div className="bg-gradient-to-br from-purple-950/40 to-studio-900 border border-purple-500/30 rounded-3xl p-5 shadow-lg">
-            <div className="flex items-center gap-2 text-purple-400 font-bold text-xs uppercase tracking-wider mb-2">
-              <Brush className="w-4 h-4" />
-              <span>Dibuja aquí mismo</span>
+          <div className="bg-[#0c0e14] border border-studio-800/80 rounded-2xl p-5 shadow-lg relative drafting-corner">
+            <div className="flex items-center gap-2 text-amber-400 font-mono text-[10px] tracking-widest uppercase mb-2">
+              <Brush className="w-3.5 h-3.5" />
+              <span>SOPORTE DIGITAL INMEDIATO</span>
             </div>
-            <h3 className="font-display font-extrabold text-lg text-white">
-              ¿No tienes papel o tableta a mano?
+            <h3 className="font-serif text-xl text-white italic">
+              ¿Sin papel o tableta a mano?
             </h3>
-            <p className="text-xs text-studio-300 mt-1 leading-relaxed mb-4">
-              Usa el lienzo integrado de Art Street mientras corre el temporizador para hacer tus bocetos rápidos con el dedo o ratón.
+            <p className="text-xs text-studio-300 mt-1 leading-relaxed mb-4 font-sans">
+              Utiliza el bloc digital integrado mientras corre el cronómetro para calentar el trazo con la mano o ratón.
             </p>
             <button
               onClick={onOpenCanvas}
-              className="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 shadow-md shadow-purple-600/25 transition-all"
+              className="w-full bg-studio-800/80 hover:bg-studio-800 text-amber-300 border border-amber-500/30 hover:border-amber-500/60 font-mono text-xs uppercase tracking-wider py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"
             >
               <Brush className="w-4 h-4" />
-              <span>Abrir Lienzo Digital</span>
+              <span>Desplegar Bloc Digital</span>
             </button>
           </div>
 
-          {/* Curated Reference Sites (Croquis Cafe, Line of Action) */}
-          <div className="bg-studio-900 border border-studio-800 rounded-3xl p-5">
-            <h3 className="font-bold text-sm text-white mb-2">
-              Bases de Poses para la Práctica
+          {/* Curated Reference Sites */}
+          <div className="bg-[#0c0e14] border border-studio-800/80 rounded-2xl p-5">
+            <h3 className="font-serif text-lg text-white italic mb-1">
+              Catálogo de Poses del Currículum
             </h3>
-            <p className="text-xs text-studio-400 mb-4">
-              Abre una de estas webs gratuitas recomendadas por el currículum en otra pestaña o pantalla dividida:
+            <p className="text-xs text-studio-400 mb-4 font-sans">
+              Abre los bancos de poses de referencia recomendados por el programa en pantalla dividida:
             </p>
 
             <div className="space-y-2">
@@ -252,13 +252,13 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
                 href="https://line-of-action.com/practice-tools/figure-drawing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-xl bg-studio-950 hover:bg-studio-800 border border-studio-800 transition-colors group"
+                className="flex items-center justify-between p-3 rounded-xl bg-[#08090d] hover:bg-studio-900 border border-studio-800/80 transition-colors group"
               >
                 <div>
-                  <p className="text-xs font-bold text-white group-hover:text-orange-400">
+                  <p className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors">
                     Line of Action
                   </p>
-                  <p className="text-[10px] text-studio-400">Herramienta de poses con temporizador integrado</p>
+                  <p className="font-mono text-[10px] text-studio-500">Herramienta cronometrada de figura y expresión</p>
                 </div>
                 <ExternalLink className="w-4 h-4 text-studio-500 group-hover:text-white" />
               </a>
@@ -267,13 +267,13 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
                 href="https://vimeo.com/channels/croquiscafe"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-xl bg-studio-950 hover:bg-studio-800 border border-studio-800 transition-colors group"
+                className="flex items-center justify-between p-3 rounded-xl bg-[#08090d] hover:bg-studio-900 border border-studio-800/80 transition-colors group"
               >
                 <div>
-                  <p className="text-xs font-bold text-white group-hover:text-orange-400">
+                  <p className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors">
                     Croquis Cafe (Vimeo)
                   </p>
-                  <p className="text-[10px] text-studio-400">Sesiones profesionales con modelos reales en 360°</p>
+                  <p className="font-mono text-[10px] text-studio-500">Sesiones con modelos vivos en rotación 360°</p>
                 </div>
                 <ExternalLink className="w-4 h-4 text-studio-500 group-hover:text-white" />
               </a>
@@ -282,13 +282,13 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
                 href="https://quickposes.com/en/gestures/timed"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-xl bg-studio-950 hover:bg-studio-800 border border-studio-800 transition-colors group"
+                className="flex items-center justify-between p-3 rounded-xl bg-[#08090d] hover:bg-studio-900 border border-studio-800/80 transition-colors group"
               >
                 <div>
-                  <p className="text-xs font-bold text-white group-hover:text-orange-400">
+                  <p className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors">
                     Quickposes
                   </p>
-                  <p className="text-[10px] text-studio-400">Biblioteca masiva de poses de cuerpo y manos</p>
+                  <p className="font-mono text-[10px] text-studio-500">Archivo masivo de anatomía, manos y escorzos</p>
                 </div>
                 <ExternalLink className="w-4 h-4 text-studio-500 group-hover:text-white" />
               </a>

@@ -4,23 +4,65 @@
 
 @layer base {
   body {
-    @apply bg-studio-950 text-slate-100 font-sans min-h-screen;
+    @apply bg-atelier-950 text-slate-100 font-sans min-h-screen selection:bg-orange-500/25 selection:text-orange-200;
     -webkit-tap-highlight-color: transparent;
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.08), transparent 55%),
+      radial-gradient(circle at 100% 100%, rgba(223, 168, 55, 0.05), transparent 45%),
+      linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
   }
 
   /* Custom subtle scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
   ::-webkit-scrollbar-track {
-    background: #070b14;
+    background: #08090d;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e293b;
+    background: #1e2232;
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #334155;
+    background: #343c56;
+  }
+}
+
+@layer components {
+  /* Atelier Glass Card */
+  .glass-folio {
+    @apply bg-atelier-900/70 backdrop-blur-xl border border-white/[0.08] shadow-[0_16px_40px_rgba(0,0,0,0.5)];
+  }
+
+  .glass-panel {
+    @apply bg-atelier-950/80 backdrop-blur-2xl border border-white/[0.06];
+  }
+
+  /* Drafting Crosshair Accents */
+  .drafting-corner {
+    position: relative;
+  }
+  .drafting-corner::before {
+    content: '+';
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 11px;
+    color: rgba(249, 115, 22, 0.35);
+    pointer-events: none;
+  }
+  .drafting-corner::after {
+    content: '+';
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 11px;
+    color: rgba(249, 115, 22, 0.35);
+    pointer-events: none;
   }
 }

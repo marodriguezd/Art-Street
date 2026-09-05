@@ -73,23 +73,25 @@ export const ProofUploadModal: React.FC<ProofUploadModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-studio-900 border border-studio-800 w-full max-w-2xl rounded-3xl p-6 shadow-2xl my-8">
+      <div className="bg-[#0c0e14] border border-studio-800/80 w-full max-w-2xl rounded-2xl p-6 shadow-2xl relative drafting-corner my-8">
         {/* Header */}
-        <div className="flex items-start justify-between gap-4 pb-4 border-b border-studio-800">
+        <div className="flex items-start justify-between gap-4 pb-4 border-b border-studio-800/80">
           <div>
-            <span className="text-[10px] uppercase tracking-wider font-bold text-orange-400 bg-orange-500/10 px-2.5 py-1 rounded-full border border-orange-500/20">
-              Pruebas de Práctica
-            </span>
-            <h3 className="font-display font-black text-xl text-white mt-1.5">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+                EXPEDIENTE DE TALLER // VERIFICACIÓN
+              </span>
+            </div>
+            <h3 className="font-serif text-2xl text-white italic tracking-tight mt-1">
               {check.title}
             </h3>
-            <p className="text-xs text-studio-400 mt-1">
+            <p className="text-xs text-studio-400 mt-1 leading-relaxed">
               {check.description}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-studio-800 hover:bg-studio-700 text-studio-400 hover:text-white transition-colors"
+            className="p-2 rounded-xl bg-studio-800/60 hover:bg-studio-800 text-studio-400 hover:text-white transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -101,14 +103,14 @@ export const ProofUploadModal: React.FC<ProofUploadModalProps> = ({
             {/* Upload File Button */}
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-studio-700 hover:border-orange-500 rounded-2xl p-5 text-center cursor-pointer transition-all bg-studio-950/60 hover:bg-studio-950 flex items-center justify-center gap-3 group"
+              className="border border-dashed border-studio-700/80 hover:border-amber-500/60 rounded-xl p-4 text-center cursor-pointer transition-all bg-[#08090d]/80 hover:bg-[#08090d] flex items-center justify-center gap-3 group"
             >
-              <div className="w-10 h-10 rounded-xl bg-studio-800 group-hover:bg-orange-500/20 text-studio-400 group-hover:text-orange-400 flex items-center justify-center transition-all">
+              <div className="w-10 h-10 rounded-xl bg-studio-800/80 group-hover:bg-amber-500/20 text-studio-400 group-hover:text-amber-400 flex items-center justify-center transition-all">
                 <Camera className="w-5 h-5" />
               </div>
               <div className="text-left">
-                <p className="text-xs font-bold text-white">Subir Foto o Escaneo</p>
-                <p className="text-[10px] text-studio-400">JPG, PNG o WEBP</p>
+                <p className="text-xs font-bold text-white">Adjuntar Estudio o Foto</p>
+                <p className="font-mono text-[10px] text-studio-500">JPG, PNG o WEBP</p>
               </div>
               <input
                 ref={fileInputRef}
@@ -125,50 +127,50 @@ export const ProofUploadModal: React.FC<ProofUploadModalProps> = ({
                 onClose();
                 onOpenSketchpad(check);
               }}
-              className="border-2 border-dashed border-studio-700 hover:border-purple-500 rounded-2xl p-5 text-center cursor-pointer transition-all bg-studio-950/60 hover:bg-studio-950 flex items-center justify-center gap-3 group"
+              className="border border-dashed border-studio-700/80 hover:border-amber-500/60 rounded-xl p-4 text-center cursor-pointer transition-all bg-[#08090d]/80 hover:bg-[#08090d] flex items-center justify-center gap-3 group"
             >
-              <div className="w-10 h-10 rounded-xl bg-studio-800 group-hover:bg-purple-500/20 text-studio-400 group-hover:text-purple-400 flex items-center justify-center transition-all">
+              <div className="w-10 h-10 rounded-xl bg-studio-800/80 group-hover:bg-amber-500/20 text-studio-400 group-hover:text-amber-400 flex items-center justify-center transition-all">
                 <Brush className="w-5 h-5" />
               </div>
               <div className="text-left">
-                <p className="text-xs font-bold text-white">Dibujar en Lienzo</p>
-                <p className="text-[10px] text-studio-400">Crear boceto en la app</p>
+                <p className="text-xs font-bold text-white">Trazar en Bloc Digital</p>
+                <p className="font-mono text-[10px] text-studio-500">Boceto directo en app</p>
               </div>
             </div>
           </div>
 
           <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-studio-400 mb-1">
-              Nota para las próximas fotos que subas (opcional)
+            <label className="block font-mono text-[10px] uppercase tracking-wider text-studio-400 mb-1">
+              Notas técnicas para este pliego (opcional):
             </label>
             <input
               type="text"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              placeholder="ej. Sesión de 30 minutos con lápiz 2B y papel bond..."
-              className="w-full bg-studio-950 border border-studio-800 rounded-xl px-3.5 py-2 text-white placeholder-studio-500 text-xs focus:outline-none focus:border-orange-500"
+              placeholder="ej. Sesión de 30 minutos con carboncillo y papel craft..."
+              className="w-full bg-[#08090d] border border-studio-800 rounded-xl px-3.5 py-2 text-white placeholder-studio-600 text-xs focus:outline-none focus:border-amber-500 font-sans"
             />
           </div>
         </div>
 
         {/* Uploaded Proof Gallery */}
         <div>
-          <h4 className="text-xs font-bold text-studio-300 uppercase tracking-wider mb-3 flex items-center justify-between">
-            <span>Dibujos adjuntos ({images.length})</span>
+          <h4 className="font-mono text-[10px] tracking-widest text-studio-400 uppercase mb-3 flex items-center justify-between">
+            <span>PLIEGOS REGISTRADOS ({images.length})</span>
             {images.length > 0 && (
-              <span className="text-[11px] text-emerald-400 flex items-center gap-1 font-semibold">
+              <span className="text-emerald-400 flex items-center gap-1.5 font-semibold">
                 <CheckCircle className="w-3.5 h-3.5" />
-                Ejercicio verificado
+                EJERCICIO CONVALIDADO
               </span>
             )}
           </h4>
 
           {images.length === 0 ? (
-            <div className="text-center py-8 bg-studio-950/40 rounded-2xl border border-studio-800/60">
-              <Camera className="w-8 h-8 text-studio-600 mx-auto mb-2" />
-              <p className="text-xs text-studio-400">Aún no has adjuntado fotos de este ejercicio.</p>
-              <p className="text-[11px] text-studio-500 mt-0.5">
-                Sube tu práctica para documentar cada paso de tu camino.
+            <div className="text-center py-8 bg-[#08090d] rounded-xl border border-dashed border-studio-800/80">
+              <Camera className="w-7 h-7 text-studio-600 mx-auto mb-2" />
+              <p className="text-xs text-studio-300">Aún no has anexado pruebas visuales para este check.</p>
+              <p className="font-mono text-[10px] text-studio-500 mt-1">
+                Sube tu práctica para documentar rigurosamente tu progreso.
               </p>
             </div>
           ) : (
@@ -176,18 +178,18 @@ export const ProofUploadModal: React.FC<ProofUploadModalProps> = ({
               {images.map((img) => (
                 <div
                   key={img.id}
-                  className="group relative bg-studio-950 rounded-xl overflow-hidden border border-studio-800 shadow-md"
+                  className="group relative bg-[#08090d] rounded-xl overflow-hidden border border-studio-800 shadow-md"
                 >
                   <img
                     src={img.dataUrl}
                     alt="Prueba de ejercicio"
-                    className="w-full h-32 object-cover transition-transform group-hover:scale-105"
+                    className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-2">
+                  <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-2 backdrop-blur-xs">
                     <button
                       type="button"
                       onClick={() => setZoomedImage(img.dataUrl)}
-                      className="p-1.5 rounded-lg bg-studio-800 text-white hover:bg-studio-700"
+                      className="p-1.5 rounded-lg bg-studio-800/90 text-white hover:bg-studio-700"
                       title="Ver en grande"
                     >
                       <Maximize2 className="w-4 h-4" />
@@ -195,15 +197,15 @@ export const ProofUploadModal: React.FC<ProofUploadModalProps> = ({
                     <button
                       type="button"
                       onClick={() => handleDeleteImage(img.id)}
-                      className="p-1.5 rounded-lg bg-red-600/80 text-white hover:bg-red-600"
+                      className="p-1.5 rounded-lg bg-red-900/80 text-white hover:bg-red-700"
                       title="Eliminar"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                   {img.note && (
-                    <div className="p-1.5 bg-studio-950 border-t border-studio-850">
-                      <p className="text-[10px] text-studio-300 truncate">{img.note}</p>
+                    <div className="p-1.5 bg-[#08090d] border-t border-studio-850">
+                      <p className="text-[10px] text-studio-300 truncate font-mono">{img.note}</p>
                     </div>
                   )}
                 </div>
@@ -213,13 +215,13 @@ export const ProofUploadModal: React.FC<ProofUploadModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="mt-6 pt-4 border-t border-studio-800 flex justify-end">
+        <div className="mt-6 pt-4 border-t border-studio-800/80 flex justify-end">
           <button
             type="button"
             onClick={onClose}
-            className="bg-studio-800 hover:bg-studio-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs transition-colors"
+            className="bg-studio-800/80 hover:bg-studio-800 text-white font-mono text-xs uppercase tracking-wider py-2.5 px-6 rounded-xl transition-colors"
           >
-            Listo
+            Cerrar Folio
           </button>
         </div>
       </div>
@@ -228,19 +230,19 @@ export const ProofUploadModal: React.FC<ProofUploadModalProps> = ({
       {zoomedImage && (
         <div
           onClick={() => setZoomedImage(null)}
-          className="fixed inset-0 z-60 bg-black/90 flex items-center justify-center p-4 cursor-pointer"
+          className="fixed inset-0 z-60 bg-black/92 flex items-center justify-center p-4 cursor-pointer backdrop-blur-md"
         >
           <div className="relative max-w-4xl max-h-[90vh]">
             <img
               src={zoomedImage}
               alt="Zoom de dibujo"
-              className="max-h-[85vh] max-w-full rounded-2xl object-contain shadow-2xl"
+              className="max-h-[85vh] max-w-full rounded-xl object-contain shadow-2xl border border-studio-800"
             />
             <button
               onClick={() => setZoomedImage(null)}
-              className="absolute top-3 right-3 p-2 rounded-xl bg-studio-900/80 text-white hover:bg-studio-800"
+              className="absolute top-3 right-3 p-2 rounded-xl bg-studio-900/90 text-white hover:bg-studio-800 border border-studio-700"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5" />
             </button>
           </div>
         </div>

@@ -55,7 +55,7 @@ export const UnitView: React.FC<UnitViewProps> = ({
         </button>
 
         {/* Unit Selector Tabs */}
-        <div className="flex items-center gap-1 bg-studio-900/90 p-1 rounded-xl border border-studio-800">
+        <div className="flex items-center gap-1 bg-atelier-900/90 p-1.5 rounded-2xl border border-white/[0.08] shadow-inner">
           {term.units.map((u) => {
             const isSelected = u.id === unit.id;
             const uCompleted = u.checks.filter((c) => checkStates[c.id]?.completed).length;
@@ -65,13 +65,13 @@ export const UnitView: React.FC<UnitViewProps> = ({
               <button
                 key={u.id}
                 onClick={() => onSelectUnit(u)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold transition-all ${
                   isSelected
-                    ? 'bg-orange-500 text-white shadow-sm'
-                    : 'text-studio-400 hover:text-studio-200 hover:bg-studio-800'
+                    ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
+                    : 'text-atelier-400 hover:text-white hover:bg-atelier-800/60'
                 }`}
               >
-                <span>U{u.number}</span>
+                <span>MOD.{u.number}</span>
                 {uDone && <CheckCircle2 className="w-3 h-3 text-emerald-300" />}
               </button>
             );
@@ -80,71 +80,71 @@ export const UnitView: React.FC<UnitViewProps> = ({
       </div>
 
       {/* Unit Banner */}
-      <div className="bg-studio-900/90 border border-studio-800 rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden mb-6">
-        <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${term.color} opacity-10 blur-3xl pointer-events-none`} />
+      <div className="bg-atelier-900/70 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden mb-8 drafting-corner">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-amber-500/10 to-orange-500/10 blur-3xl pointer-events-none" />
 
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
-              Término {term.number} • Unidad {unit.number}
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
+              FOLIO {term.number} • MÓDULO {unit.number}
             </span>
-            <span className="text-xs text-studio-400 bg-studio-950 px-3 py-1 rounded-full border border-studio-800">
-              ~4 semanas recomendadas
+            <span className="font-mono text-xs text-atelier-400 bg-atelier-950 px-3 py-1 rounded-full border border-white/[0.06]">
+              4 SEMANAS SUGERIDAS
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-studio-300">
-              {completedChecks} de {totalChecks} ejercicios
+          <div className="flex items-center gap-2.5 font-mono">
+            <span className="text-xs text-atelier-300">
+              {completedChecks} / {totalChecks} ejercicios
             </span>
-            <span className="text-xs font-black text-orange-400 bg-studio-950 px-2.5 py-1 rounded-lg border border-studio-800">
+            <span className="text-xs font-bold text-orange-400 bg-atelier-950 px-2.5 py-1 rounded-lg border border-white/[0.06]">
               {unitProgress}%
             </span>
           </div>
         </div>
 
-        <h2 className="font-display font-black text-2xl sm:text-3xl text-white tracking-tight">
+        <h2 className="font-serif italic font-normal text-3xl sm:text-5xl text-white tracking-tight leading-tight">
           {unit.title}
         </h2>
-        <p className="text-sm text-studio-300 mt-2 leading-relaxed max-w-3xl">
+        <p className="text-xs sm:text-sm text-atelier-300 mt-3 leading-relaxed max-w-3xl font-sans font-light">
           {unit.description}
         </p>
 
         {/* Subtitle / Challenge brief if any */}
         {unit.subtitle && (
-          <div className="mt-4 p-3 rounded-2xl bg-studio-950/70 border border-studio-800/80 flex items-start gap-2.5 text-xs text-studio-300">
+          <div className="mt-5 p-4 rounded-2xl bg-atelier-950/80 border border-white/[0.06] flex items-start gap-3 text-xs text-atelier-200">
             <Sparkles className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
             <div>
-              <span className="font-bold text-amber-400">Enfoque clave de la unidad: </span>
-              <span>{unit.subtitle}</span>
+              <span className="font-mono font-bold text-amber-400 uppercase tracking-wide">OBJETIVO TÉCNICO: </span>
+              <span className="font-sans">{unit.subtitle}</span>
             </div>
           </div>
         )}
 
         {/* Tab switch inside Unit */}
-        <div className="flex gap-2 mt-6 pt-4 border-t border-studio-800">
+        <div className="flex gap-2 mt-8 pt-5 border-t border-white/[0.06]">
           <button
             onClick={() => setActiveTab('checks')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
               activeTab === 'checks'
-                ? 'bg-orange-500 text-white shadow-md'
-                : 'bg-studio-950 text-studio-400 hover:text-white border border-studio-800'
+                ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
+                : 'bg-atelier-950 text-atelier-400 hover:text-white border border-white/[0.06]'
             }`}
           >
             <CheckCircle2 className="w-4 h-4" />
-            <span>Lista de Ejercicios y Pruebas ({totalChecks})</span>
+            <span>EJERCICIOS Y PRUEBAS ({totalChecks})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('resources')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
               activeTab === 'resources'
-                ? 'bg-orange-500 text-white shadow-md'
-                : 'bg-studio-950 text-studio-400 hover:text-white border border-studio-800'
+                ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
+                : 'bg-atelier-950 text-atelier-400 hover:text-white border border-white/[0.06]'
             }`}
           >
             <BookOpen className="w-4 h-4" />
-            <span>Recursos y Tutoriales ({unit.resources.length})</span>
+            <span>TUTORIALES Y RECURSOS ({unit.resources.length})</span>
           </button>
         </div>
       </div>

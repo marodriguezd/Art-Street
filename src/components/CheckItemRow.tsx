@@ -29,21 +29,21 @@ export const CheckItemRow: React.FC<CheckItemRowProps> = ({
 
   return (
     <div
-      className={`group relative p-4 rounded-2xl border transition-all duration-200 ${
+      className={`group relative p-5 rounded-2xl border transition-all duration-300 ${
         isCompleted
-          ? 'bg-studio-950/80 border-emerald-500/30 text-studio-200 shadow-sm'
-          : 'bg-studio-950/40 border-studio-800/80 hover:border-studio-700 text-studio-300'
+          ? 'bg-atelier-900/50 border-emerald-500/30 text-slate-300 shadow-sm'
+          : 'bg-atelier-900/80 border-white/[0.08] hover:border-amber-500/40 text-slate-200'
       }`}
     >
-      <div className="flex items-start gap-3.5">
+      <div className="flex items-start gap-4">
         {/* Checkbox Toggle Button */}
         <button
           type="button"
           onClick={() => onToggleCheck(check.id)}
-          className={`mt-0.5 p-1 rounded-xl transition-all ${
+          className={`mt-0.5 p-1.5 rounded-xl transition-all ${
             isCompleted
-              ? 'text-emerald-400 bg-emerald-500/15 hover:bg-emerald-500/25'
-              : 'text-studio-500 hover:text-orange-400 hover:bg-orange-500/10'
+              ? 'text-emerald-400 bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 shadow-sm'
+              : 'text-atelier-500 hover:text-orange-400 hover:bg-orange-500/10 border border-white/[0.08]'
           }`}
           title={isCompleted ? 'Marcar como pendiente' : 'Marcar como completado'}
         >
@@ -56,58 +56,58 @@ export const CheckItemRow: React.FC<CheckItemRowProps> = ({
 
         {/* Content */}
         <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-center gap-2 mb-1">
+          <div className="flex flex-wrap items-center gap-2.5 mb-1.5">
             <h4
               onClick={() => onToggleCheck(check.id)}
-              className={`font-bold text-sm cursor-pointer transition-colors ${
+              className={`font-sans font-bold text-sm sm:text-base cursor-pointer transition-colors ${
                 isCompleted
-                  ? 'line-through text-studio-400 group-hover:text-studio-300'
-                  : 'text-white group-hover:text-orange-400'
+                  ? 'line-through text-atelier-400 group-hover:text-atelier-300'
+                  : 'text-white group-hover:text-amber-300'
               }`}
             >
               {check.title}
             </h4>
 
             {check.targetCount && (
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-studio-800 text-studio-300 border border-studio-700">
-                Meta: {check.targetCount}
+              <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded-full bg-atelier-950 text-orange-400 border border-orange-500/30">
+                META: {check.targetCount}
               </span>
             )}
 
             {check.recommendedDuration && (
-              <span className="flex items-center gap-1 text-[10px] text-studio-400 bg-studio-900 px-2 py-0.5 rounded-full border border-studio-800">
-                <Clock className="w-2.5 h-2.5" />
+              <span className="font-mono flex items-center gap-1 text-[10px] text-atelier-400 bg-atelier-950 px-2 py-0.5 rounded-full border border-white/[0.06]">
+                <Clock className="w-2.5 h-2.5 text-amber-400" />
                 <span>{check.recommendedDuration}</span>
               </span>
             )}
           </div>
 
-          <p className="text-xs text-studio-400 leading-relaxed mb-3">
+          <p className="text-xs text-atelier-300 leading-relaxed font-light mb-3">
             {check.description}
           </p>
 
           {/* Tags and Action Buttons */}
-          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-studio-900">
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/[0.04]">
             {/* Tags */}
             <div className="flex items-center gap-1.5 flex-wrap">
               {check.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] text-studio-500 bg-studio-900 px-2 py-0.5 rounded-md flex items-center gap-1"
+                  className="font-mono text-[9px] uppercase tracking-wider text-atelier-400 bg-atelier-950 px-2 py-0.5 rounded-md border border-white/[0.04] flex items-center gap-1"
                 >
-                  <Tag className="w-2.5 h-2.5" />
+                  <Tag className="w-2.5 h-2.5 text-orange-400/70" />
                   <span>#{tag}</span>
                 </span>
               ))}
             </div>
 
             {/* Proof Attachment Buttons & Thumbnails */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               {/* Thumbnail Gallery Preview if images exist */}
               {proofImages.length > 0 && (
                 <div
                   onClick={() => onOpenProofModal(check)}
-                  className="flex items-center gap-1 cursor-pointer bg-studio-900/80 hover:bg-studio-900 px-2 py-1 rounded-xl border border-studio-800 transition-colors mr-1"
+                  className="flex items-center gap-1.5 cursor-pointer bg-atelier-950 hover:bg-atelier-850 px-2.5 py-1 rounded-xl border border-white/[0.08] transition-colors"
                   title="Ver dibujos adjuntos"
                 >
                   <div className="flex -space-x-2 overflow-hidden">
@@ -115,12 +115,12 @@ export const CheckItemRow: React.FC<CheckItemRowProps> = ({
                       <img
                         key={img.id || idx}
                         src={img.dataUrl}
-                        alt="Miniatura de prueba"
-                        className="inline-block h-6 w-6 rounded-full ring-2 ring-studio-950 object-cover"
+                        alt="Miniatura"
+                        className="inline-block h-6 w-6 rounded-lg ring-1 ring-white/20 object-cover"
                       />
                     ))}
                   </div>
-                  <span className="text-[11px] font-bold text-orange-400 ml-1">
+                  <span className="font-mono text-[10px] font-bold text-orange-400 ml-1">
                     {proofImages.length}
                   </span>
                 </div>
@@ -130,22 +130,22 @@ export const CheckItemRow: React.FC<CheckItemRowProps> = ({
               <button
                 type="button"
                 onClick={() => onOpenProofModal(check)}
-                className="flex items-center gap-1 text-[11px] font-semibold text-studio-300 hover:text-white bg-studio-900 hover:bg-studio-800 px-2.5 py-1.5 rounded-xl border border-studio-800 transition-colors"
+                className="flex items-center gap-1.5 font-mono text-[10px] font-bold text-slate-200 hover:text-white bg-atelier-950 hover:bg-atelier-850 px-3 py-1.5 rounded-xl border border-white/[0.08] hover:border-orange-500/40 transition-colors"
                 title="Adjuntar dibujo o foto de práctica"
               >
                 <Camera className="w-3.5 h-3.5 text-orange-400" />
-                <span className="hidden sm:inline">Adjuntar prueba</span>
+                <span className="hidden sm:inline">ADJUNTAR</span>
               </button>
 
               {/* Sketchpad Direct Button */}
               <button
                 type="button"
                 onClick={() => onOpenSketchpad(check)}
-                className="flex items-center gap-1 text-[11px] font-semibold text-studio-300 hover:text-white bg-studio-900 hover:bg-studio-800 px-2.5 py-1.5 rounded-xl border border-studio-800 transition-colors"
+                className="flex items-center gap-1.5 font-mono text-[10px] font-bold text-slate-200 hover:text-white bg-atelier-950 hover:bg-atelier-850 px-3 py-1.5 rounded-xl border border-white/[0.08] hover:border-purple-500/40 transition-colors"
                 title="Dibujar en el lienzo integrado"
               >
                 <Brush className="w-3.5 h-3.5 text-purple-400" />
-                <span className="hidden sm:inline">Lienzo</span>
+                <span className="hidden sm:inline">LIENZO</span>
               </button>
             </div>
           </div>

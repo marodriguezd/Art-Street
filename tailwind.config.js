@@ -5,30 +5,41 @@ export default {
   theme: {
     extend: {
       colors: {
-        studio: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#070b14',
+        atelier: {
+          950: '#08090d',
+          900: '#0f1118',
+          850: '#161924',
+          800: '#1e2232',
+          750: '#272d42',
+          700: '#343c56',
+          600: '#4c577a',
+          500: '#6b79a5',
+          400: '#9aa5c8',
+          300: '#c5cde3',
+          200: '#e4e8f3',
+          100: '#f4f6fa',
         },
-        artist: {
-          primary: '#f97316',   // warm studio orange
-          secondary: '#8b5cf6', // creative violet
-          accent: '#06b6d4',    // vibrant cyan
-          success: '#10b981',   // completion emerald
-          gold: '#f59e0b',      // graduation gold
+        studio: {
+          carbon: '#050608',
+          paper: '#f8f6f0',
+          terracotta: '#d95338',
+          gold: '#dfa837',
+          ochre: '#c68a35',
+          cadmium: '#f97316',
+          ultramarine: '#2563eb',
+          sepia: '#78350f',
+          rawUmber: '#451a03',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Calistoga', 'Georgia', 'serif'],
+        serif: ['"Instrument Serif"', 'Georgia', 'serif'],
+        mono: ['"Space Grotesk"', 'ui-monospace', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', '-apple-system', 'sans-serif'],
+      },
+      backgroundImage: {
+        'atelier-radial': 'radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.15), transparent 70%)',
+        'spotlight-gold': 'radial-gradient(circle at 80% 20%, rgba(223, 168, 55, 0.12), transparent 60%)',
+        'spotlight-terracotta': 'radial-gradient(circle at 10% 80%, rgba(217, 83, 56, 0.1), transparent 60%)',
       },
     },
   },

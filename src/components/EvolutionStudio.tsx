@@ -67,54 +67,54 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
   return (
     <div className="max-w-6xl mx-auto py-4 px-2 sm:px-4">
       {/* Header */}
-      <div className="text-center mb-6">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 font-bold text-xs uppercase tracking-wider mb-2">
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 font-mono font-bold text-[10px] uppercase tracking-widest mb-3">
           <TrendingUp className="w-3.5 h-3.5" />
-          <span>Espejo de Superación Técnica</span>
+          <span>ARCHIVO COMPARATIVO // METAMORFOSIS TÉCNICA</span>
         </div>
-        <h2 className="font-display font-black text-2xl sm:text-3xl text-white">
-          Estudio de Evolución: Antes y Después
+        <h2 className="font-serif italic font-normal text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight">
+          Estudio de Evolución
         </h2>
-        <p className="text-xs sm:text-sm text-studio-400 mt-1 max-w-lg mx-auto">
-          Compara de forma interactiva tu punto de partida original con las obras que has creado tras completar las lecciones.
+        <p className="text-xs sm:text-sm text-atelier-300 mt-2 max-w-lg mx-auto font-sans font-light">
+          Contempla tu salto visual contrastando el punto de partida inicial (Nivel 0) con las obras concebidas tras cada lección del currículum.
         </p>
 
         {/* View Mode Switcher */}
-        <div className="inline-flex items-center gap-1 bg-studio-900/90 p-1 rounded-2xl border border-studio-800 mt-4 shadow-md">
+        <div className="inline-flex items-center gap-1.5 bg-atelier-900/90 p-1.5 rounded-2xl border border-white/[0.08] mt-6 shadow-xl">
           <button
             onClick={() => setViewMode('slider')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all ${
               viewMode === 'slider'
-                ? 'bg-orange-500 text-white shadow-sm'
-                : 'text-studio-400 hover:text-white'
+                ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/25'
+                : 'text-atelier-400 hover:text-white'
             }`}
           >
-            <Columns3 className="w-4 h-4" />
-            <span>Deslizador Divisor</span>
+            <Columns3 className="w-3.5 h-3.5" />
+            <span>DESLIZADOR DIVISOR</span>
           </button>
 
           <button
             onClick={() => setViewMode('sideBySide')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all ${
               viewMode === 'sideBySide'
-                ? 'bg-orange-500 text-white shadow-sm'
-                : 'text-studio-400 hover:text-white'
+                ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/25'
+                : 'text-atelier-400 hover:text-white'
             }`}
           >
-            <Layers className="w-4 h-4" />
-            <span>Lado a Lado</span>
+            <Layers className="w-3.5 h-3.5" />
+            <span>LADO A LADO</span>
           </button>
 
           <button
             onClick={() => setViewMode('timeline')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all ${
               viewMode === 'timeline'
-                ? 'bg-orange-500 text-white shadow-sm'
-                : 'text-studio-400 hover:text-white'
+                ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/25'
+                : 'text-atelier-400 hover:text-white'
             }`}
           >
-            <Calendar className="w-4 h-4" />
-            <span>Galería Histórica ({milestones.length})</span>
+            <Calendar className="w-3.5 h-3.5" />
+            <span>GALERÍA HISTÓRICA ({milestones.length})</span>
           </button>
         </div>
       </div>
@@ -131,11 +131,11 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
         <div>
           {/* Milestone Selectors for Comparison (Slider & Side-by-Side) */}
           {viewMode !== 'timeline' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 bg-studio-900/80 p-4 rounded-2xl border border-studio-800">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 bg-atelier-900/80 p-5 rounded-2xl border border-white/[0.08] shadow-lg">
               {/* Before Selector */}
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-studio-400 mb-1.5 flex items-center justify-between">
-                  <span>Punto Inicial ("Antes"):</span>
+                <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-atelier-400 mb-2 flex items-center justify-between">
+                  <span>PUNTO INICIAL ("ANTES"):</span>
                   <span className="text-orange-400 font-normal">
                     {beforeArtwork?.termTitle || 'Nivel 0'}
                   </span>
@@ -143,7 +143,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
                 <select
                   value={beforeIndex}
                   onChange={(e) => setBeforeIndex(Number(e.target.value))}
-                  className="w-full bg-studio-950 border border-studio-700 rounded-xl px-3 py-2 text-white text-xs font-medium focus:outline-none focus:border-orange-500"
+                  className="w-full bg-atelier-950 border border-white/[0.08] rounded-xl px-3.5 py-2.5 text-white font-mono text-xs font-medium focus:outline-none focus:border-orange-500/60 shadow-inner"
                 >
                   {milestones.map((m, idx) => (
                     <option key={m.id} value={idx}>
@@ -155,8 +155,8 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
 
               {/* After Selector */}
               <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-studio-400 mb-1.5 flex items-center justify-between">
-                  <span>Punto Avanzado ("Después"):</span>
+                <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-atelier-400 mb-2 flex items-center justify-between">
+                  <span>PUNTO AVANZADO ("DESPUÉS"):</span>
                   <span className="text-emerald-400 font-normal">
                     {afterArtwork?.termTitle || 'Término Reciente'}
                   </span>
@@ -164,7 +164,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
                 <select
                   value={afterIndex}
                   onChange={(e) => setAfterIndex(Number(e.target.value))}
-                  className="w-full bg-studio-950 border border-studio-700 rounded-xl px-3 py-2 text-white text-xs font-medium focus:outline-none focus:border-orange-500"
+                  className="w-full bg-atelier-950 border border-white/[0.08] rounded-xl px-3.5 py-2.5 text-white font-mono text-xs font-medium focus:outline-none focus:border-orange-500/60 shadow-inner"
                 >
                   {milestones.map((m, idx) => (
                     <option key={m.id} value={idx}>
@@ -178,7 +178,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
 
           {/* MODE 1: INTERACTIVE SPLIT SLIDER */}
           {viewMode === 'slider' && beforeArtwork && afterArtwork && (
-            <div className="bg-studio-900 border border-studio-800 rounded-3xl p-4 sm:p-6 shadow-2xl">
+            <div className="bg-atelier-900/70 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-5 sm:p-8 shadow-2xl drafting-corner">
               {/* Slider Viewport */}
               <div
                 ref={sliderContainerRef}
@@ -186,7 +186,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
                 onMouseUp={handleMouseUp}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleMouseUp}
-                className="relative w-full h-[450px] sm:h-[550px] rounded-2xl overflow-hidden bg-studio-950 select-none cursor-ew-resize border border-studio-800"
+                className="relative w-full h-[450px] sm:h-[580px] rounded-2xl overflow-hidden bg-atelier-950 select-none cursor-ew-resize border border-white/[0.08] shadow-inner"
               >
                 {/* Image 2 (After - Full background) */}
                 <img
@@ -211,56 +211,56 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
                   />
                 </div>
 
-                {/* Vertical Divider Bar */}
+                {/* Vertical Divider Bar with Titanium Handle */}
                 <div
                   onMouseDown={handleMouseDown}
                   onTouchStart={handleMouseDown}
-                  className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize shadow-2xl flex items-center justify-center pointer-events-auto"
+                  className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-orange-400 via-white to-orange-400 cursor-ew-resize shadow-[0_0_15px_rgba(249,115,22,0.6)] flex items-center justify-center pointer-events-auto"
                   style={{ left: `${sliderPosition}%` }}
                 >
-                  <div className="w-8 h-8 rounded-full bg-white text-studio-950 flex items-center justify-center shadow-lg border-2 border-orange-500 text-xs font-black">
+                  <div className="w-9 h-9 rounded-full bg-atelier-950 text-white flex items-center justify-center shadow-2xl border-2 border-orange-500 font-mono text-xs font-black ring-4 ring-orange-500/20">
                     ↔
                   </div>
                 </div>
 
-                {/* Floating Badges */}
-                <div className="absolute top-3 left-3 bg-black/75 backdrop-blur-md px-3 py-1 rounded-xl border border-white/20 text-white text-xs font-bold flex items-center gap-1.5 shadow-md">
-                  <span className="w-2 h-2 rounded-full bg-orange-500" />
-                  <span>Antes ({beforeArtwork.termNumber === 0 ? 'Nivel 0' : `T${beforeArtwork.termNumber}`})</span>
+                {/* Floating Frosted Badges */}
+                <div className="absolute top-4 left-4 bg-atelier-950/90 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 text-white font-mono text-[11px] font-bold flex items-center gap-2 shadow-xl">
+                  <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+                  <span>ANTES // {beforeArtwork.termNumber === 0 ? 'NIVEL 0.0' : `FOLIO ${beforeArtwork.termNumber}`}</span>
                 </div>
 
-                <div className="absolute top-3 right-3 bg-black/75 backdrop-blur-md px-3 py-1 rounded-xl border border-white/20 text-white text-xs font-bold flex items-center gap-1.5 shadow-md">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                  <span>Después ({afterArtwork.termNumber === 0 ? 'Nivel 0' : `T${afterArtwork.termNumber}`})</span>
+                <div className="absolute top-4 right-4 bg-atelier-950/90 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 text-white font-mono text-[11px] font-bold flex items-center gap-2 shadow-xl">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>DESPUÉS // {afterArtwork.termNumber === 0 ? 'NIVEL 0.0' : `FOLIO ${afterArtwork.termNumber}`}</span>
                 </div>
               </div>
 
               {/* Information Cards Below Slider */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4 pt-4 border-t border-studio-800 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 pt-5 border-t border-white/[0.06]">
                 {/* Left Artwork Info */}
-                <div className="bg-studio-950 p-4 rounded-2xl border border-studio-800/80">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] uppercase font-bold text-orange-400">
-                      Punto Inicial
+                <div className="bg-atelier-950/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
+                  <div className="flex items-center justify-between mb-1.5 font-mono">
+                    <span className="text-[10px] uppercase font-bold text-orange-400 tracking-wider">
+                      PLACA ORIGEN
                     </span>
-                    <span className="text-studio-400">{beforeArtwork.date}</span>
+                    <span className="text-[11px] text-atelier-400">{beforeArtwork.date}</span>
                   </div>
-                  <h4 className="font-bold text-sm text-white mb-1">{beforeArtwork.title}</h4>
-                  <p className="text-studio-400 italic">
+                  <h4 className="font-serif italic text-xl text-white mb-2 leading-tight">{beforeArtwork.title}</h4>
+                  <p className="text-xs text-atelier-300 font-light italic leading-relaxed">
                     "{beforeArtwork.reflectionNotes || 'Sin notas registradas'}"
                   </p>
                 </div>
 
                 {/* Right Artwork Info */}
-                <div className="bg-studio-950 p-4 rounded-2xl border border-studio-800/80">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[10px] uppercase font-bold text-emerald-400">
-                      Punto Actual
+                <div className="bg-atelier-950/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
+                  <div className="flex items-center justify-between mb-1.5 font-mono">
+                    <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">
+                      PLACA GRADUACIÓN
                     </span>
-                    <span className="text-studio-400">{afterArtwork.date}</span>
+                    <span className="text-[11px] text-atelier-400">{afterArtwork.date}</span>
                   </div>
-                  <h4 className="font-bold text-sm text-white mb-1">{afterArtwork.title}</h4>
-                  <p className="text-studio-400 italic">
+                  <h4 className="font-serif italic text-xl text-white mb-2 leading-tight">{afterArtwork.title}</h4>
+                  <p className="text-xs text-atelier-300 font-light italic leading-relaxed">
                     "{afterArtwork.reflectionNotes || 'Sin notas registradas'}"
                   </p>
                 </div>
