@@ -116,18 +116,18 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#0c0e14] border border-studio-800/80 w-full max-w-xl rounded-2xl p-6 sm:p-8 shadow-2xl relative drafting-corner my-8">
+      <div className="bg-[#111c30] border border-white/[0.1] w-full max-w-xl rounded-3xl p-6 sm:p-8 shadow-2xl relative my-8">
         {/* Step Indicator / Folio Header */}
-        <div className="flex items-center justify-between mb-6 pb-4 border-b border-studio-800/80">
-          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-amber-400">
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.08]">
+          <div className="flex items-center gap-2 font-display text-xs uppercase font-bold tracking-wider text-fantasy-pink">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>ACTA DE INGRESO // PASO 0{step} DE 02</span>
+            <span>PASAPORTE DEL ARTISTA // PASO 0{step} DE 02</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] text-studio-500">FASE</span>
+            <span className="font-display text-[10px] font-bold text-slate-400">FASE</span>
             <div className="flex gap-1.5">
-              <div className={`w-8 h-1.5 rounded-full transition-all ${step >= 1 ? 'bg-amber-500' : 'bg-studio-800'}`} />
-              <div className={`w-8 h-1.5 rounded-full transition-all ${step >= 2 ? 'bg-amber-500' : 'bg-studio-800'}`} />
+              <div className={`w-8 h-2 rounded-full transition-all ${step >= 1 ? 'bg-fantasy-sky' : 'bg-slate-800'}`} />
+              <div className={`w-8 h-2 rounded-full transition-all ${step >= 2 ? 'bg-fantasy-pink' : 'bg-slate-800'}`} />
             </div>
           </div>
         </div>
@@ -135,52 +135,52 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
         {step === 1 ? (
           <div>
             <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 mb-3 border border-amber-500/20 text-2xl font-serif">
-                ✦
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-fantasy-sky/15 text-fantasy-sky mb-3 border border-fantasy-sky/30 text-3xl">
+                🧙‍♀️
               </div>
-              <p className="font-mono text-[10px] tracking-widest uppercase text-studio-400 mb-1">
-                REGISTRO ACADÉMICO DEL ARTISTA
+              <p className="font-display text-xs font-bold tracking-widest uppercase text-fantasy-skyLight mb-1">
+                REGISTRO DEL VIAJERO
               </p>
-              <h2 className="font-serif text-3xl sm:text-4xl text-white tracking-tight italic">
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
                 El Camino del Artista
               </h2>
-              <p className="text-xs text-studio-300 mt-2 max-w-md mx-auto leading-relaxed">
-                Currículum estructurado de 9 términos basado en la metodología de Alex Huneycutt (@RadioRunner). Desde fundamentos del trazo hasta la maestría conceptual.
+              <p className="text-xs text-slate-200 mt-2 max-w-md mx-auto leading-relaxed font-sans font-medium">
+                Currículum estructurado de 9 estaciones basado en la metodología de Alex Huneycutt (@RadioRunner). Desde los primeros bocetos hasta la maestría de la luz.
               </p>
             </div>
 
             <div className="space-y-4">
               <div>
-                <label className="block font-mono text-[10px] uppercase tracking-wider text-studio-300 mb-1.5">
-                  Identidad o Alias de Taller:
+                <label className="block font-display text-xs uppercase font-bold tracking-wider text-slate-300 mb-1.5">
+                  ¿Cómo te llamas o cuál es tu alias artístico?
                 </label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="ej. Clara, Alex, Dibujante99"
-                  className="w-full bg-[#08090d] border border-studio-800 rounded-xl px-4 py-3 text-white placeholder-studio-600 focus:outline-none focus:border-amber-500 transition-all text-xs font-medium"
+                  className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-fantasy-sky transition-all text-xs font-medium"
                 />
               </div>
 
               <div>
-                <label className="block font-mono text-[10px] uppercase tracking-wider text-studio-300 mb-1.5">
-                  Soporte Primario de Trabajo:
+                <label className="block font-display text-xs uppercase font-bold tracking-wider text-slate-300 mb-1.5">
+                  ¿Qué medio utilizas principalmente?
                 </label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { id: 'digital', label: '💻 Digital (Wacom/iPad)' },
-                    { id: 'traditional', label: '✏️ Tradicional (Grafito/Óleo)' },
+                    { id: 'digital', label: '💻 Digital (Tableta/iPad)' },
+                    { id: 'traditional', label: '✏️ Tradicional (Papel/Óleo)' },
                     { id: 'both', label: '🎨 Mixto' },
                   ].map((m) => (
                     <button
                       key={m.id}
                       type="button"
                       onClick={() => setMedium(m.id as MediumType)}
-                      className={`py-2.5 px-3 rounded-xl text-xs font-semibold border transition-all text-center ${
+                      className={`py-3 px-3 rounded-2xl text-xs font-display font-bold border transition-all text-center ${
                         medium === m.id
-                          ? 'bg-amber-500/15 border-amber-500/60 text-amber-300 shadow-sm'
-                          : 'bg-[#08090d] border-studio-800/80 text-studio-400 hover:border-studio-700'
+                          ? 'bg-fantasy-sky/20 border-fantasy-sky text-fantasy-sky shadow-sm'
+                          : 'bg-[#0b1320] border-white/[0.08] text-slate-400 hover:border-slate-600'
                       }`}
                     >
                       {m.label}
@@ -190,13 +190,13 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               </div>
 
               <div>
-                <label className="block font-mono text-[10px] uppercase tracking-wider text-studio-300 mb-1.5">
-                  Especialidad u Objetivo de Graduación:
+                <label className="block font-display text-xs uppercase font-bold tracking-wider text-slate-300 mb-1.5">
+                  ¿Cuál es tu meta principal?
                 </label>
                 <select
                   value={goal}
                   onChange={(e) => setGoal(e.target.value)}
-                  className="w-full bg-[#08090d] border border-studio-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-all text-xs font-medium"
+                  className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-fantasy-sky transition-all text-xs font-medium"
                 >
                   <option value="Ilustración y Concept Art">Ilustración y Concept Art profesional</option>
                   <option value="Cómic, Manga y Webtoon">Creación de Cómic, Manga o Novelas Gráficas</option>
@@ -215,9 +215,9 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     }
                     setStep(2);
                   }}
-                  className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-amber-900/20 flex items-center justify-center gap-2 text-xs uppercase font-mono tracking-wider transition-all"
+                  className="w-full bg-gradient-to-r from-fantasy-sky to-fantasy-pink hover:opacity-95 text-white font-display font-black py-4 px-6 rounded-2xl shadow-lg shadow-fantasy-sky/25 flex items-center justify-center gap-2 text-xs uppercase tracking-wider transition-all"
                 >
-                  <span>Continuar al Registro de Nivel 0</span>
+                  <span>Continuar al Punto de Partida</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -226,32 +226,32 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
         ) : (
           <div>
             <div className="text-center mb-6">
-              <span className="inline-block px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 font-mono text-[10px] tracking-widest uppercase mb-2 border border-amber-500/20">
+              <span className="inline-block px-3 py-1 rounded-full bg-fantasy-ochre/15 text-fantasy-ochre font-display text-[11px] font-bold tracking-wider uppercase mb-2 border border-fantasy-ochre/30">
                 ✦ REGISTRO DE LÍNEA BASE // HITO CERO
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl text-white tracking-tight italic">
+              <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
                 Tu Punto de Partida
               </h2>
-              <p className="text-xs text-studio-300 mt-1 max-w-md mx-auto leading-relaxed">
-                Sube tu dibujo más reciente, boceto o estudio actual. Este archivo será tu <strong>Nivel 0</strong> en el comparador de evolución técnica.
+              <p className="text-xs text-slate-200 mt-2 max-w-md mx-auto leading-relaxed font-sans font-medium">
+                Sube tu dibujo más reciente, boceto o estudio actual. Este archivo será tu <strong>Nivel 0</strong> en el comparador de evolución mágica.
               </p>
             </div>
 
             <div className="space-y-4">
               {/* Image Preview / Upload Area */}
               {imageDataUrl ? (
-                <div className="relative rounded-xl overflow-hidden border border-studio-700/80 bg-[#08090d] p-3 text-center">
-                  <div className="relative border border-dashed border-studio-800/80 rounded-lg p-2 bg-[#050608]">
+                <div className="relative rounded-2xl overflow-hidden border border-white/[0.1] bg-[#0b1320] p-4 text-center">
+                  <div className="relative border border-dashed border-fantasy-sky/40 rounded-xl p-2 bg-[#080d16]">
                     <img
                       src={imageDataUrl}
                       alt="Punto de partida"
-                      className="max-h-56 mx-auto rounded object-contain"
+                      className="max-h-56 mx-auto rounded-lg object-contain shadow-md"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={() => setImageDataUrl(null)}
-                    className="mt-2 font-mono text-[10px] text-red-400 hover:text-red-300 uppercase tracking-wider"
+                    className="mt-3 font-display text-xs font-bold text-red-400 hover:text-red-300 uppercase tracking-wider"
                   >
                     [ Descartar y Cargar Otra Imagen ]
                   </button>
@@ -261,14 +261,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   {/* File Upload Box */}
                   <div
                     onClick={() => fileInputRef.current?.click()}
-                    className="border border-dashed border-studio-700/80 hover:border-amber-500/60 rounded-xl p-5 text-center cursor-pointer transition-all bg-[#08090d]/80 hover:bg-[#08090d] flex flex-col items-center justify-center gap-2 group"
+                    className="border-2 border-dashed border-white/[0.15] hover:border-fantasy-sky rounded-2xl p-5 text-center cursor-pointer transition-all bg-[#0b1320] hover:bg-[#0f192b] flex flex-col items-center justify-center gap-2 group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-studio-800/80 group-hover:bg-amber-500/20 text-studio-400 group-hover:text-amber-400 flex items-center justify-center transition-all">
+                    <div className="w-12 h-12 rounded-2xl bg-fantasy-sky/15 group-hover:bg-fantasy-sky/25 text-fantasy-sky flex items-center justify-center transition-all border border-fantasy-sky/30">
                       <Upload className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-white">Cargar Archivo Local</p>
-                      <p className="font-mono text-[10px] text-studio-500 mt-0.5">JPG, PNG o WEBP</p>
+                      <p className="text-xs font-display font-bold text-white">Cargar Archivo Local</p>
+                      <p className="font-sans text-[11px] text-slate-400 mt-0.5">JPG, PNG o WEBP</p>
                     </div>
                     <input
                       ref={fileInputRef}
@@ -282,21 +282,21 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   {/* Draw in Canvas Option */}
                   <div
                     onClick={openCanvasForBaseline}
-                    className="border border-dashed border-studio-700/80 hover:border-amber-500/60 rounded-xl p-5 text-center cursor-pointer transition-all bg-[#08090d]/80 hover:bg-[#08090d] flex flex-col items-center justify-center gap-2 group"
+                    className="border-2 border-dashed border-white/[0.15] hover:border-fantasy-pink rounded-2xl p-5 text-center cursor-pointer transition-all bg-[#0b1320] hover:bg-[#0f192b] flex flex-col items-center justify-center gap-2 group"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-studio-800/80 group-hover:bg-amber-500/20 text-studio-400 group-hover:text-amber-400 flex items-center justify-center transition-all">
+                    <div className="w-12 h-12 rounded-2xl bg-fantasy-pink/15 group-hover:bg-fantasy-pink/25 text-fantasy-pink flex items-center justify-center transition-all border border-fantasy-pink/30">
                       <Brush className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-white">Trazar en Bloc Digital</p>
-                      <p className="font-mono text-[10px] text-studio-500 mt-0.5">Dibujar en pantalla ahora</p>
+                      <p className="text-xs font-display font-bold text-white">Trazar en Bloc Digital</p>
+                      <p className="font-sans text-[11px] text-slate-400 mt-0.5">Dibujar en pantalla ahora</p>
                     </div>
                   </div>
                 </div>
               )}
 
               <div>
-                <label className="block font-mono text-[10px] uppercase tracking-wider text-studio-300 mb-1.5">
+                <label className="block font-display text-xs uppercase font-bold tracking-wider text-slate-300 mb-1.5">
                   Título de la Obra o Estudio:
                 </label>
                 <input
@@ -304,28 +304,28 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   value={drawingTitle}
                   onChange={(e) => setDrawingTitle(e.target.value)}
                   placeholder="ej. Retrato rápido, Mi personaje favorito"
-                  className="w-full bg-[#08090d] border border-studio-800 rounded-xl px-3.5 py-2.5 text-white placeholder-studio-600 focus:outline-none focus:border-amber-500 text-xs font-medium"
+                  className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-fantasy-sky text-xs font-medium"
                 />
               </div>
 
               <div>
-                <label className="block font-mono text-[10px] uppercase tracking-wider text-studio-300 mb-1.5">
+                <label className="block font-display text-xs uppercase font-bold tracking-wider text-slate-300 mb-1.5">
                   Diagnóstico y Desafíos Actuales:
                 </label>
                 <textarea
                   value={drawingNotes}
                   onChange={(e) => setDrawingNotes(e.target.value)}
-                  placeholder="ej. Rigidez en poses, dificultad con la tridimensionalidad y volumen de las manos, inseguridad al aplicar sombras directas..."
+                  placeholder="ej. Rigidez en poses, dificultad con el volumen tridimensional, inseguridad al aplicar sombras directas..."
                   rows={3}
-                  className="w-full bg-[#08090d] border border-studio-800 rounded-xl px-3.5 py-2.5 text-white placeholder-studio-600 focus:outline-none focus:border-amber-500 text-xs font-medium resize-none"
+                  className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-fantasy-sky text-xs font-medium resize-none"
                 />
               </div>
 
-              <div className="flex gap-2 pt-2">
+              <div className="flex gap-3 pt-2">
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className="w-1/3 bg-studio-800/80 hover:bg-studio-800 text-studio-300 font-mono text-xs uppercase tracking-wider py-3 px-4 rounded-xl transition-all"
+                  className="w-1/3 bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] text-slate-300 font-display text-xs font-bold uppercase tracking-wider py-3.5 px-4 rounded-2xl transition-all"
                 >
                   Volver
                 </button>
@@ -334,10 +334,10 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   type="button"
                   disabled={isSubmitting || !imageDataUrl}
                   onClick={handleFinalSubmit}
-                  className="w-2/3 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 disabled:opacity-40 text-white font-mono text-xs font-bold uppercase tracking-wider py-3 px-4 rounded-xl shadow-lg shadow-amber-900/20 flex items-center justify-center gap-2 transition-all"
+                  className="w-2/3 bg-gradient-to-r from-fantasy-sky via-fantasy-pink to-fantasy-ochre hover:opacity-95 disabled:opacity-40 text-white font-display text-xs font-black uppercase tracking-wider py-3.5 px-4 rounded-2xl shadow-lg shadow-fantasy-sky/20 flex items-center justify-center gap-2 transition-all"
                 >
                   <CheckCircle className="w-4 h-4" />
-                  <span>{isSubmitting ? 'Registrando...' : 'Ingresar al Atelier'}</span>
+                  <span>{isSubmitting ? 'Registrando...' : '¡Comenzar el Viaje!'}</span>
                 </button>
               </div>
             </div>

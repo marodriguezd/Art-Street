@@ -184,40 +184,40 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-      <div className="bg-[#0c0e14] border border-studio-800/80 w-full max-w-4xl rounded-2xl p-4 sm:p-6 shadow-2xl flex flex-col relative drafting-corner my-4">
+      <div className="bg-[#111c30] border border-white/[0.1] w-full max-w-4xl rounded-3xl p-4 sm:p-6 shadow-2xl flex flex-col relative my-4">
         {/* Header */}
-        <div className="flex items-center justify-between gap-4 pb-3 border-b border-studio-800/80">
+        <div className="flex items-center justify-between gap-4 pb-3 border-b border-white/[0.08]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] uppercase tracking-widest text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
-                BLOC DIGITAL // ATELIER
+              <span className="font-display text-xs uppercase font-bold tracking-wider text-fantasy-sky bg-fantasy-sky/15 px-3 py-1 rounded-full border border-fantasy-sky/30">
+                BLOC DIGITAL // ATELIER MÁGICO
               </span>
             </div>
-            <h3 className="font-serif text-xl sm:text-2xl text-white italic tracking-tight mt-1">
+            <h3 className="font-display text-xl sm:text-2xl font-black text-white tracking-tight mt-1.5">
               {check ? check.title : 'Lienzo de Práctica Libre'}
             </h3>
-            <p className="text-xs text-studio-400 font-sans">
+            <p className="text-xs text-slate-300 font-sans font-medium">
               {check ? 'Captura tu ejercicio y guárdalo como prueba técnica convalidada' : 'Espacio de estudio gestual y calentamiento anatómico'}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-studio-800/60 hover:bg-studio-800 text-studio-400 hover:text-white transition-colors"
+            className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Toolbar */}
-        <div className="py-2.5 flex flex-wrap items-center justify-between gap-3 bg-[#08090d] px-3.5 rounded-xl my-3 border border-studio-800/80">
+        <div className="py-2.5 flex flex-wrap items-center justify-between gap-3 bg-[#0b1320] px-4 rounded-2xl my-3 border border-white/[0.08]">
           {/* Tools */}
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => setTool('pen')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-display font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all ${
                 tool === 'pen'
-                  ? 'bg-amber-500/20 border border-amber-500/60 text-amber-300'
-                  : 'text-studio-400 hover:bg-studio-800 hover:text-white'
+                  ? 'bg-fantasy-sky/20 border border-fantasy-sky text-fantasy-sky'
+                  : 'text-slate-400 hover:bg-white/[0.05] hover:text-white'
               }`}
               title="Grafito Fino"
             >
@@ -227,12 +227,12 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
 
             <button
               onClick={() => setTool('brush')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-display font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all ${
                 tool === 'brush'
-                  ? 'bg-amber-500/20 border border-amber-500/60 text-amber-300'
-                  : 'text-studio-400 hover:bg-studio-800 hover:text-white'
+                  ? 'bg-fantasy-pink/20 border border-fantasy-pink text-fantasy-pink'
+                  : 'text-slate-400 hover:bg-white/[0.05] hover:text-white'
               }`}
-              title="Pincel Carboncillo"
+              title="Pincel Tinta"
             >
               <BrushIcon className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Pincel</span>
@@ -240,12 +240,12 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
 
             <button
               onClick={() => setTool('eraser')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 transition-all ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-display font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all ${
                 tool === 'eraser'
-                  ? 'bg-studio-700 text-white shadow-sm'
-                  : 'text-studio-400 hover:bg-studio-800 hover:text-white'
+                  ? 'bg-white/20 text-white shadow-sm border border-white/40'
+                  : 'text-slate-400 hover:bg-white/[0.05] hover:text-white'
               }`}
-              title="Goma de Migajón"
+              title="Goma de Borrar"
             >
               <Eraser className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Goma</span>
@@ -254,16 +254,16 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
 
           {/* Size Slider */}
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] text-studio-400 uppercase tracking-wider">CALIBRE</span>
+            <span className="font-display text-[11px] font-bold text-slate-400 uppercase tracking-wider">GROSOR</span>
             <input
               type="range"
               min="1"
               max="35"
               value={brushSize}
               onChange={(e) => setBrushSize(Number(e.target.value))}
-              className="w-16 sm:w-24 accent-amber-500"
+              className="w-16 sm:w-24 accent-fantasy-sky"
             />
-            <span className="font-mono text-[11px] text-studio-300 w-4">{brushSize}</span>
+            <span className="font-display text-xs font-bold text-fantasy-skyLight w-4">{brushSize}</span>
           </div>
 
           {/* Color Palette */}
@@ -276,10 +276,10 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
                   setColor(c);
                   if (tool === 'eraser') setTool('pen');
                 }}
-                className={`w-4 h-4 rounded-full border transition-all ${
+                className={`w-5 h-5 rounded-full border transition-all ${
                   color === c && tool !== 'eraser'
-                    ? 'ring-2 ring-amber-400 scale-125 border-white'
-                    : 'border-studio-700 hover:scale-110'
+                    ? 'ring-2 ring-fantasy-sky scale-125 border-white'
+                    : 'border-white/20 hover:scale-110'
                 }`}
                 style={{ backgroundColor: c }}
               />
@@ -301,15 +301,15 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
             <button
               onClick={handleUndo}
               disabled={history.length <= 1}
-              className="p-1.5 rounded-lg text-studio-400 hover:text-white hover:bg-studio-800 disabled:opacity-30 transition-colors"
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.08] disabled:opacity-30 transition-colors"
               title="Deshacer trazo"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
             <button
               onClick={handleClear}
-              className="p-1.5 rounded-lg text-studio-400 hover:text-red-400 hover:bg-studio-800 transition-colors"
-              title="Limpiar soporte"
+              className="p-2 rounded-xl text-slate-400 hover:text-red-400 hover:bg-white/[0.08] transition-colors"
+              title="Limpiar lienzo"
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -319,7 +319,7 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
         {/* Canvas Area */}
         <div
           ref={containerRef}
-          className="flex-1 flex items-center justify-center bg-[#050608] rounded-xl overflow-hidden border border-studio-800 shadow-inner relative touch-none"
+          className="flex-1 flex items-center justify-center bg-[#070b12] rounded-2xl overflow-hidden border border-white/[0.1] shadow-inner relative touch-none"
         >
           <canvas
             ref={canvasRef}
@@ -330,33 +330,33 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={stopDrawing}
-            className="cursor-crosshair shadow-2xl"
+            className="cursor-crosshair shadow-2xl rounded-xl"
           />
         </div>
 
         {/* Footer with note and save button */}
-        <div className="mt-3 pt-3 border-t border-studio-800/80 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="mt-3 pt-3 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-3">
           <input
             type="text"
             value={sketchNote}
             onChange={(e) => setSketchNote(e.target.value)}
-            placeholder="Nota del pliego (ej. Estudio de escorzo de mano, 5 min)..."
-            className="w-full sm:w-80 bg-[#08090d] border border-studio-800 rounded-xl px-3 py-2 text-xs text-white placeholder-studio-600 focus:outline-none focus:border-amber-500 font-sans"
+            placeholder="Nota del boceto (ej. Estudio de escorzo de mano, 5 min)..."
+            className="w-full sm:w-80 bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-fantasy-sky font-sans"
           />
 
           <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl font-mono text-xs uppercase tracking-wider text-studio-400 hover:text-white bg-studio-800/60 hover:bg-studio-800 transition-colors"
+              className="px-4 py-2.5 rounded-2xl font-display text-xs font-bold uppercase tracking-wider text-slate-300 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] transition-colors"
             >
               Cerrar
             </button>
             <button
               onClick={handleSave}
-              className="px-5 py-2 rounded-xl font-mono text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 shadow-md shadow-amber-900/20 flex items-center gap-1.5 transition-all"
+              className="px-5 py-2.5 rounded-2xl font-display text-xs font-black uppercase tracking-wider text-white bg-gradient-to-r from-fantasy-sky to-fantasy-pink hover:opacity-95 shadow-md shadow-fantasy-sky/20 flex items-center gap-1.5 transition-all"
             >
               <Check className="w-4 h-4" />
-              <span>Guardar Pliego</span>
+              <span>Guardar Dibujo</span>
             </button>
           </div>
         </div>

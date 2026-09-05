@@ -68,37 +68,37 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
     <div className="max-w-6xl mx-auto py-4 px-2 sm:px-4">
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 font-mono font-bold text-[10px] uppercase tracking-widest mb-3">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-fantasy-pink/15 border border-fantasy-pink/30 text-fantasy-pink font-display font-bold text-xs uppercase tracking-wider mb-3">
           <TrendingUp className="w-3.5 h-3.5" />
-          <span>ARCHIVO COMPARATIVO // METAMORFOSIS TÉCNICA</span>
+          <span>GALERÍA DE PROGRESO // COMPARADOR TÉCNICO</span>
         </div>
-        <h2 className="font-serif italic font-normal text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight">
+        <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight">
           Estudio de Evolución
         </h2>
-        <p className="text-xs sm:text-sm text-atelier-300 mt-2 max-w-lg mx-auto font-sans font-light">
-          Contempla tu salto visual contrastando el punto de partida inicial (Nivel 0) con las obras concebidas tras cada lección del currículum.
+        <p className="text-xs sm:text-sm text-slate-300 mt-2 max-w-lg mx-auto font-sans font-medium">
+          Comprueba tu salto visual contrastando tu punto de partida (Nivel 0) con las obras concebidas tras cada lección del currículum.
         </p>
 
         {/* View Mode Switcher */}
-        <div className="inline-flex items-center gap-1.5 bg-atelier-900/90 p-1.5 rounded-2xl border border-white/[0.08] mt-6 shadow-xl">
+        <div className="inline-flex items-center gap-1.5 bg-[#111c30]/90 p-1.5 rounded-2xl border border-white/[0.08] mt-6 shadow-xl">
           <button
             onClick={() => setViewMode('slider')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs font-bold transition-all ${
               viewMode === 'slider'
-                ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/25'
-                : 'text-atelier-400 hover:text-white'
+                ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/25'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             <Columns3 className="w-3.5 h-3.5" />
-            <span>DESLIZADOR DIVISOR</span>
+            <span>DESLIZADOR INTERACTIVO</span>
           </button>
 
           <button
             onClick={() => setViewMode('sideBySide')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs font-bold transition-all ${
               viewMode === 'sideBySide'
-                ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/25'
-                : 'text-atelier-400 hover:text-white'
+                ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/25'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -107,36 +107,36 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
 
           <button
             onClick={() => setViewMode('timeline')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-mono text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl font-display text-xs font-bold transition-all ${
               viewMode === 'timeline'
-                ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/25'
-                : 'text-atelier-400 hover:text-white'
+                ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/25'
+                : 'text-slate-400 hover:text-white'
             }`}
           >
             <Calendar className="w-3.5 h-3.5" />
-            <span>GALERÍA HISTÓRICA ({milestones.length})</span>
+            <span>HISTORIAL ({milestones.length})</span>
           </button>
         </div>
       </div>
 
       {milestones.length === 0 ? (
-        <div className="text-center py-16 bg-studio-900/60 rounded-3xl border border-studio-800 max-w-lg mx-auto p-6">
-          <Award className="w-12 h-12 text-studio-600 mx-auto mb-3" />
-          <h3 className="font-bold text-lg text-white">Aún no hay obras registradas</h3>
-          <p className="text-xs text-studio-400 mt-1">
-            Al completar tu perfil y graduarte de los términos, aquí aparecerán tus hitos para comparar tu progreso.
+        <div className="text-center py-16 bg-[#111c30]/80 rounded-3xl border border-white/[0.08] max-w-lg mx-auto p-6">
+          <Award className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+          <h3 className="font-display font-bold text-lg text-white">Aún no hay obras registradas</h3>
+          <p className="text-xs text-slate-400 mt-1">
+            Al registrar tu dibujo inicial y graduarte de los términos, aquí aparecerán tus hitos para comparar tu progreso.
           </p>
         </div>
       ) : (
         <div>
           {/* Milestone Selectors for Comparison (Slider & Side-by-Side) */}
           {viewMode !== 'timeline' && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 bg-atelier-900/80 p-5 rounded-2xl border border-white/[0.08] shadow-lg">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 bg-[#111c30]/90 p-5 rounded-2xl border border-white/[0.08] shadow-lg">
               {/* Before Selector */}
               <div>
-                <label className="block font-mono text-[10px] font-bold uppercase tracking-widest text-atelier-400 mb-2 flex items-center justify-between">
+                <label className="block font-display text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center justify-between">
                   <span>PUNTO INICIAL ("ANTES"):</span>
-                  <span className="text-orange-400 font-normal">
+                  <span className="text-fantasy-sky font-bold">
                     {beforeArtwork?.termTitle || 'Nivel 0'}
                   </span>
                 </label>
@@ -211,56 +211,56 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
                   />
                 </div>
 
-                {/* Vertical Divider Bar with Titanium Handle */}
+                {/* Vertical Divider Bar with Sky Handle */}
                 <div
                   onMouseDown={handleMouseDown}
                   onTouchStart={handleMouseDown}
-                  className="absolute top-0 bottom-0 w-[2px] bg-gradient-to-b from-orange-400 via-white to-orange-400 cursor-ew-resize shadow-[0_0_15px_rgba(249,115,22,0.6)] flex items-center justify-center pointer-events-auto"
+                  className="absolute top-0 bottom-0 w-[3px] bg-gradient-to-b from-fantasy-sky via-white to-fantasy-pink cursor-ew-resize shadow-[0_0_15px_rgba(91,178,246,0.6)] flex items-center justify-center pointer-events-auto"
                   style={{ left: `${sliderPosition}%` }}
                 >
-                  <div className="w-9 h-9 rounded-full bg-atelier-950 text-white flex items-center justify-center shadow-2xl border-2 border-orange-500 font-mono text-xs font-black ring-4 ring-orange-500/20">
+                  <div className="w-10 h-10 rounded-full bg-[#0b1320] text-white flex items-center justify-center shadow-2xl border-2 border-fantasy-sky font-display text-sm font-black ring-4 ring-fantasy-sky/20">
                     ↔
                   </div>
                 </div>
 
-                {/* Floating Frosted Badges */}
-                <div className="absolute top-4 left-4 bg-atelier-950/90 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 text-white font-mono text-[11px] font-bold flex items-center gap-2 shadow-xl">
-                  <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
-                  <span>ANTES // {beforeArtwork.termNumber === 0 ? 'NIVEL 0.0' : `FOLIO ${beforeArtwork.termNumber}`}</span>
+                {/* Floating Badges */}
+                <div className="absolute top-4 left-4 bg-[#0b1320]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white font-display text-xs font-bold flex items-center gap-2 shadow-xl">
+                  <span className="w-2.5 h-2.5 rounded-full bg-fantasy-sky animate-pulse" />
+                  <span>ANTES // {beforeArtwork.termNumber === 0 ? 'NIVEL 0' : `ESTACIÓN ${beforeArtwork.termNumber}`}</span>
                 </div>
 
-                <div className="absolute top-4 right-4 bg-atelier-950/90 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 text-white font-mono text-[11px] font-bold flex items-center gap-2 shadow-xl">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>DESPUÉS // {afterArtwork.termNumber === 0 ? 'NIVEL 0.0' : `FOLIO ${afterArtwork.termNumber}`}</span>
+                <div className="absolute top-4 right-4 bg-[#0b1320]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white font-display text-xs font-bold flex items-center gap-2 shadow-xl">
+                  <span className="w-2.5 h-2.5 rounded-full bg-fantasy-pink animate-pulse" />
+                  <span>DESPUÉS // {afterArtwork.termNumber === 0 ? 'NIVEL 0' : `ESTACIÓN ${afterArtwork.termNumber}`}</span>
                 </div>
               </div>
 
               {/* Information Cards Below Slider */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 pt-5 border-t border-white/[0.06]">
                 {/* Left Artwork Info */}
-                <div className="bg-atelier-950/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
-                  <div className="flex items-center justify-between mb-1.5 font-mono">
-                    <span className="text-[10px] uppercase font-bold text-orange-400 tracking-wider">
-                      PLACA ORIGEN
+                <div className="bg-[#0b1320]/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
+                  <div className="flex items-center justify-between mb-1.5 font-display">
+                    <span className="text-[10px] uppercase font-bold text-fantasy-sky tracking-wider">
+                      OBRA INICIAL
                     </span>
-                    <span className="text-[11px] text-atelier-400">{beforeArtwork.date}</span>
+                    <span className="text-[11px] text-slate-400">{beforeArtwork.date}</span>
                   </div>
-                  <h4 className="font-serif italic text-xl text-white mb-2 leading-tight">{beforeArtwork.title}</h4>
-                  <p className="text-xs text-atelier-300 font-light italic leading-relaxed">
+                  <h4 className="font-display font-bold text-lg text-white mb-2 leading-tight">{beforeArtwork.title}</h4>
+                  <p className="text-xs text-slate-300 font-medium italic leading-relaxed">
                     "{beforeArtwork.reflectionNotes || 'Sin notas registradas'}"
                   </p>
                 </div>
 
                 {/* Right Artwork Info */}
-                <div className="bg-atelier-950/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
-                  <div className="flex items-center justify-between mb-1.5 font-mono">
-                    <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">
-                      PLACA GRADUACIÓN
+                <div className="bg-[#0b1320]/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
+                  <div className="flex items-center justify-between mb-1.5 font-display">
+                    <span className="text-[10px] uppercase font-bold text-fantasy-pink tracking-wider">
+                      OBRA DE GRADUACIÓN
                     </span>
-                    <span className="text-[11px] text-atelier-400">{afterArtwork.date}</span>
+                    <span className="text-[11px] text-slate-400">{afterArtwork.date}</span>
                   </div>
-                  <h4 className="font-serif italic text-xl text-white mb-2 leading-tight">{afterArtwork.title}</h4>
-                  <p className="text-xs text-atelier-300 font-light italic leading-relaxed">
+                  <h4 className="font-display font-bold text-lg text-white mb-2 leading-tight">{afterArtwork.title}</h4>
+                  <p className="text-xs text-slate-300 font-medium italic leading-relaxed">
                     "{afterArtwork.reflectionNotes || 'Sin notas registradas'}"
                   </p>
                 </div>
@@ -272,16 +272,16 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
           {viewMode === 'sideBySide' && beforeArtwork && afterArtwork && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {/* Before Card */}
-              <div className="bg-studio-900 border border-studio-800 rounded-3xl p-5 shadow-xl flex flex-col justify-between">
+              <div className="bg-[#111c30]/90 border border-white/[0.08] rounded-3xl p-5 shadow-xl flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-400 font-bold text-xs border border-orange-500/20">
+                    <span className="px-3 py-1 rounded-full bg-fantasy-sky/15 text-fantasy-sky font-display font-bold text-xs border border-fantasy-sky/30">
                       Antes • {beforeArtwork.termTitle}
                     </span>
-                    <span className="text-xs text-studio-400">{beforeArtwork.date}</span>
+                    <span className="text-xs text-slate-400 font-display">{beforeArtwork.date}</span>
                   </div>
-                  <h3 className="font-bold text-base text-white mb-3">{beforeArtwork.title}</h3>
-                  <div className="bg-studio-950 rounded-2xl p-2 border border-studio-800 mb-3 flex items-center justify-center h-80">
+                  <h3 className="font-display font-bold text-lg text-white mb-3">{beforeArtwork.title}</h3>
+                  <div className="bg-[#0b1320] rounded-2xl p-2 border border-white/[0.06] mb-3 flex items-center justify-center h-80">
                     <img
                       src={beforeArtwork.dataUrl}
                       alt={beforeArtwork.title}

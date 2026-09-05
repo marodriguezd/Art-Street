@@ -4,65 +4,69 @@
 
 @layer base {
   body {
-    @apply bg-atelier-950 text-slate-100 font-sans min-h-screen selection:bg-orange-500/25 selection:text-orange-200;
+    @apply bg-[#0b1320] text-slate-100 font-sans min-h-screen selection:bg-pink-500/25 selection:text-pink-200;
     -webkit-tap-highlight-color: transparent;
     background-image: 
-      radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.08), transparent 55%),
-      radial-gradient(circle at 100% 100%, rgba(223, 168, 55, 0.05), transparent 45%),
-      linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+      radial-gradient(circle at 50% -10%, rgba(91, 178, 246, 0.18), transparent 50%),
+      radial-gradient(circle at 90% 20%, rgba(255, 143, 180, 0.12), transparent 40%),
+      radial-gradient(circle at 10% 90%, rgba(42, 123, 155, 0.15), transparent 50%),
+      linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
   }
 
   /* Custom subtle scrollbar */
   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #08090d;
+    background: #0b1320;
   }
   ::-webkit-scrollbar-thumb {
-    background: #1e2232;
+    background: #1e2f4e;
     border-radius: 9999px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #343c56;
+    background: #344e82;
   }
 }
 
 @layer components {
-  /* Atelier Glass Card */
-  .glass-folio {
-    @apply bg-atelier-900/70 backdrop-blur-xl border border-white/[0.08] shadow-[0_16px_40px_rgba(0,0,0,0.5)];
+  /* Local Fantasy Floating Storybook Card */
+  .fantasy-card {
+    @apply bg-[#111c30]/90 backdrop-blur-xl border border-white/[0.08] shadow-[0_12px_32px_rgba(11,19,32,0.6)] rounded-3xl transition-all;
   }
 
-  .glass-panel {
-    @apply bg-atelier-950/80 backdrop-blur-2xl border border-white/[0.06];
+  .fantasy-panel {
+    @apply bg-[#0e1728]/95 backdrop-blur-2xl border border-white/[0.07] rounded-2xl;
   }
 
-  /* Drafting Crosshair Accents */
-  .drafting-corner {
+  /* Cute Illustrated Badge / Sticker */
+  .bubble-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-display text-xs tracking-wide shadow-sm;
+  }
+
+  /* Star / Sparkle Accents */
+  .sparkle-accent {
     position: relative;
   }
-  .drafting-corner::before {
-    content: '+';
+  .sparkle-accent::before {
+    content: '✦';
     position: absolute;
-    top: 6px;
-    left: 8px;
-    font-family: 'Space Grotesk', monospace;
-    font-size: 11px;
-    color: rgba(249, 115, 22, 0.35);
+    top: 8px;
+    left: 10px;
+    font-size: 10px;
+    color: rgba(91, 178, 246, 0.45);
     pointer-events: none;
   }
-  .drafting-corner::after {
-    content: '+';
+  .sparkle-accent::after {
+    content: '✦';
     position: absolute;
-    top: 6px;
-    right: 8px;
-    font-family: 'Space Grotesk', monospace;
-    font-size: 11px;
-    color: rgba(249, 115, 22, 0.35);
+    top: 8px;
+    right: 10px;
+    font-size: 10px;
+    color: rgba(255, 143, 180, 0.45);
     pointer-events: none;
   }
 }

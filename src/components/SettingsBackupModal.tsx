@@ -107,60 +107,60 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-studio-900 border border-studio-800 w-full max-w-xl rounded-3xl p-6 sm:p-8 shadow-2xl my-8">
+      <div className="bg-[#111c30] border border-white/[0.1] w-full max-w-xl rounded-3xl p-6 sm:p-8 shadow-2xl my-8">
         {/* Header */}
-        <div className="flex items-center justify-between gap-4 pb-4 border-b border-studio-800">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-studio-800 flex items-center justify-center text-orange-400">
+        <div className="flex items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-fantasy-sky/15 border border-fantasy-sky/30 flex items-center justify-center text-fantasy-sky">
               <Database className="w-5 h-5" />
             </div>
             <div>
               <h3 className="font-display font-black text-xl text-white">
                 Ajustes y Respaldo
               </h3>
-              <p className="text-xs text-studio-400">
+              <p className="text-xs text-slate-300 font-sans font-medium">
                 Tus datos residen de forma 100% privada y local en tu dispositivo
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-studio-800 hover:bg-studio-700 text-studio-400 hover:text-white"
+            className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {message && (
-          <div className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-xs text-emerald-400 font-bold text-center">
+          <div className="mt-4 p-3 bg-fantasy-lime/15 border border-fantasy-lime/30 rounded-2xl text-xs text-fantasy-lime font-display font-bold text-center">
             {message}
           </div>
         )}
 
         {/* Profile Details Edit */}
         <div className="my-5 space-y-3">
-          <h4 className="text-xs font-bold text-studio-300 uppercase tracking-wider flex items-center gap-1.5">
-            <User className="w-4 h-4 text-orange-400" />
+          <h4 className="text-xs font-display font-bold text-fantasy-pink uppercase tracking-wider flex items-center gap-1.5">
+            <User className="w-4 h-4 text-fantasy-pink" />
             <span>Perfil del Artista</span>
           </h4>
 
           <div>
-            <label className="block text-[11px] font-bold text-studio-400 mb-1">Nombre o Alias</label>
+            <label className="block text-xs font-display font-bold text-slate-300 mb-1">Nombre o Alias</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-studio-950 border border-studio-800 rounded-xl px-3.5 py-2 text-white text-xs focus:outline-none focus:border-orange-500"
+              className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-fantasy-sky font-medium"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[11px] font-bold text-studio-400 mb-1">Medio</label>
+              <label className="block text-xs font-display font-bold text-slate-300 mb-1">Medio</label>
               <select
                 value={medium}
                 onChange={(e) => setMedium(e.target.value as 'digital' | 'traditional' | 'both')}
-                className="w-full bg-studio-950 border border-studio-800 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500"
+                className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-fantasy-sky font-medium"
               >
                 <option value="digital">Digital</option>
                 <option value="traditional">Tradicional</option>
@@ -169,12 +169,12 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-[11px] font-bold text-studio-400 mb-1">Meta Principal</label>
+              <label className="block text-xs font-display font-bold text-slate-300 mb-1">Meta Principal</label>
               <input
                 type="text"
                 value={goal}
                 onChange={(e) => setGoal(e.target.value)}
-                className="w-full bg-studio-950 border border-studio-800 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500"
+                className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-fantasy-sky font-medium"
               />
             </div>
           </div>
@@ -182,16 +182,16 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
           <button
             type="button"
             onClick={handleSaveProfile}
-            className="w-full bg-studio-800 hover:bg-studio-700 text-white font-bold py-2 rounded-xl text-xs transition-colors"
+            className="w-full bg-gradient-to-r from-fantasy-sky to-fantasy-pink hover:opacity-95 text-white font-display font-black py-2.5 rounded-2xl text-xs uppercase tracking-wider transition-all shadow-md shadow-fantasy-sky/20"
           >
             Actualizar Perfil
           </button>
         </div>
 
         {/* Backup & Restore */}
-        <div className="pt-4 border-t border-studio-800 space-y-3">
-          <h4 className="text-xs font-bold text-studio-300 uppercase tracking-wider flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+        <div className="pt-4 border-t border-white/[0.08] space-y-3">
+          <h4 className="text-xs font-display font-bold text-fantasy-lime uppercase tracking-wider flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-fantasy-lime" />
             <span>Seguridad y Portabilidad</span>
           </h4>
 
@@ -199,27 +199,27 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
             <button
               type="button"
               onClick={handleExportBackup}
-              className="p-4 rounded-2xl bg-studio-950 hover:bg-studio-850 border border-studio-800 flex items-center gap-3 text-left transition-colors group"
+              className="p-4 rounded-2xl bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] flex items-center gap-3 text-left transition-colors group"
             >
-              <div className="w-9 h-9 rounded-xl bg-studio-800 group-hover:bg-orange-500/20 text-studio-400 group-hover:text-orange-400 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl bg-fantasy-sky/15 group-hover:bg-fantasy-sky/25 text-fantasy-sky flex items-center justify-center border border-fantasy-sky/30">
                 <Download className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs font-bold text-white">Exportar Respaldo</p>
-                <p className="text-[10px] text-studio-400">Descarga un archivo JSON</p>
+                <p className="text-xs font-display font-bold text-white">Exportar Respaldo</p>
+                <p className="text-[11px] font-sans text-slate-400">Descarga un archivo JSON</p>
               </div>
             </button>
 
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="p-4 rounded-2xl bg-studio-950 hover:bg-studio-850 border border-studio-800 flex items-center gap-3 text-left transition-colors group cursor-pointer"
+              className="p-4 rounded-2xl bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] flex items-center gap-3 text-left transition-colors group cursor-pointer"
             >
-              <div className="w-9 h-9 rounded-xl bg-studio-800 group-hover:bg-emerald-500/20 text-studio-400 group-hover:text-emerald-400 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl bg-fantasy-lime/15 group-hover:bg-fantasy-lime/25 text-fantasy-lime flex items-center justify-center border border-fantasy-lime/30">
                 <Upload className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs font-bold text-white">Restaurar Respaldo</p>
-                <p className="text-[10px] text-studio-400">Carga un archivo previo</p>
+                <p className="text-xs font-display font-bold text-white">Restaurar Respaldo</p>
+                <p className="text-[11px] font-sans text-slate-400">Carga un archivo previo</p>
               </div>
               <input
                 ref={fileInputRef}
@@ -234,7 +234,7 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
           <button
             type="button"
             onClick={handleClearData}
-            className="w-full text-xs text-red-400/80 hover:text-red-400 font-bold py-2 flex items-center justify-center gap-1.5 transition-colors"
+            className="w-full text-xs text-red-400 hover:text-red-300 font-display font-bold py-2 flex items-center justify-center gap-1.5 transition-colors"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Restablecer y Borrar Datos Locales</span>
@@ -242,15 +242,15 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
         </div>
 
         {/* Credits & Community */}
-        <div className="mt-6 pt-4 border-t border-studio-800 text-[11px] text-studio-400 space-y-2">
-          <div className="flex items-center gap-1 font-bold text-studio-300">
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+        <div className="mt-6 pt-4 border-t border-white/[0.08] text-xs text-slate-300 space-y-2">
+          <div className="flex items-center gap-1.5 font-display font-bold text-white">
+            <Heart className="w-4 h-4 text-fantasy-pink fill-fantasy-pink" />
             <span>Créditos y Comunidad Artística</span>
           </div>
-          <p>
+          <p className="font-sans font-medium text-slate-300 leading-relaxed">
             Basado en la estructura del legendario <strong>Curriculum for the Solo Artist</strong> diseñado por <strong>Alex Huneycutt (@RadioRunner)</strong> en Reddit, inspirado a su vez en ARTSchool de Marc Brunet.
           </p>
-          <div className="flex flex-wrap items-center gap-3 pt-1 text-orange-400">
+          <div className="flex flex-wrap items-center gap-3 pt-1 text-fantasy-skyLight font-display font-bold">
             <a
               href="https://www.soloartcurriculum.com/"
               target="_blank"

@@ -48,14 +48,14 @@ export const UnitView: React.FC<UnitViewProps> = ({
       <div className="flex items-center justify-between gap-3 mb-4">
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-xs font-bold text-studio-400 hover:text-white bg-studio-900 hover:bg-studio-800 px-3 py-2 rounded-xl border border-studio-800 transition-colors"
+          className="flex items-center gap-1.5 text-xs font-display font-bold text-slate-300 hover:text-white bg-[#111c30] hover:bg-[#16243d] px-4 py-2 rounded-2xl border border-white/[0.08] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Volver al Camino</span>
         </button>
 
         {/* Unit Selector Tabs */}
-        <div className="flex items-center gap-1 bg-atelier-900/90 p-1.5 rounded-2xl border border-white/[0.08] shadow-inner">
+        <div className="flex items-center gap-1.5 bg-[#111c30]/90 p-1.5 rounded-2xl border border-white/[0.08] shadow-inner">
           {term.units.map((u) => {
             const isSelected = u.id === unit.id;
             const uCompleted = u.checks.filter((c) => checkStates[c.id]?.completed).length;
@@ -65,14 +65,14 @@ export const UnitView: React.FC<UnitViewProps> = ({
               <button
                 key={u.id}
                 onClick={() => onSelectUnit(u)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-display text-xs font-bold transition-all ${
                   isSelected
-                    ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
-                    : 'text-atelier-400 hover:text-white hover:bg-atelier-800/60'
+                    ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/20'
+                    : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
                 }`}
               >
-                <span>MOD.{u.number}</span>
-                {uDone && <CheckCircle2 className="w-3 h-3 text-emerald-300" />}
+                <span>MÓD.{u.number}</span>
+                {uDone && <CheckCircle2 className="w-3.5 h-3.5 text-fantasy-lime" />}
               </button>
             );
           })}
@@ -80,42 +80,42 @@ export const UnitView: React.FC<UnitViewProps> = ({
       </div>
 
       {/* Unit Banner */}
-      <div className="bg-atelier-900/70 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden mb-8 drafting-corner">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-amber-500/10 to-orange-500/10 blur-3xl pointer-events-none" />
+      <div className="bg-[#111c30]/90 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden mb-8">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-fantasy-sky/15 to-fantasy-pink/15 blur-3xl pointer-events-none" />
 
         <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-orange-400 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20">
-              FOLIO {term.number} • MÓDULO {unit.number}
+            <span className="font-display text-xs font-bold uppercase tracking-wider text-fantasy-sky bg-fantasy-sky/15 px-3 py-1 rounded-full border border-fantasy-sky/30">
+              ESTACIÓN {term.number} • MÓDULO {unit.number}
             </span>
-            <span className="font-mono text-xs text-atelier-400 bg-atelier-950 px-3 py-1 rounded-full border border-white/[0.06]">
+            <span className="font-display text-xs text-slate-300 bg-[#0b1320] px-3 py-1 rounded-full border border-white/[0.06]">
               4 SEMANAS SUGERIDAS
             </span>
           </div>
 
-          <div className="flex items-center gap-2.5 font-mono">
-            <span className="text-xs text-atelier-300">
+          <div className="flex items-center gap-2.5 font-display">
+            <span className="text-xs text-slate-300">
               {completedChecks} / {totalChecks} ejercicios
             </span>
-            <span className="text-xs font-bold text-orange-400 bg-atelier-950 px-2.5 py-1 rounded-lg border border-white/[0.06]">
+            <span className="text-xs font-bold text-fantasy-lime bg-[#0b1320] px-3 py-1 rounded-full border border-white/[0.06]">
               {unitProgress}%
             </span>
           </div>
         </div>
 
-        <h2 className="font-serif italic font-normal text-3xl sm:text-5xl text-white tracking-tight leading-tight">
+        <h2 className="font-display font-black text-3xl sm:text-5xl text-white tracking-tight leading-tight">
           {unit.title}
         </h2>
-        <p className="text-xs sm:text-sm text-atelier-300 mt-3 leading-relaxed max-w-3xl font-sans font-light">
+        <p className="text-xs sm:text-sm text-slate-200 mt-3 leading-relaxed max-w-3xl font-sans font-medium">
           {unit.description}
         </p>
 
         {/* Subtitle / Challenge brief if any */}
         {unit.subtitle && (
-          <div className="mt-5 p-4 rounded-2xl bg-atelier-950/80 border border-white/[0.06] flex items-start gap-3 text-xs text-atelier-200">
-            <Sparkles className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+          <div className="mt-5 p-4 rounded-2xl bg-[#0b1320]/80 border border-white/[0.06] flex items-start gap-3 text-xs text-slate-200">
+            <Sparkles className="w-4 h-4 text-fantasy-ochre flex-shrink-0 mt-0.5" />
             <div>
-              <span className="font-mono font-bold text-amber-400 uppercase tracking-wide">OBJETIVO TÉCNICO: </span>
+              <span className="font-display font-bold text-fantasy-ochre uppercase tracking-wide">OBJETIVO TÉCNICO: </span>
               <span className="font-sans">{unit.subtitle}</span>
             </div>
           </div>
@@ -125,7 +125,7 @@ export const UnitView: React.FC<UnitViewProps> = ({
         <div className="flex gap-2 mt-8 pt-5 border-t border-white/[0.06]">
           <button
             onClick={() => setActiveTab('checks')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-display text-xs font-bold transition-all ${
               activeTab === 'checks'
                 ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
                 : 'bg-atelier-950 text-atelier-400 hover:text-white border border-white/[0.06]'

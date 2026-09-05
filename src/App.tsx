@@ -277,57 +277,57 @@ export const App: React.FC = () => {
             ) : (
               /* Roadmap Main Overview */
               <div>
-                {/* Editorial Atelier Hero Card */}
-                <div className="relative bg-atelier-900/70 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl overflow-hidden mb-8 drafting-corner">
-                  <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent blur-3xl pointer-events-none rounded-full" />
+                {/* Local Fantasy Hero Banner */}
+                <div className="relative bg-gradient-to-br from-[#111c30]/95 via-[#14233c]/90 to-[#161d2d]/95 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl overflow-hidden mb-8">
+                  <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-fantasy-sky/20 via-fantasy-pink/15 to-transparent blur-3xl pointer-events-none rounded-full" />
 
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <div className="lg:col-span-8">
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 font-mono font-bold text-[10px] uppercase tracking-widest mb-3">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fantasy-pink/15 border border-fantasy-pink/30 text-fantasy-pink font-display font-bold text-xs uppercase tracking-wider mb-3">
                         <Sparkles className="w-3.5 h-3.5" />
-                        <span>PLAN DE ESTUDIOS // RADIO_RUNNER CURRICULUM</span>
+                        <span>LOCAL FANTASY // EL CAMINO DEL ARTISTA</span>
                       </div>
 
-                      <h1 className="font-serif italic font-normal text-4xl sm:text-6xl lg:text-7xl text-white tracking-tight leading-[1.08]">
+                      <h1 className="font-display font-black text-4xl sm:text-6xl lg:text-7xl text-white tracking-tight leading-[1.05]">
                         El Camino del Artista
                       </h1>
-                      <p className="text-xs sm:text-sm text-atelier-300 mt-3 max-w-2xl leading-relaxed font-sans font-light">
-                        Bienvenido al atelier, <strong>{profile?.name || 'Artista'}</strong>. Navega a través de <strong>9 Folios Académicos</strong> y <strong>27 Módulos</strong>. Completa tus ejercicios deliberados, documenta tus pruebas visuales y entrega tus obras de evaluación técnica para contemplar tu metamorfosis.
+                      <p className="text-xs sm:text-sm text-slate-200 mt-3 max-w-2xl leading-relaxed font-sans font-medium">
+                        ¡Bienvenido a la aventura, <strong>{profile?.name || 'Artista'}</strong>! Recorre las <strong>9 Estaciones</strong> y <strong>27 Módulos</strong> del currículum de RadioRunner. Practica a tu ritmo, guarda tus dibujos de prueba y gradúate en cada estación para ver tu salto técnico.
                       </p>
 
-                      {/* Editorial Quick Actions */}
-                      <div className="flex flex-wrap items-center gap-3 mt-6 pt-4 border-t border-white/[0.06] text-xs font-mono">
+                      {/* Quick Actions */}
+                      <div className="flex flex-wrap items-center gap-3 mt-6 pt-4 border-t border-white/[0.06] text-xs font-display">
                         <button
                           onClick={() => setActiveTab('evolution')}
-                          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-atelier-800/80 hover:bg-atelier-750 text-white font-medium border border-white/[0.08] hover:border-orange-500/40 transition-all shadow-sm"
+                          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#16243d] hover:bg-[#1d3052] text-white font-bold border border-fantasy-sky/30 hover:border-fantasy-sky/60 transition-all shadow-sm"
                         >
-                          <Columns3 className="w-3.5 h-3.5 text-orange-400" />
-                          <span>02. COMPARADOR ANTES / DESPUÉS</span>
+                          <Columns3 className="w-4 h-4 text-fantasy-sky" />
+                          <span>COMPARADOR ANTES / DESPUÉS</span>
                         </button>
 
                         <button
                           onClick={() => setActiveTab('timer')}
-                          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-atelier-800/80 hover:bg-atelier-750 text-white font-medium border border-white/[0.08] hover:border-amber-500/40 transition-all shadow-sm"
+                          className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-[#16243d] hover:bg-[#1d3052] text-white font-bold border border-fantasy-ochre/30 hover:border-fantasy-ochre/60 transition-all shadow-sm"
                         >
-                          <Flame className="w-3.5 h-3.5 text-amber-400" />
-                          <span>03. TEMPORIZADOR DE GESTOS</span>
+                          <Flame className="w-4 h-4 text-fantasy-ochre" />
+                          <span>GIMNASIO DE GESTOS RÁPIDOS</span>
                         </button>
                       </div>
                     </div>
 
-                    {/* Architectural Compass & Progress Gauge */}
-                    <div className="lg:col-span-4 bg-atelier-950/90 p-6 rounded-3xl border border-white/[0.08] flex items-center gap-5 shadow-inner">
+                    {/* Progress Gauge */}
+                    <div className="lg:col-span-4 bg-[#0b1320]/90 p-6 rounded-3xl border border-white/[0.08] flex items-center gap-5 shadow-inner">
                       <div className="relative w-24 h-24 flex-shrink-0 flex items-center justify-center">
                         <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                           <path
-                            className="text-atelier-800 stroke-current"
-                            strokeWidth="3"
+                            className="text-slate-800 stroke-current"
+                            strokeWidth="3.5"
                             fill="none"
                             d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                           />
                           <path
-                            className="text-orange-500 stroke-current transition-all duration-1000 ease-out"
-                            strokeWidth="3"
+                            className="text-fantasy-sky stroke-current transition-all duration-1000 ease-out"
+                            strokeWidth="3.5"
                             strokeDasharray={`${progressPercent}, 100`}
                             strokeLinecap="round"
                             fill="none"
@@ -335,54 +335,54 @@ export const App: React.FC = () => {
                           />
                         </svg>
                         <div className="absolute flex flex-col items-center justify-center">
-                          <span className="font-mono font-bold text-lg text-white">
+                          <span className="font-display font-black text-xl text-white">
                             {progressPercent}%
                           </span>
-                          <span className="font-mono text-[8px] text-atelier-400 tracking-tighter uppercase">
-                            DOMINIO
+                          <span className="font-display text-[9px] text-fantasy-skyLight/80 uppercase font-bold tracking-tight">
+                            AVANCE
                           </span>
                         </div>
                       </div>
 
                       <div>
-                        <p className="font-mono text-[10px] font-bold text-orange-400 uppercase tracking-widest">
+                        <p className="font-display text-[10px] font-bold text-fantasy-sky uppercase tracking-wider">
                           PROGRESO GLOBAL
                         </p>
-                        <p className="font-mono text-sm text-white font-bold mt-1">
+                        <p className="font-display text-sm text-white font-bold mt-1">
                           {completedChecksCount} / {TOTAL_CHECKS_COUNT}
-                          <span className="text-xs font-normal text-atelier-400 ml-1">ejercicios</span>
+                          <span className="text-xs font-normal text-slate-400 ml-1">ejercicios</span>
                         </p>
-                        <p className="font-mono text-[11px] text-amber-300 font-medium mt-1.5 flex items-center gap-1.5">
-                          <Award className="w-3.5 h-3.5 text-amber-400" />
-                          <span>{milestones.length} obras en archivo</span>
+                        <p className="font-display text-[11px] text-fantasy-ochre font-bold mt-1.5 flex items-center gap-1.5">
+                          <Award className="w-3.5 h-3.5" />
+                          <span>{milestones.length} obras registradas</span>
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Filters & Search Toolbar with Architectural Folio Tabs */}
+                {/* Filters & Search Toolbar with Storybook Station Tabs */}
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
                   {/* Search bar */}
                   <div className="relative w-full sm:w-80">
-                    <Search className="w-4 h-4 text-atelier-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      placeholder="Filtrar por Loomis, Drawabox, gesto..."
-                      className="w-full bg-atelier-900/90 border border-white/[0.08] rounded-2xl pl-10 pr-4 py-2.5 font-mono text-xs text-white placeholder-atelier-500 focus:outline-none focus:border-orange-500/60 transition-colors shadow-sm"
+                      placeholder="Buscar por Loomis, Drawabox, anatomía..."
+                      className="w-full bg-[#111c30]/90 border border-white/[0.08] rounded-2xl pl-10 pr-4 py-2.5 font-display text-xs text-white placeholder-slate-400 focus:outline-none focus:border-fantasy-sky transition-colors shadow-sm"
                     />
                   </div>
 
-                  {/* Roman Numeral Folio Filter Tabs */}
-                  <div className="flex items-center gap-1 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 bg-atelier-900/80 p-1.5 rounded-2xl border border-white/[0.06]">
+                  {/* Roman Numeral Station Tabs */}
+                  <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 bg-[#111c30]/80 p-1.5 rounded-2xl border border-white/[0.06]">
                     <button
                       onClick={() => setTermFilter('all')}
-                      className={`px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold transition-all whitespace-nowrap ${
+                      className={`px-3.5 py-1.5 rounded-xl font-display text-xs font-bold transition-all whitespace-nowrap ${
                         termFilter === 'all'
-                          ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
-                          : 'text-atelier-400 hover:text-white'
+                          ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/20'
+                          : 'text-slate-400 hover:text-white'
                       }`}
                     >
                       TODOS
@@ -393,10 +393,10 @@ export const App: React.FC = () => {
                         <button
                           key={num}
                           onClick={() => setTermFilter(num)}
-                          className={`px-3 py-1.5 rounded-xl font-mono text-xs font-bold transition-all whitespace-nowrap ${
+                          className={`px-3 py-1.5 rounded-xl font-display text-xs font-bold transition-all whitespace-nowrap ${
                             termFilter === num
-                              ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md shadow-orange-500/20'
-                              : 'text-atelier-400 hover:text-white hover:bg-atelier-800/60'
+                              ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/20'
+                              : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
                           }`}
                         >
                           {roman}
