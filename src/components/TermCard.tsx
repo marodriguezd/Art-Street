@@ -45,35 +45,35 @@ export const TermCard: React.FC<TermCardProps> = ({
   const canGraduated = progressPercent >= 80 || isGraduated;
 
   return (
-    <div className="group relative bg-[#0e1626]/90 hover:bg-[#121c30] backdrop-blur-xl border border-white/[0.09] hover:border-fantasy-sky/40 rounded-2xl p-6 transition-all duration-300 shadow-[0_16px_40px_rgba(5,9,16,0.65)] hover:shadow-[0_20px_48px_rgba(91,178,246,0.12)] flex flex-col justify-between overflow-hidden">
+    <div className="group relative bg-[#0e1626]/90 hover:bg-[#121c30] backdrop-blur-xl border border-white/[0.09] hover:border-fantasy-sky/40 rounded-2xl p-4 sm:p-6 transition-all duration-300 shadow-[0_16px_40px_rgba(5,9,16,0.65)] hover:shadow-[0_20px_48px_rgba(91,178,246,0.12)] flex flex-col justify-between overflow-hidden">
       {/* Subtle ambient spotlight */}
       <div className="absolute -top-12 -right-12 w-44 h-44 bg-gradient-to-br from-fantasy-sky/15 via-fantasy-pink/10 to-transparent rounded-full blur-3xl pointer-events-none group-hover:scale-125 transition-transform duration-700" />
 
       <div>
         {/* Folio Metadata Header */}
-        <div className="flex items-center justify-between gap-2 mb-3 pb-3 border-b border-white/[0.06]">
-          <div className="flex items-center gap-2.5">
-            <span className="font-serif italic text-2xl text-fantasy-sky font-normal">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-3 border-b border-white/[0.06]">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <span className="font-serif italic text-xl sm:text-2xl text-fantasy-sky font-normal">
               Folio {roman}
             </span>
-            <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] px-2 py-0.5 rounded-full bg-white/[0.05] text-slate-400 border border-white/[0.06]">
+            <span className="font-mono text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] px-2 py-0.5 rounded-full bg-white/[0.05] text-slate-400 border border-white/[0.06]">
               CAPÍTULO 0{term.number}
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="flex items-center gap-1 font-mono text-[10px] text-slate-300 bg-[#070b14] px-2.5 py-1 rounded-lg border border-white/[0.06]">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="flex items-center gap-1 font-mono text-[10px] text-slate-300 bg-[#070b14] px-2 sm:px-2.5 py-1 rounded-lg border border-white/[0.06]">
               <Clock className="w-3 h-3 text-fantasy-ochre" />
               <span>{term.estimatedWeeks} SEM</span>
             </span>
 
             {isGraduated ? (
-              <span className="flex items-center gap-1 font-mono text-[10px] font-bold text-fantasy-ochre bg-fantasy-ochre/15 border border-fantasy-ochre/30 px-2.5 py-1 rounded-lg">
+              <span className="flex items-center gap-1 font-mono text-[10px] font-bold text-fantasy-ochre bg-fantasy-ochre/15 border border-fantasy-ochre/30 px-2 sm:px-2.5 py-1 rounded-lg">
                 <Award className="w-3 h-3" />
                 <span>GRADUADO</span>
               </span>
             ) : progressPercent >= 100 ? (
-              <span className="flex items-center gap-1 font-mono text-[10px] font-bold text-fantasy-lime bg-fantasy-lime/15 border border-fantasy-lime/30 px-2.5 py-1 rounded-lg">
+              <span className="flex items-center gap-1 font-mono text-[10px] font-bold text-fantasy-lime bg-fantasy-lime/15 border border-fantasy-lime/30 px-2 sm:px-2.5 py-1 rounded-lg">
                 <Sparkles className="w-3 h-3" />
                 <span>LISTO</span>
               </span>
@@ -82,15 +82,15 @@ export const TermCard: React.FC<TermCardProps> = ({
         </div>
 
         {/* Display Title with Editorial Serif */}
-        <h3 className="font-serif italic text-2xl sm:text-[27px] text-white tracking-tight group-hover:text-fantasy-skyLight transition-colors leading-tight mt-1">
+        <h3 className="font-serif italic text-xl sm:text-2xl lg:text-[26px] text-white tracking-tight group-hover:text-fantasy-skyLight transition-colors leading-snug mt-1">
           {term.title}
         </h3>
-        <p className="text-xs text-slate-300 mt-2 line-clamp-2 leading-relaxed font-sans font-normal">
+        <p className="text-xs text-slate-300 mt-1.5 sm:mt-2 line-clamp-2 leading-relaxed font-sans font-normal">
           {term.subtitle}
         </p>
 
         {/* Progress Bar with Fine Lines */}
-        <div className="mt-5 bg-[#070b14] p-3.5 rounded-xl border border-white/[0.06]">
+        <div className="mt-4 sm:mt-5 bg-[#070b14] p-3 sm:p-3.5 rounded-xl border border-white/[0.06]">
           <div className="flex items-center justify-between font-mono text-[10px] mb-2 font-medium">
             <span className="text-slate-400 tracking-wider uppercase">Avance del Folio</span>
             <span className="text-fantasy-sky font-bold">{progressPercent}%</span>
@@ -125,17 +125,17 @@ export const TermCard: React.FC<TermCardProps> = ({
             return (
               <div
                 key={unit.id}
-                className="flex items-center justify-between bg-[#070b14]/70 hover:bg-[#0a101d] px-3 py-2 rounded-xl border border-white/[0.04] transition-colors"
+                className="flex items-center justify-between gap-2 bg-[#070b14]/70 hover:bg-[#0a101d] px-2.5 sm:px-3 py-2 rounded-xl border border-white/[0.04] transition-colors"
               >
-                <div className="flex items-center gap-2 truncate">
-                  <span className="font-mono text-[10px] text-fantasy-sky font-semibold">
+                <div className="flex items-center gap-2 min-w-0 flex-1">
+                  <span className="font-mono text-[10px] text-fantasy-sky font-semibold flex-shrink-0">
                     § {unit.number}
                   </span>
                   <span className="text-xs text-slate-200 truncate font-sans">
                     {unit.title}
                   </span>
                 </div>
-                <span className={`font-mono text-[10px] px-2 py-0.5 rounded-md ${
+                <span className={`font-mono text-[10px] px-2 py-0.5 rounded-md flex-shrink-0 ${
                   unitDone 
                     ? 'bg-fantasy-lime/20 text-fantasy-lime border border-fantasy-lime/30' 
                     : 'bg-slate-850 text-slate-400'

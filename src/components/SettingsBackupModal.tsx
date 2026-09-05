@@ -106,26 +106,26 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#111c30] border border-white/[0.1] w-full max-w-xl rounded-3xl p-6 sm:p-8 shadow-2xl my-8">
+    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div className="bg-[#111c30] border border-white/[0.1] w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-3xl p-4 sm:p-8 shadow-2xl my-auto sm:my-8">
         {/* Header */}
         <div className="flex items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-fantasy-sky/15 border border-fantasy-sky/30 flex items-center justify-center text-fantasy-sky">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-fantasy-sky/15 border border-fantasy-sky/30 flex items-center justify-center text-fantasy-sky flex-shrink-0">
               <Database className="w-5 h-5" />
             </div>
-            <div>
-              <h3 className="font-display font-black text-xl text-white">
+            <div className="min-w-0">
+              <h3 className="font-display font-black text-lg sm:text-xl text-white truncate">
                 Ajustes y Respaldo
               </h3>
-              <p className="text-xs text-slate-300 font-sans font-medium">
+              <p className="text-[11px] sm:text-xs text-slate-300 font-sans font-medium truncate">
                 Tus datos residen de forma 100% privada y local en tu dispositivo
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white transition-colors flex-shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
@@ -154,7 +154,7 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-display font-bold text-slate-300 mb-1">Medio</label>
               <select

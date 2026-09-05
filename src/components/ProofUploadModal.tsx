@@ -72,17 +72,17 @@ export const ProofUploadModal: React.FC<ProofUploadModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-[#111c30] border border-white/[0.1] w-full max-w-2xl rounded-3xl p-6 shadow-2xl relative my-8">
+    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+      <div className="bg-[#111c30] border border-white/[0.1] w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl p-4 sm:p-6 shadow-2xl relative my-auto sm:my-8">
         {/* Header */}
-        <div className="flex items-start justify-between gap-4 pb-4 border-b border-white/[0.08]">
-          <div>
+        <div className="flex items-start justify-between gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-white/[0.08]">
+          <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-display text-xs uppercase font-bold tracking-wider text-fantasy-pink bg-fantasy-pink/15 px-3 py-1 rounded-full border border-fantasy-pink/30">
+              <span className="font-display text-[10px] sm:text-xs uppercase font-bold tracking-wider text-fantasy-pink bg-fantasy-pink/15 px-2.5 sm:px-3 py-1 rounded-full border border-fantasy-pink/30">
                 EVIDENCIA DE PRÁCTICA // REVISIÓN
               </span>
             </div>
-            <h3 className="font-display text-2xl font-black text-white tracking-tight mt-2">
+            <h3 className="font-display text-xl sm:text-2xl font-black text-white tracking-tight mt-1.5">
               {check.title}
             </h3>
             <p className="text-xs text-slate-300 mt-1 leading-relaxed font-sans font-medium">
@@ -91,7 +91,7 @@ export const ProofUploadModal: React.FC<ProofUploadModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white transition-colors"
+            className="p-1.5 sm:p-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white transition-colors flex-shrink-0"
           >
             <X className="w-5 h-5" />
           </button>

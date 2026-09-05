@@ -54,10 +54,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-serif italic text-2xl tracking-tight text-white group-hover:text-fantasy-sky transition-colors">
+                <span className="font-serif italic text-xl sm:text-2xl tracking-tight text-white group-hover:text-fantasy-sky transition-colors">
                   Art Street
                 </span>
-                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.2em] px-2 py-0.5 rounded-full bg-fantasy-pink/15 text-fantasy-pink border border-fantasy-pink/30">
+                <span className="font-mono text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] px-1.5 sm:px-2 py-0.5 rounded-full bg-fantasy-pink/15 text-fantasy-pink border border-fantasy-pink/30">
                   MONOGRAFÍA
                 </span>
               </div>
@@ -119,11 +119,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
 
           {/* Right Stats & Profile */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Streak Counter */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#0a101d] border border-fantasy-ochre/30 text-fantasy-ochre text-xs font-mono font-semibold shadow-sm">
+            <div className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-[#0a101d] border border-fantasy-ochre/30 text-fantasy-ochre font-mono font-semibold shadow-sm">
               <Flame className="w-3.5 h-3.5 fill-fantasy-ochre text-fantasy-ochre" />
-              <span>{profile?.streakDays || 1}D RACHA</span>
+              <span className="text-[11px] sm:text-xs">{profile?.streakDays || 1}D RACHA</span>
             </div>
 
             {/* Level & XP */}
@@ -159,8 +159,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </header>
 
-      {/* Mobile Bottom Navigation Dock */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0a101d]/95 backdrop-blur-2xl border-t border-white/[0.08] px-3 py-2 flex items-center justify-around shadow-2xl">
+      {/* Mobile Bottom Navigation Dock with Safe Area Support */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0a101d]/95 backdrop-blur-2xl border-t border-white/[0.08] px-2 py-1.5 pb-[max(env(safe-area-inset-bottom),0.5rem)] flex items-center justify-around shadow-2xl">
         {[
           { id: 'roadmap', label: 'Folios', icon: Compass },
           { id: 'evolution', label: 'Evolución', icon: Columns3 },
@@ -174,7 +174,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`flex flex-col items-center gap-1 py-1 px-3 rounded-xl transition-all ${
+              className={`flex flex-col items-center justify-center gap-0.5 py-1 px-2.5 min-w-[56px] rounded-xl transition-all ${
                 isActive ? 'text-white font-semibold' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -187,7 +187,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <Icon className="w-4 h-4" />
               </div>
-              <span className="text-[9px] font-mono tracking-wider uppercase">{tab.label}</span>
+              <span className="text-[9px] font-mono tracking-wider uppercase leading-tight">{tab.label}</span>
             </button>
           );
         })}

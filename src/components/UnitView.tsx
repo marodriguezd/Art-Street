@@ -43,19 +43,19 @@ export const UnitView: React.FC<UnitViewProps> = ({
   const unitProgress = totalChecks > 0 ? Math.round((completedChecks / totalChecks) * 100) : 0;
 
   return (
-    <div className="max-w-5xl mx-auto py-4 px-2 sm:px-4">
+    <div className="max-w-5xl mx-auto py-3 sm:py-4 px-2 sm:px-4">
       {/* Back Button and Navigation Bar */}
-      <div className="flex items-center justify-between gap-3 mb-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 mb-4">
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-xs font-display font-bold text-slate-300 hover:text-white bg-[#111c30] hover:bg-[#16243d] px-4 py-2 rounded-2xl border border-white/[0.08] transition-colors"
+          className="flex items-center justify-center sm:justify-start gap-1.5 text-xs font-display font-bold text-slate-300 hover:text-white bg-[#111c30] hover:bg-[#16243d] px-4 py-2.5 rounded-2xl border border-white/[0.08] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Volver al Camino</span>
         </button>
 
         {/* Unit Selector Tabs */}
-        <div className="flex items-center gap-1.5 bg-[#111c30]/90 p-1.5 rounded-2xl border border-white/[0.08] shadow-inner">
+        <div className="flex items-center gap-1.5 bg-[#111c30]/90 p-1.5 rounded-2xl border border-white/[0.08] shadow-inner overflow-x-auto no-scrollbar">
           {term.units.map((u) => {
             const isSelected = u.id === unit.id;
             const uCompleted = u.checks.filter((c) => checkStates[c.id]?.completed).length;
@@ -65,7 +65,7 @@ export const UnitView: React.FC<UnitViewProps> = ({
               <button
                 key={u.id}
                 onClick={() => onSelectUnit(u)}
-                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl font-display text-xs font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-display text-xs font-bold transition-all whitespace-nowrap flex-shrink-0 ${
                   isSelected
                     ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/20'
                     : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
@@ -80,39 +80,39 @@ export const UnitView: React.FC<UnitViewProps> = ({
       </div>
 
       {/* Unit Banner */}
-      <div className="bg-[#0e1626]/90 backdrop-blur-2xl border border-white/[0.09] rounded-2xl p-6 sm:p-10 shadow-2xl relative overflow-hidden mb-8">
+      <div className="bg-[#0e1626]/90 backdrop-blur-2xl border border-white/[0.09] rounded-2xl p-4 sm:p-8 lg:p-10 shadow-2xl relative overflow-hidden mb-6 sm:mb-8">
         <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-fantasy-sky/15 to-fantasy-pink/12 blur-3xl pointer-events-none" />
 
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-white/[0.06]">
-          <div className="flex items-center gap-2.5">
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-fantasy-sky bg-fantasy-sky/15 px-3 py-1 rounded-full border border-fantasy-sky/30">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 mb-3 sm:mb-4 pb-3 border-b border-white/[0.06]">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.18em] sm:tracking-[0.2em] text-fantasy-sky bg-fantasy-sky/15 px-2.5 sm:px-3 py-1 rounded-full border border-fantasy-sky/30">
               FOLIO 0{term.number} // MÓDULO {unit.number}
             </span>
-            <span className="font-mono text-[10px] text-slate-300 bg-[#070b14] px-3 py-1 rounded-full border border-white/[0.06]">
+            <span className="font-mono text-[9px] sm:text-[10px] text-slate-300 bg-[#070b14] px-2.5 sm:px-3 py-1 rounded-full border border-white/[0.06]">
               4 SEMANAS ESTIMADAS
             </span>
           </div>
 
-          <div className="flex items-center gap-2.5 font-mono text-[11px]">
+          <div className="flex items-center gap-2.5 font-mono text-[10px] sm:text-[11px]">
             <span className="text-slate-300">
               {completedChecks} / {totalChecks} pliegos
             </span>
-            <span className="font-bold text-fantasy-lime bg-[#070b14] px-3 py-1 rounded-full border border-white/[0.06]">
+            <span className="font-bold text-fantasy-lime bg-[#070b14] px-2.5 sm:px-3 py-1 rounded-full border border-white/[0.06]">
               {unitProgress}%
             </span>
           </div>
         </div>
 
-        <h2 className="font-serif italic text-3xl sm:text-5xl text-white tracking-tight leading-tight">
+        <h2 className="font-serif italic text-2xl sm:text-4xl lg:text-5xl text-white tracking-tight leading-tight">
           {unit.title}
         </h2>
-        <p className="text-xs sm:text-sm text-slate-200 mt-3 leading-relaxed max-w-3xl font-sans font-normal">
+        <p className="text-xs sm:text-sm text-slate-200 mt-2.5 sm:mt-3 leading-relaxed max-w-3xl font-sans font-normal">
           {unit.description}
         </p>
 
         {/* Subtitle / Challenge brief if any */}
         {unit.subtitle && (
-          <div className="mt-5 p-4 rounded-xl bg-[#070b14]/80 border border-white/[0.06] flex items-start gap-3 text-xs text-slate-200">
+          <div className="mt-4 sm:mt-5 p-3 sm:p-4 rounded-xl bg-[#070b14]/80 border border-white/[0.06] flex items-start gap-2.5 sm:gap-3 text-xs text-slate-200">
             <Sparkles className="w-4 h-4 text-fantasy-ochre flex-shrink-0 mt-0.5" />
             <div>
               <span className="font-mono font-bold text-fantasy-ochre uppercase tracking-wider">OBJETIVO TÉCNICO: </span>
@@ -122,10 +122,10 @@ export const UnitView: React.FC<UnitViewProps> = ({
         )}
 
         {/* Tab switch inside Unit */}
-        <div className="flex gap-2 mt-8 pt-5 border-t border-white/[0.06]">
+        <div className="flex flex-col sm:flex-row gap-2 mt-6 sm:mt-8 pt-4 sm:pt-5 border-t border-white/[0.06]">
           <button
             onClick={() => setActiveTab('checks')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-xs font-semibold uppercase tracking-wider transition-all ${
+            className={`flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl font-mono text-xs font-semibold uppercase tracking-wider transition-all ${
               activeTab === 'checks'
                 ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/25'
                 : 'bg-[#070b14] text-slate-400 hover:text-white border border-white/[0.06]'
@@ -137,7 +137,7 @@ export const UnitView: React.FC<UnitViewProps> = ({
 
           <button
             onClick={() => setActiveTab('resources')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-mono text-xs font-semibold uppercase tracking-wider transition-all ${
+            className={`flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl font-mono text-xs font-semibold uppercase tracking-wider transition-all ${
               activeTab === 'resources'
                 ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white shadow-md shadow-fantasy-sky/25'
                 : 'bg-[#070b14] text-slate-400 hover:text-white border border-white/[0.06]'
