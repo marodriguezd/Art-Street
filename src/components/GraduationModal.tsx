@@ -130,7 +130,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
             </div>
 
             {/* Brief and Requirements */}
-            <div className="my-4 p-4 rounded-2xl bg-[#0b1320] border border-white/[0.08] text-xs">
+            <div className="my-4 p-4 rounded-2xl bg-[#0d1017] border border-white/[0.08] text-xs">
               <p className="text-slate-200 leading-relaxed font-sans mb-3 font-medium">
                 {term.graduationPrompt.brief}
               </p>
@@ -150,7 +150,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
             {/* Upload Area */}
             <div className="space-y-4">
               {imageDataUrl ? (
-                <div className="relative rounded-2xl overflow-hidden border border-white/[0.1] bg-[#0b1320] p-4 text-center">
+                <div className="relative rounded-2xl overflow-hidden border border-white/[0.1] bg-[#0d1017] p-4 text-center">
                   <div className="border border-dashed border-fantasy-sky/40 rounded-xl p-2 bg-[#080d16]">
                     <img
                       src={imageDataUrl}
@@ -170,7 +170,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div
                     onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-white/[0.15] hover:border-fantasy-sky rounded-2xl p-5 text-center cursor-pointer transition-all bg-[#0b1320] hover:bg-[#0f192b] flex flex-col items-center justify-center gap-2 group"
+                    className="border-2 border-dashed border-white/[0.15] hover:border-fantasy-sky rounded-2xl p-5 text-center cursor-pointer transition-all bg-[#0d1017] hover:bg-[#0f192b] flex flex-col items-center justify-center gap-2 group"
                   >
                     <div className="w-12 h-12 rounded-2xl bg-fantasy-sky/15 group-hover:bg-fantasy-sky/25 text-fantasy-sky flex items-center justify-center transition-all border border-fantasy-sky/30">
                       <Camera className="w-5 h-5" />
@@ -190,7 +190,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
 
                   <div
                     onClick={onOpenCanvas}
-                    className="border-2 border-dashed border-white/[0.15] hover:border-fantasy-pink rounded-2xl p-5 text-center cursor-pointer transition-all bg-[#0b1320] hover:bg-[#0f192b] flex flex-col items-center justify-center gap-2 group"
+                    className="border-2 border-dashed border-white/[0.15] hover:border-fantasy-pink rounded-2xl p-5 text-center cursor-pointer transition-all bg-[#0d1017] hover:bg-[#0f192b] flex flex-col items-center justify-center gap-2 group"
                   >
                     <div className="w-12 h-12 rounded-2xl bg-fantasy-pink/15 group-hover:bg-fantasy-pink/25 text-fantasy-pink flex items-center justify-center transition-all border border-fantasy-pink/30">
                       <Brush className="w-5 h-5" />
@@ -213,7 +213,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="ej. Estudio de Busto en Contrapicado, Iluminación de Ocaso"
-                  className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-fantasy-sky"
+                  className="w-full bg-[#0d1017] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-fantasy-sky"
                 />
               </div>
 
@@ -227,7 +227,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
                   onChange={(e) => setReflection(e.target.value)}
                   placeholder="ej. Noto que ahora entiendo cómo encajar los rasgos en la esfera y ya no dibujo ojos planos..."
                   rows={3}
-                  className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-fantasy-sky resize-none font-medium"
+                  className="w-full bg-[#0d1017] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-fantasy-sky resize-none font-medium"
                 />
               </div>
 
@@ -237,7 +237,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
                   <label className="block font-display text-xs uppercase font-bold tracking-wider text-slate-300 mb-1">
                     Horas de Trabajo
                   </label>
-                  <div className="flex items-center gap-2 bg-[#0b1320] border border-white/[0.1] rounded-2xl px-3.5 py-2">
+                  <div className="flex items-center gap-2 bg-[#0d1017] border border-white/[0.1] rounded-2xl px-3.5 py-2">
                     <Clock className="w-4 h-4 text-fantasy-sky" />
                     <input
                       type="number"
@@ -255,7 +255,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
                   <label className="block font-display text-xs uppercase font-bold tracking-wider text-slate-300 mb-1">
                     Confianza Técnica
                   </label>
-                  <div className="flex items-center gap-1 bg-[#0b1320] border border-white/[0.1] rounded-2xl px-3 py-2">
+                  <div className="flex items-center gap-1 bg-[#0d1017] border border-white/[0.1] rounded-2xl px-3 py-2">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
@@ -279,7 +279,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="w-1/3 bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] text-slate-300 font-display text-xs font-bold uppercase tracking-wider py-3.5 px-4 rounded-2xl transition-colors"
+                  className="w-1/3 bg-[#0d1017] hover:bg-[#142035] border border-white/[0.08] text-slate-300 font-display text-xs font-bold uppercase tracking-wider py-3.5 px-4 rounded-2xl transition-colors"
                 >
                   Cancelar
                 </button>
@@ -288,7 +288,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
                   type="button"
                   disabled={isSubmitting || !imageDataUrl}
                   onClick={handleSubmit}
-                  className="w-2/3 bg-gradient-to-r from-fantasy-sky via-fantasy-pink to-fantasy-ochre hover:opacity-95 disabled:opacity-40 text-white font-display text-xs font-black uppercase tracking-wider py-3.5 px-4 rounded-2xl shadow-lg shadow-fantasy-sky/20 flex items-center justify-center gap-2 transition-all"
+                  className="w-2/3 btn-atelier-primary "
                 >
                   <Award className="w-4 h-4" />
                   <span>{isSubmitting ? 'Registrando...' : `Graduar Estación ${term.number} (+500 XP)`}</span>
@@ -312,7 +312,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
               Has consolidado las unidades didácticas y depositado tu obra en el atelier del pueblo. ¡Compara tu evolución con tu Punto de Partida original!
             </p>
 
-            <div className="my-6 max-w-sm mx-auto rounded-3xl overflow-hidden border border-white/[0.1] bg-[#0b1320] p-4 shadow-xl">
+            <div className="my-6 max-w-sm mx-auto rounded-3xl overflow-hidden border border-white/[0.1] bg-[#0d1017] p-4 shadow-xl">
               <div className="border border-dashed border-fantasy-sky/40 rounded-2xl p-2 bg-[#080d16]">
                 <img
                   src={imageDataUrl!}
@@ -327,7 +327,7 @@ export const GraduationModal: React.FC<GraduationModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full sm:w-auto bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] text-slate-300 font-display text-xs font-bold uppercase tracking-wider py-3.5 px-6 rounded-2xl"
+                className="w-full sm:w-auto bg-[#0d1017] hover:bg-[#142035] border border-white/[0.08] text-slate-300 font-display text-xs font-bold uppercase tracking-wider py-3.5 px-6 rounded-2xl"
               >
                 Volver al Mapa
               </button>

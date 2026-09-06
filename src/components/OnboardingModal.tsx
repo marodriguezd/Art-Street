@@ -312,7 +312,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     onClick={() => setImageDataUrl(null)}
                     className="mt-3 font-display text-xs font-bold text-red-400 hover:text-red-300 uppercase tracking-wider"
                   >
-                    [ Descartar y Cargar Otra Imagen ]
+                    [ Cambiar dibujo ]
                   </button>
                 </div>
               ) : (
@@ -340,7 +340,15 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
                   {/* Draw in Canvas Option */}
                   <div
+                    role="button"
+                    tabIndex={0}
                     onClick={openCanvasForBaseline}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        openCanvasForBaseline();
+                      }
+                    }}
                     className="border-2 border-dashed border-white/[0.15] hover:border-fantasy-pink rounded-2xl p-3.5 sm:p-5 text-left sm:text-center cursor-pointer transition-all bg-[#0b1320] hover:bg-[#0f192b] flex flex-row sm:flex-col items-center justify-start sm:justify-center gap-3 sm:gap-2 group"
                   >
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-fantasy-pink/15 group-hover:bg-fantasy-pink/25 text-fantasy-pink flex items-center justify-center transition-all border border-fantasy-pink/30 flex-shrink-0">

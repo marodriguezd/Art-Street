@@ -154,7 +154,7 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-fantasy-sky font-medium"
+              className="w-full bg-[#0d1017] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-fantasy-sky font-medium"
             />
           </div>
 
@@ -164,7 +164,7 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
               <select
                 value={medium}
                 onChange={(e) => setMedium(e.target.value as 'digital' | 'traditional' | 'both')}
-                className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-fantasy-sky font-medium"
+                className="w-full bg-[#0d1017] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-fantasy-sky font-medium"
               >
                 <option value="digital">Digital</option>
                 <option value="traditional">Tradicional</option>
@@ -178,7 +178,7 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
                 type="text"
                 value={goal}
                 onChange={(e) => setGoal(e.target.value)}
-                className="w-full bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-fantasy-sky font-medium"
+                className="w-full bg-[#0d1017] border border-white/[0.1] rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-fantasy-sky font-medium"
               />
             </div>
           </div>
@@ -227,7 +227,7 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
             <button
               type="button"
               onClick={handleExportBackup}
-              className="p-4 rounded-2xl bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] flex items-center gap-3 text-left transition-colors group"
+              className="p-4 rounded-2xl bg-[#0d1017] hover:bg-[#142035] border border-white/[0.08] flex items-center gap-3 text-left transition-colors group"
             >
               <div className="w-10 h-10 rounded-2xl bg-fantasy-sky/15 group-hover:bg-fantasy-sky/25 text-fantasy-sky flex items-center justify-center border border-fantasy-sky/30">
                 <Download className="w-5 h-5" />
@@ -240,7 +240,7 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
 
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="p-4 rounded-2xl bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] flex items-center gap-3 text-left transition-colors group cursor-pointer"
+              className="p-4 rounded-2xl bg-[#0d1017] hover:bg-[#142035] border border-white/[0.08] flex items-center gap-3 text-left transition-colors group cursor-pointer"
             >
               <div className="w-10 h-10 rounded-2xl bg-fantasy-lime/15 group-hover:bg-fantasy-lime/25 text-fantasy-lime flex items-center justify-center border border-fantasy-lime/30">
                 <Upload className="w-5 h-5" />

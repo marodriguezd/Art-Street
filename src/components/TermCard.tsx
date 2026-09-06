@@ -57,7 +57,7 @@ export const TermCard: React.FC<TermCardProps> = ({
               Folio {roman}
             </span>
             <span className="font-mono text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] px-2 py-0.5 rounded-full bg-white/[0.05] text-slate-400 border border-white/[0.06]">
-              CAPÍTULO 0{term.number}
+              ESTACIÓN 0{term.number}
             </span>
           </div>
 
@@ -82,7 +82,10 @@ export const TermCard: React.FC<TermCardProps> = ({
         </div>
 
         {/* Display Title with Editorial Serif */}
-        <h3 className="font-serif italic text-xl sm:text-2xl lg:text-[26px] text-white tracking-tight group-hover:text-fantasy-skyLight transition-colors leading-snug mt-1">
+        <h3
+          onClick={() => onSelectTerm(term)}
+          className="font-serif italic text-xl sm:text-2xl lg:text-[26px] text-white tracking-tight group-hover:text-fantasy-skyLight transition-colors leading-snug mt-1 cursor-pointer"
+        >
           {term.title}
         </h3>
         <p className="text-xs text-slate-300 mt-1.5 sm:mt-2 line-clamp-2 leading-relaxed font-sans font-normal">

@@ -134,7 +134,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Award className="w-4 h-4 text-fantasy-sky" />
               <div>
                 <div className="flex items-center gap-2 font-mono text-[10px]">
-                  <span className="font-semibold text-white uppercase">{rankTitle}</span>
+                  <span className="font-semibold text-white uppercase" title={rankTitle}>
+                    {profile?.name ? `${profile.name} · ${rankTitle}` : rankTitle}
+                  </span>
                   <span className="text-fantasy-skyLight/80">LVL {level}</span>
                 </div>
                 <div className="w-24 bg-slate-800 h-1.5 rounded-full overflow-hidden mt-1">

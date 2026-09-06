@@ -253,7 +253,7 @@ export const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-studio-950 text-slate-100 flex flex-col pb-20 md:pb-8">
+    <div className="min-h-screen bg-[#0d1017] text-slate-200 flex flex-col pb-20 md:pb-8">
       {/* Top Navbar */}
       <Navbar
         profile={profile}
@@ -302,8 +302,8 @@ export const App: React.FC = () => {
               /* Roadmap Main Overview */
               <div>
                 {/* Editorial Artbook Masthead Banner */}
-                <div className="relative bg-gradient-to-br from-[#0d1524]/95 via-[#111c30]/90 to-[#0a101d]/95 backdrop-blur-2xl border border-white/[0.1] rounded-3xl p-4 sm:p-8 lg:p-10 shadow-[0_20px_50px_rgba(5,9,16,0.7)] overflow-hidden mb-8">
-                  <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-fantasy-sky/15 via-fantasy-pink/10 to-transparent blur-3xl pointer-events-none rounded-full" />
+                <div className="relative bg-[#121622]/90 backdrop-blur-2xl border border-white/[0.08] rounded-3xl p-5 sm:p-8 lg:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.65),inset_0_1px_0_0_rgba(255,255,255,0.06)] overflow-hidden mb-8">
+                  <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-atelier-ochre/[0.04] blur-3xl pointer-events-none rounded-full" />
 
                   {/* Top Monograph Strip */}
                   <div className="flex flex-wrap items-center justify-between gap-2 pb-3 sm:pb-4 mb-4 sm:mb-6 border-b border-white/[0.08] font-mono text-[9px] sm:text-[10px] tracking-[0.18em] sm:tracking-[0.22em] text-slate-400 uppercase">
@@ -340,7 +340,7 @@ export const App: React.FC = () => {
                         {(!profile || !profile.baselineArtwork) && (
                           <button
                             onClick={() => setIsOnboardingOpen(true)}
-                            className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-fantasy-sky via-fantasy-pink to-fantasy-ochre text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg shadow-fantasy-sky/20 hover:opacity-95 transition-all"
+                            className="btn-atelier-primary px-5 py-3"
                           >
                             <Sparkles className="w-4 h-4" />
                             <span>REGISTRAR HITO CERO (NIVEL 0)</span>
@@ -439,7 +439,7 @@ export const App: React.FC = () => {
                       type="text"
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      placeholder="Buscar por Loomis, Drawabox, anatomía..."
+                      placeholder="Buscar temas, conceptos o ejercicios (Loomis, Drawabox, anatomía)..."
                       className="w-full bg-[#0e1626]/90 border border-white/[0.08] rounded-xl pl-10 pr-4 py-2.5 font-mono text-xs text-white placeholder-slate-400 focus:outline-none focus:border-fantasy-sky transition-colors shadow-sm"
                     />
                   </div>
@@ -450,7 +450,7 @@ export const App: React.FC = () => {
                       onClick={() => setTermFilter('all')}
                       className={`px-3 py-1.5 rounded-lg font-mono text-xs tracking-wider transition-all whitespace-nowrap flex-shrink-0 ${
                         termFilter === 'all'
-                          ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white font-bold shadow-md shadow-fantasy-sky/20'
+                          ? 'bg-[#1c2233] text-white border border-atelier-ochre/40 shadow-sm font-semibold'
                           : 'text-slate-400 hover:text-white'
                       }`}
                     >
@@ -464,7 +464,7 @@ export const App: React.FC = () => {
                           onClick={() => setTermFilter(num)}
                           className={`px-3 py-1.5 rounded-lg font-mono text-xs tracking-wider transition-all whitespace-nowrap flex-shrink-0 ${
                             termFilter === num
-                              ? 'bg-gradient-to-r from-fantasy-sky to-fantasy-pink text-white font-bold shadow-md shadow-fantasy-sky/20'
+                              ? 'bg-[#1c2233] text-white border border-atelier-ochre/40 shadow-sm font-semibold'
                               : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
                           }`}
                         >
@@ -511,6 +511,7 @@ export const App: React.FC = () => {
         {/* GESTURE TIMER TAB */}
         {activeTab === 'timer' && (
           <GestureTimerModal
+            onClose={() => setActiveTab('roadmap')}
             onOpenCanvas={() => {
               setCanvasTargetMode('standalone');
               setIsCanvasModalOpen(true);
@@ -536,6 +537,7 @@ export const App: React.FC = () => {
       {/* Onboarding Modal */}
       {isOnboardingOpen && (
         <OnboardingModal
+          onClose={() => setIsOnboardingOpen(false)}
           onComplete={(newProfile) => {
             setProfile(newProfile);
             setIsOnboardingOpen(false);
@@ -543,7 +545,6 @@ export const App: React.FC = () => {
           }}
           openCanvasForBaseline={handleOpenCanvasForBaseline}
           temporaryCanvasImage={tempCanvasImage}
-          onClose={() => setIsOnboardingOpen(false)}
           onOpenBackupSync={(tab) => {
             setBackupSyncTab(tab || 'import');
             setIsBackupSyncOpen(true);

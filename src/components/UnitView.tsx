@@ -71,7 +71,7 @@ export const UnitView: React.FC<UnitViewProps> = ({
                     : 'text-slate-400 hover:text-white hover:bg-white/[0.06]'
                 }`}
               >
-                <span>MÓD.{u.number}</span>
+                <span>Unidad {term.number}.{u.number}</span>
                 {uDone && <CheckCircle2 className="w-3.5 h-3.5 text-fantasy-lime" />}
               </button>
             );
@@ -86,7 +86,7 @@ export const UnitView: React.FC<UnitViewProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-2.5 mb-3 sm:mb-4 pb-3 border-b border-white/[0.06]">
           <div className="flex items-center gap-2 sm:gap-2.5">
             <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.18em] sm:tracking-[0.2em] text-fantasy-sky bg-fantasy-sky/15 px-2.5 sm:px-3 py-1 rounded-full border border-fantasy-sky/30">
-              FOLIO 0{term.number} // MÓDULO {unit.number}
+              ESTACIÓN 0{term.number} // UNIDAD {unit.number}
             </span>
             <span className="font-mono text-[9px] sm:text-[10px] text-slate-300 bg-[#070b14] px-2.5 sm:px-3 py-1 rounded-full border border-white/[0.06]">
               4 SEMANAS ESTIMADAS
@@ -152,6 +152,9 @@ export const UnitView: React.FC<UnitViewProps> = ({
       {/* Main Content Body */}
       {activeTab === 'checks' ? (
         <div className="space-y-3">
+          <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 px-1">
+            Contenido de la Estación
+          </h3>
           <div className="flex items-center justify-between text-xs text-studio-400 px-1 mb-1">
             <span>Haz clic en cada check al completar tu sesión y adjunta tu foto o dibujo</span>
             <span className="text-orange-400 font-bold">+50 XP por cada ejercicio</span>

@@ -27,3 +27,8 @@ release
 # Capacitor
 /android
 /ios
+
+test-results/
+playwright-report/
+.tokensave/
+__pycache__/

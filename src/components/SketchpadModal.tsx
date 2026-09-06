@@ -209,7 +209,7 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
         </div>
 
         {/* Toolbar */}
-        <div className="py-2.5 flex flex-wrap items-center justify-between gap-3 bg-[#0b1320] px-4 rounded-2xl my-3 border border-white/[0.08]">
+        <div className="py-2.5 flex flex-wrap items-center justify-between gap-3 bg-[#0d1017] px-4 rounded-2xl my-3 border border-white/[0.08]">
           {/* Tools */}
           <div className="flex items-center gap-1.5">
             <button
@@ -341,7 +341,7 @@ export const SketchpadModal: React.FC<SketchpadModalProps> = ({
             value={sketchNote}
             onChange={(e) => setSketchNote(e.target.value)}
             placeholder="Nota del boceto (ej. Estudio de escorzo de mano, 5 min)..."
-            className="w-full sm:w-80 bg-[#0b1320] border border-white/[0.1] rounded-2xl px-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-fantasy-sky font-sans"
+            className="w-full sm:w-80 bg-[#0d1017] border border-white/[0.1] rounded-2xl px-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-fantasy-sky font-sans"
           />
 
           <div className="flex items-center gap-2 w-full sm:w-auto justify-end">

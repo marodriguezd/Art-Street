@@ -73,7 +73,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
           <span>GALERÍA DE PROGRESO // COMPARADOR TÉCNICO</span>
         </div>
         <h2 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight">
-          Estudio de Evolución
+          Estudio de Evolución Artística
         </h2>
         <p className="text-xs sm:text-sm text-slate-300 mt-2 max-w-lg mx-auto font-sans font-medium">
           Comprueba tu salto visual contrastando tu punto de partida (Nivel 0) con las obras concebidas tras cada lección del currículum.
@@ -90,7 +90,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
             }`}
           >
             <Columns3 className="w-3.5 h-3.5" />
-            <span>DESLIZADOR INTERACTIVO</span>
+            <span>Cortinilla</span>
           </button>
 
           <button
@@ -102,7 +102,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>LADO A LADO</span>
+            <span>Lado a Lado</span>
           </button>
 
           <button
@@ -114,7 +114,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
             }`}
           >
             <Calendar className="w-3.5 h-3.5" />
-            <span>HISTORIAL ({milestones.length})</span>
+            <span>Línea de Tiempo</span>
           </button>
         </div>
       </div>
@@ -124,7 +124,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
           <Award className="w-12 h-12 text-slate-600 mx-auto mb-3" />
           <h3 className="font-display font-bold text-lg text-white">Aún no hay obras registradas</h3>
           <p className="text-xs text-slate-400 mt-1">
-            Al registrar tu dibujo inicial y graduarte de los términos, aquí aparecerán tus hitos para comparar tu progreso.
+            Registra tu Punto de Partida y gradúate de cada estación para construir aquí tu Cronología de Hitos.
           </p>
         </div>
       ) : (
@@ -218,18 +218,18 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
                   className="absolute top-0 bottom-0 w-[3px] bg-gradient-to-b from-fantasy-sky via-white to-fantasy-pink cursor-ew-resize shadow-[0_0_15px_rgba(91,178,246,0.6)] flex items-center justify-center pointer-events-auto"
                   style={{ left: `${sliderPosition}%` }}
                 >
-                  <div className="w-10 h-10 rounded-full bg-[#0b1320] text-white flex items-center justify-center shadow-2xl border-2 border-fantasy-sky font-display text-sm font-black ring-4 ring-fantasy-sky/20">
+                  <div className="w-10 h-10 rounded-full bg-[#0d1017] text-white flex items-center justify-center shadow-2xl border-2 border-fantasy-sky font-display text-sm font-black ring-4 ring-fantasy-sky/20">
                     ↔
                   </div>
                 </div>
 
                 {/* Floating Badges */}
-                <div className="absolute top-4 left-4 bg-[#0b1320]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white font-display text-xs font-bold flex items-center gap-2 shadow-xl">
+                <div className="absolute top-4 left-4 bg-[#0d1017]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white font-display text-xs font-bold flex items-center gap-2 shadow-xl">
                   <span className="w-2.5 h-2.5 rounded-full bg-fantasy-sky animate-pulse" />
                   <span>ANTES // {beforeArtwork.termNumber === 0 ? 'NIVEL 0' : `ESTACIÓN ${beforeArtwork.termNumber}`}</span>
                 </div>
 
-                <div className="absolute top-4 right-4 bg-[#0b1320]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white font-display text-xs font-bold flex items-center gap-2 shadow-xl">
+                <div className="absolute top-4 right-4 bg-[#0d1017]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white font-display text-xs font-bold flex items-center gap-2 shadow-xl">
                   <span className="w-2.5 h-2.5 rounded-full bg-fantasy-pink animate-pulse" />
                   <span>DESPUÉS // {afterArtwork.termNumber === 0 ? 'NIVEL 0' : `ESTACIÓN ${afterArtwork.termNumber}`}</span>
                 </div>
@@ -238,7 +238,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
               {/* Information Cards Below Slider */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 pt-5 border-t border-white/[0.06]">
                 {/* Left Artwork Info */}
-                <div className="bg-[#0b1320]/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
+                <div className="bg-[#0d1017]/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
                   <div className="flex items-center justify-between mb-1.5 font-display">
                     <span className="text-[10px] uppercase font-bold text-fantasy-sky tracking-wider">
                       OBRA INICIAL
@@ -252,7 +252,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
                 </div>
 
                 {/* Right Artwork Info */}
-                <div className="bg-[#0b1320]/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
+                <div className="bg-[#0d1017]/80 p-5 rounded-2xl border border-white/[0.06] shadow-sm">
                   <div className="flex items-center justify-between mb-1.5 font-display">
                     <span className="text-[10px] uppercase font-bold text-fantasy-pink tracking-wider">
                       OBRA DE GRADUACIÓN
@@ -281,7 +281,7 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
                     <span className="text-xs text-slate-400 font-display">{beforeArtwork.date}</span>
                   </div>
                   <h3 className="font-display font-bold text-lg text-white mb-3">{beforeArtwork.title}</h3>
-                  <div className="bg-[#0b1320] rounded-2xl p-2 border border-white/[0.06] mb-3 flex items-center justify-center h-80">
+                  <div className="bg-[#0d1017] rounded-2xl p-2 border border-white/[0.06] mb-3 flex items-center justify-center h-80">
                     <img
                       src={beforeArtwork.dataUrl}
                       alt={beforeArtwork.title}
@@ -333,6 +333,9 @@ export const EvolutionStudio: React.FC<EvolutionStudioProps> = ({
           {/* MODE 3: TIMELINE OF EVOLUTION */}
           {viewMode === 'timeline' && (
             <div className="space-y-6">
+              <h3 className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 px-1">
+                Cronología de Hitos
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {milestones.map((m) => (
                   <div

@@ -256,7 +256,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
             <div className="min-w-0">
               <div className="flex items-center gap-2">
                 <h3 className="font-display font-black text-lg sm:text-xl text-white tracking-tight truncate">
-                  Sincronización y Respaldo
+                  Copia de Seguridad y Sincronización
                 </h3>
                 <span className="font-mono text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-fantasy-pink/15 text-fantasy-pink border border-fantasy-pink/30">
                   PORTABILIDAD
@@ -277,7 +277,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
         </div>
 
         {/* Tab Switcher */}
-        <div className="grid grid-cols-2 gap-2 my-4 bg-[#0b1320] p-1.5 rounded-2xl border border-white/[0.06]">
+        <div className="grid grid-cols-2 gap-2 my-4 bg-[#0d1017] p-1.5 rounded-2xl border border-white/[0.06]">
           <button
             type="button"
             onClick={() => setActiveTab('import')}
@@ -324,7 +324,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
         {activeTab === 'import' && (
           <div className="space-y-4">
             {/* Primary: Universal or GetCroc Input */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0b1320] border border-white/[0.08] relative overflow-hidden">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#0d1017] border border-white/[0.08] relative overflow-hidden">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-fantasy-sky flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-fantasy-sky" />
@@ -391,7 +391,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
             </div>
 
             {/* Secondary: Local JSON File Import */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0b1320] border border-white/[0.08]">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#0d1017] border border-white/[0.08]">
               <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mb-2">
                 <FileJson className="w-3.5 h-3.5 text-fantasy-ochre" />
                 MÉTODO 2: ARCHIVO JSON LOCAL
@@ -402,7 +402,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
 
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-white/[0.12] hover:border-fantasy-ochre rounded-xl p-3.5 text-center cursor-pointer transition-all bg-[#080d16] hover:bg-[#0d1524] flex items-center justify-center gap-2.5 group"
+                className="border-2 border-dashed border-white/[0.12] hover:border-fantasy-ochre rounded-xl p-3.5 text-center cursor-pointer transition-all bg-[#080d16] hover:bg-[#121622] flex items-center justify-center gap-2.5 group"
               >
                 <FileJson className="w-5 h-5 text-slate-400 group-hover:text-fantasy-ochre transition-colors" />
                 <span className="font-mono text-xs text-slate-300 group-hover:text-white transition-colors">
@@ -424,7 +424,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
         {activeTab === 'export' && (
           <div className="space-y-4">
             {/* Primary: Universal In-Browser Sync (Zero-Server / Mobile Friendly) */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0b1320] border border-white/[0.08] relative overflow-hidden">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#0d1017] border border-white/[0.08] relative overflow-hidden">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-fantasy-sky flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5 text-fantasy-sky" />
@@ -444,7 +444,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                   type="button"
                   disabled={isExportingUniversal}
                   onClick={handleExportUniversal}
-                  className="w-full bg-gradient-to-r from-fantasy-sky via-fantasy-pink to-fantasy-ochre hover:opacity-95 disabled:opacity-40 text-white font-mono text-xs font-bold uppercase tracking-wider py-3.5 px-4 rounded-xl shadow-lg shadow-fantasy-sky/20 flex items-center justify-center gap-2 transition-all"
+                  className="w-full btn-atelier-primary "
                 >
                   <Sparkles className={`w-4 h-4 ${isExportingUniversal ? 'animate-spin' : ''}`} />
                   <span>{isExportingUniversal ? 'Generando Código...' : 'Generar Enlace y Código de Sincronización'}</span>
@@ -523,7 +523,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
             </div>
 
             {/* Secondary: Local JSON Export */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0b1320] border border-white/[0.08]">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#0d1017] border border-white/[0.08]">
               <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5 mb-2">
                 <FileJson className="w-3.5 h-3.5 text-fantasy-ochre" />
                 MÉTODO 2: DESCARGAR ARCHIVO JSON LOCAL
@@ -543,7 +543,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
             </div>
 
             {/* Tertiary: GetCroc CLI Bridge (Optional) */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0b1320] border border-white/[0.08]">
+            <div className="p-4 sm:p-5 rounded-2xl bg-[#0d1017] border border-white/[0.08]">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
                   <Cloud className="w-3.5 h-3.5 text-fantasy-sky" />

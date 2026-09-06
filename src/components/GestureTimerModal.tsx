@@ -9,16 +9,19 @@ import {
   Volume2, 
   VolumeX, 
   Flame,
-  CheckCircle2
+  CheckCircle2,
+  X
 } from 'lucide-react';
 import { playChimeSound } from '../utils/audio';
 
 interface GestureTimerModalProps {
   onOpenCanvas: () => void;
+  onClose?: () => void;
 }
 
 export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
   onOpenCanvas,
+  onClose,
 }) => {
   const [intervals] = useState([
     { label: '30s', seconds: 30 },
@@ -91,11 +94,20 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
   const formatTime = (secs: number) => {
     const mins = Math.floor(secs / 60);
     const remainder = secs % 60;
-    return `${mins}:${remainder < 10 ? '0' : ''}${remainder}`;
+    return `${mins < 10 ? '0' : ''}${mins}:${remainder < 10 ? '0' : ''}${remainder}`;
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-6 px-2 sm:px-4">
+    <div className="max-w-4xl mx-auto py-6 px-2 sm:px-4 relative">
+      {/* Close (volver a Folios) */}
+      {onClose && (
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 sm:right-4 p-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-slate-400 hover:text-white transition-colors"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      )}
       {/* Title */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-fantasy-pink/15 border border-fantasy-pink/30 text-fantasy-pink font-display text-xs font-bold tracking-wider uppercase mb-2">
@@ -103,7 +115,7 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
           <span>GIMNASIO DE RITMO Y DINÁMICA DE FIGURA</span>
         </div>
         <h2 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
-          Cronómetro de Gesto Rápido
+          Temporizador de Práctica Gestual
         </h2>
         <p className="text-xs sm:text-sm text-slate-200 mt-2 max-w-lg mx-auto leading-relaxed font-sans font-medium">
           El gesto intervalado (30s a 2m) desactiva el juicio racional para capturar la línea de acción, el peso corporal y la vitalidad mágica del modelo.
@@ -131,7 +143,7 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-display font-bold uppercase tracking-wider border transition-all ${
                   selectedInterval === item.seconds
                     ? 'bg-fantasy-sky/25 text-fantasy-sky border-fantasy-sky shadow-sm'
-                    : 'bg-[#0b1320] border-white/[0.08] text-slate-400 hover:border-slate-600'
+                    : 'bg-[#0d1017] border-white/[0.08] text-slate-400 hover:border-slate-600'
                 }`}
               >
                 {item.label}
@@ -174,7 +186,7 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
           </div>
 
           {/* Stats bar */}
-          <div className="flex items-center gap-4 text-xs text-slate-300 bg-[#0b1320] px-4 py-2.5 rounded-2xl border border-white/[0.08] my-4 font-display font-bold">
+          <div className="flex items-center gap-4 text-xs text-slate-300 bg-[#0d1017] px-4 py-2.5 rounded-2xl border border-white/[0.08] my-4 font-display font-bold">
             <span className="flex items-center gap-1.5 text-fantasy-lime">
               <CheckCircle2 className="w-4 h-4" />
               <span>{posesCount} POSES LOGRADAS</span>
@@ -187,7 +199,7 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
           <div className="flex items-center gap-3 mt-2">
             <button
               onClick={handleReset}
-              className="p-3.5 rounded-2xl bg-[#0b1320] hover:bg-[#142035] text-slate-400 hover:text-white transition-colors border border-white/[0.08]"
+              className="p-3.5 rounded-2xl bg-[#0d1017] hover:bg-[#142035] text-slate-400 hover:text-white transition-colors border border-white/[0.08]"
               title="Reiniciar cronómetro"
             >
               <RotateCcw className="w-5 h-5" />
@@ -197,17 +209,18 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
               onClick={() => setIsRunning(!isRunning)}
               className={`p-4 sm:p-5 rounded-2xl font-bold text-white shadow-xl transition-all flex items-center justify-center ${
                 isRunning
-                  ? 'bg-[#0b1320] hover:bg-[#142035] border border-fantasy-sky text-fantasy-sky'
-                  : 'bg-gradient-to-r from-fantasy-sky via-fantasy-pink to-fantasy-ochre hover:opacity-95 shadow-fantasy-sky/25 scale-105'
+                  ? 'bg-[#0d1017] hover:bg-[#142035] border border-fantasy-sky text-fantasy-sky'
+                  : 'btn-atelier-primary '
               }`}
               title={isRunning ? 'Pausar' : 'Iniciar'}
+              aria-label={isRunning ? 'Pausar' : 'Iniciar Sesión'}
             >
               {isRunning ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5 fill-white" />}
             </button>
 
             <button
               onClick={handleNextPose}
-              className="p-3.5 rounded-2xl bg-[#0b1320] hover:bg-[#142035] text-slate-400 hover:text-white transition-colors border border-white/[0.08]"
+              className="p-3.5 rounded-2xl bg-[#0d1017] hover:bg-[#142035] text-slate-400 hover:text-white transition-colors border border-white/[0.08]"
               title="Siguiente pose"
             >
               <SkipForward className="w-5 h-5" />
@@ -252,7 +265,7 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
                 href="https://line-of-action.com/practice-tools/figure-drawing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-2xl bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] transition-colors group"
+                className="flex items-center justify-between p-3 rounded-2xl bg-[#0d1017] hover:bg-[#142035] border border-white/[0.08] transition-colors group"
               >
                 <div>
                   <p className="text-xs font-display font-bold text-white group-hover:text-fantasy-sky transition-colors">
@@ -267,7 +280,7 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
                 href="https://vimeo.com/channels/croquiscafe"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-2xl bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] transition-colors group"
+                className="flex items-center justify-between p-3 rounded-2xl bg-[#0d1017] hover:bg-[#142035] border border-white/[0.08] transition-colors group"
               >
                 <div>
                   <p className="text-xs font-display font-bold text-white group-hover:text-fantasy-sky transition-colors">
@@ -282,7 +295,7 @@ export const GestureTimerModal: React.FC<GestureTimerModalProps> = ({
                 href="https://quickposes.com/en/gestures/timed"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-3 rounded-2xl bg-[#0b1320] hover:bg-[#142035] border border-white/[0.08] transition-colors group"
+                className="flex items-center justify-between p-3 rounded-2xl bg-[#0d1017] hover:bg-[#142035] border border-white/[0.08] transition-colors group"
               >
                 <div>
                   <p className="text-xs font-display font-bold text-white group-hover:text-fantasy-sky transition-colors">
