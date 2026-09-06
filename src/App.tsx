@@ -46,7 +46,7 @@ export const App: React.FC = () => {
   const [milestones, setMilestones] = useState<MilestoneArtwork[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Backup & Sync with GetCroc and JSON state
+  // Backup & Sync with proprietary sync code and JSON state
   const [isBackupSyncOpen, setIsBackupSyncOpen] = useState(false);
   const [backupSyncTab, setBackupSyncTab] = useState<'import' | 'export'>('import');
 
@@ -353,7 +353,7 @@ export const App: React.FC = () => {
                             setIsBackupSyncOpen(true);
                           }}
                           className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#0a101d] hover:bg-[#121c30] text-white font-mono text-xs uppercase tracking-wider border border-white/[0.1] hover:border-fantasy-pink/40 transition-all shadow-sm"
-                          title="Importar o exportar datos vía GetCroc y JSON"
+                          title="Importar o exportar datos vía código de sincronización y JSON"
                         >
                           <Cloud className="w-4 h-4 text-fantasy-pink" />
                           <span>SINCRONIZAR / RESPALDO</span>
@@ -613,7 +613,7 @@ export const App: React.FC = () => {
         />
       )}
 
-      {/* GetCroc & JSON Backup / Sync Modal */}
+      {/* Backup / Sync Modal (código propietario + JSON) */}
       <BackupSyncModal
         isOpen={isBackupSyncOpen}
         initialTab={backupSyncTab}

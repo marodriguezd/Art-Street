@@ -153,7 +153,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={() => onOpenBackupSync('import')}
                 className="p-2 rounded-xl bg-[#131e33] border border-white/[0.08] hover:border-fantasy-sky/40 text-slate-300 hover:text-white transition-colors group relative"
-                title="Sincronización y Respaldo (GetCroc / JSON)"
+                title="Sincronización y Respaldo (código y JSON)"
               >
                 <Cloud className="w-4 h-4 text-fantasy-sky group-hover:scale-110 transition-transform" />
               </button>

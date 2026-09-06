@@ -1,34 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  X, 
-  Download, 
-  Upload, 
-  Cloud, 
-  Copy, 
-  Check, 
-  AlertCircle, 
-  Sparkles, 
-  RefreshCw, 
-  FileJson, 
+import {
+  X,
+  Download,
+  Upload,
+  Cloud,
+  Copy,
+  Check,
+  AlertCircle,
+  Sparkles,
+  RefreshCw,
+  FileJson,
   ShieldCheck,
   Zap,
   Share2,
-  ExternalLink
 } from 'lucide-react';
 import { AppStateData } from '../types/curriculum';
 import { exportAllData, importAllData } from '../services/storage';
-import { 
-  checkBridgeHealth, 
-  exportViaGetCroc, 
-  importViaGetCroc, 
-  normalizeCrocInput, 
-  getCustomBridgeUrl, 
-  setCustomBridgeUrl,
+import {
+  importViaSyncCode,
+  normalizeSyncInput,
   generateUniversalSyncCode,
   UniversalSyncResult,
-  CrocBridgeStatus,
-  CrocExportResult
-} from '../services/crocService';
+} from '../services/syncService';
 import confetti from 'canvas-confetti';
 import { playCelebrationFanfare } from '../utils/audio';
 
@@ -48,13 +41,9 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
   initialCode = '',
 }) => {
   const [activeTab, setActiveTab] = useState<'import' | 'export'>(initialTab);
-  const [bridgeStatus, setBridgeStatus] = useState<CrocBridgeStatus>({ ok: false });
-  const [isCheckingBridge, setIsCheckingBridge] = useState(false);
-  const [customBridge, setCustomBridge] = useState(getCustomBridgeUrl() || '');
-  const [showBridgeSettings, setShowBridgeSettings] = useState(false);
 
   // Import states
-  const [crocInput, setCrocInput] = useState(initialCode);
+  const [syncInput, setSyncInput] = useState(initialCode);
   const [isImporting, setIsImporting] = useState(false);
   const [importStatusMessage, setImportStatusMessage] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
@@ -63,11 +52,8 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
   const [isExportingUniversal, setIsExportingUniversal] = useState(false);
   const [universalResult, setUniversalResult] = useState<UniversalSyncResult | null>(null);
 
-  const [isExportingCroc, setIsExportingCroc] = useState(false);
-  const [crocResult, setCrocResult] = useState<CrocExportResult | null>(null);
-
   const [exportError, setExportError] = useState<string | null>(null);
-  const [copiedField, setCopiedField] = useState<'url' | 'code' | 'uni_url' | 'uni_code' | null>(null);
+  const [copiedField, setCopiedField] = useState<'uni_url' | 'uni_code' | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -75,27 +61,10 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
     if (isOpen) {
       setActiveTab(initialTab);
       if (initialCode) {
-        setCrocInput(initialCode);
+        setSyncInput(initialCode);
       }
-      refreshBridge();
     }
   }, [isOpen, initialTab, initialCode]);
-
-  const refreshBridge = async () => {
-    setIsCheckingBridge(true);
-    try {
-      const status = await checkBridgeHealth();
-      setBridgeStatus(status);
-    } finally {
-      setIsCheckingBridge(false);
-    }
-  };
-
-  const handleSaveCustomBridge = async () => {
-    setCustomBridgeUrl(customBridge);
-    await refreshBridge();
-    setShowBridgeSettings(false);
-  };
 
   // Universal In-Browser Sync Export
   const handleExportUniversal = async () => {
@@ -161,37 +130,19 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
     reader.readAsText(file);
   };
 
-  // GetCroc Cloud Export (One-time transfer via CLI bridge)
-  const handleExportViaCroc = async () => {
-    setIsExportingCroc(true);
-    setExportError(null);
-    setCrocResult(null);
-
-    try {
-      const data = await exportAllData();
-      const result = await exportViaGetCroc(data);
-      setCrocResult(result);
-    } catch (err: any) {
-      console.error('Error exporting via GetCroc:', err);
-      setExportError(err.message || 'Error al exportar vía GetCroc');
-    } finally {
-      setIsExportingCroc(false);
-    }
-  };
-
-  // Unified Import (Supports Universal Code, GetCroc URLs, Tokens, or Phrase)
+  // Unified Import (proprietary sync code / link)
   const handleImport = async () => {
-    if (!crocInput.trim()) {
+    if (!syncInput.trim()) {
       setImportError('Por favor introduce un enlace o código');
       return;
     }
 
     setIsImporting(true);
     setImportError(null);
-    setImportStatusMessage('Conectando y decodificando transferencia...');
+    setImportStatusMessage('Decodificando transferencia...');
 
     try {
-      const res = await importViaGetCroc(crocInput);
+      const res = await importViaSyncCode(syncInput);
       if (!res.data) {
         throw new Error('No se recibieron datos de respaldo válidos');
       }
@@ -216,7 +167,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
     }
   };
 
-  const copyToClipboard = (text: string, field: 'url' | 'code' | 'uni_url' | 'uni_code') => {
+  const copyToClipboard = (text: string, field: 'uni_url' | 'uni_code') => {
     navigator.clipboard.writeText(text);
     setCopiedField(field);
     setTimeout(() => setCopiedField(null), 2500);
@@ -238,7 +189,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
     }
   };
 
-  const detectedInputType = normalizeCrocInput(crocInput);
+  const detectedInputType = normalizeSyncInput(syncInput);
 
   if (!isOpen) return null;
 
@@ -323,7 +274,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
         {/* TAB 1: IMPORT */}
         {activeTab === 'import' && (
           <div className="space-y-4">
-            {/* Primary: Universal or GetCroc Input */}
+            {/* Primary: Universal Input */}
             <div className="p-4 sm:p-5 rounded-2xl bg-[#0d1017] border border-white/[0.08] relative overflow-hidden">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-fantasy-sky flex items-center gap-1.5">
@@ -332,10 +283,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                 </span>
                 {detectedInputType.type !== 'unknown' && (
                   <span className="font-mono text-[9px] px-2 py-0.5 rounded-full bg-fantasy-sky/15 text-fantasy-sky border border-fantasy-sky/30 uppercase">
-                    {detectedInputType.type === 'universal_code' && '⚡ Código Universal'}
-                    {detectedInputType.type === 'store_url' && '🔗 URL GetCroc'}
-                    {detectedInputType.type === 'store_token' && '🔑 Token GetCroc'}
-                    {detectedInputType.type === 'relay_code' && '📡 Frase GetCroc'}
+                    ⚡ Código de sincronización
                   </span>
                 )}
               </div>
@@ -348,15 +296,15 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                 <div className="relative">
                   <input
                     type="text"
-                    value={crocInput}
-                    onChange={(e) => setCrocInput(e.target.value)}
-                    placeholder="Pega enlace ?sync=..., código ART-SYNC-..., o enlace getcroc.com..."
+                    value={syncInput}
+                    onChange={(e) => setSyncInput(e.target.value)}
+                    placeholder="Pega enlace ?sync=... o código ART-SYNC-v1...."
                     className="w-full bg-[#080d16] border border-white/[0.1] rounded-xl px-3.5 py-3 font-mono text-xs text-white placeholder-slate-500 focus:outline-none focus:border-fantasy-sky transition-colors"
                   />
-                  {crocInput && (
+                  {syncInput && (
                     <button
                       type="button"
-                      onClick={() => setCrocInput('')}
+                      onClick={() => setSyncInput('')}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white"
                     >
                       <X className="w-4 h-4" />
@@ -366,7 +314,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
 
                 <button
                   type="button"
-                  disabled={isImporting || !crocInput.trim()}
+                  disabled={isImporting || !syncInput.trim()}
                   onClick={handleImport}
                   className="w-full bg-gradient-to-r from-fantasy-sky to-fantasy-pink hover:opacity-95 disabled:opacity-40 text-white font-mono text-xs font-bold uppercase tracking-wider py-3 px-4 rounded-xl shadow-md shadow-fantasy-sky/20 flex items-center justify-center gap-2 transition-all"
                 >
@@ -374,20 +322,6 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                   <span>{isImporting ? 'Procesando e Importando...' : 'Decodificar e Importar en Tiempo Real'}</span>
                 </button>
               </div>
-
-              {detectedInputType.type === 'relay_code' && !bridgeStatus.ok && (
-                <div className="mt-3 p-2.5 bg-fantasy-ochre/10 border border-fantasy-ochre/30 rounded-xl text-[11px] text-fantasy-ochre font-sans flex items-center justify-between gap-2">
-                  <span>Código de GetCroc detectado. Puedes abrirlo directamente para descargar el JSON:</span>
-                  <a
-                    href={`https://getcroc.com/?code=${encodeURIComponent(detectedInputType.cleaned)}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="underline font-bold text-white flex items-center gap-1 flex-shrink-0"
-                  >
-                    Abrir en GetCroc <ExternalLink className="w-3 h-3" />
-                  </a>
-                </div>
-              )}
             </div>
 
             {/* Secondary: Local JSON File Import */}
@@ -397,7 +331,7 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                 MÉTODO 2: ARCHIVO JSON LOCAL
               </span>
               <p className="text-xs text-slate-300 mb-3 font-sans leading-relaxed">
-                Selecciona un archivo <code>.json</code> exportado previamente desde tu almacenamiento local o descargado de GetCroc.
+                Selecciona un archivo <code>.json</code> exportado previamente desde tu almacenamiento local.
               </p>
 
               <div
@@ -540,152 +474,6 @@ export const BackupSyncModal: React.FC<BackupSyncModalProps> = ({
                 <Download className="w-4 h-4 text-fantasy-ochre" />
                 <span>Descargar Archivo JSON en Dispositivo</span>
               </button>
-            </div>
-
-            {/* Tertiary: GetCroc CLI Bridge (Optional) */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-[#0d1017] border border-white/[0.08]">
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                  <Cloud className="w-3.5 h-3.5 text-fantasy-sky" />
-                  MÉTODO 3: NUBE GETCROC (PUENTE CLI)
-                </span>
-                <span className={`font-mono text-[9px] px-2 py-0.5 rounded-full border uppercase ${
-                  bridgeStatus.ok ? 'bg-fantasy-lime/15 text-fantasy-lime border-fantasy-lime/30' : 'bg-slate-800 text-slate-400 border-white/[0.08]'
-                }`}>
-                  {bridgeStatus.ok ? '● Puente Conectado' : '○ Modo Terminal Offline'}
-                </span>
-              </div>
-
-              <p className="text-xs text-slate-300 mb-3 font-sans leading-relaxed">
-                Utiliza la herramienta CLI <code>croc</code> para transferencias temporales de un solo uso en red local o servidor.
-              </p>
-
-              {bridgeStatus.ok ? (
-                !crocResult ? (
-                  <button
-                    type="button"
-                    disabled={isExportingCroc}
-                    onClick={handleExportViaCroc}
-                    className="w-full bg-[#080d16] hover:bg-[#0e1626] border border-fantasy-sky/40 text-fantasy-sky font-mono text-xs uppercase tracking-wider py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm"
-                  >
-                    <Cloud className={`w-4 h-4 ${isExportingCroc ? 'animate-spin' : ''}`} />
-                    <span>{isExportingCroc ? 'Subiendo a GetCroc...' : 'Subir a GetCroc y Obtener Enlace'}</span>
-                  </button>
-                ) : (
-                  <div className="p-3 rounded-xl bg-[#080d16] border border-fantasy-sky/30 space-y-2.5">
-                    <div className="flex items-center justify-between text-[10px] font-mono text-fantasy-lime font-bold">
-                      <span>TRANSFERENCIA GETCROC LISTA</span>
-                      <span>{crocResult.expires}</span>
-                    </div>
-                    {crocResult.browserUrl && (
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="text"
-                          readOnly
-                          value={crocResult.browserUrl}
-                          className="flex-1 bg-[#040810] border border-white/[0.08] rounded-lg px-2 py-1 font-mono text-xs text-fantasy-sky truncate"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => copyToClipboard(crocResult.browserUrl, 'url')}
-                          className="px-2.5 py-1 bg-fantasy-sky/20 text-fantasy-sky font-mono text-xs rounded-lg font-bold"
-                        >
-                          {copiedField === 'url' ? 'Copiado' : 'Copiar'}
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )
-              ) : (
-                <div className="p-2.5 rounded-xl bg-[#080d16] border border-white/[0.06] text-[11px] text-slate-400 font-sans flex items-center justify-between gap-2">
-                  <span>Puente CLI no detectado en este dispositivo (usa el Método 1 para sincronizar en web/móvil).</span>
-                  <button
-                    type="button"
-                    onClick={() => setShowBridgeSettings(!showBridgeSettings)}
-                    className="text-fantasy-sky underline flex-shrink-0 font-mono text-[10px]"
-                  >
-                    [Configurar]
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Bridge Status Indicator & Help */}
-        <div className="mt-4 pt-3 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-2 text-xs">
-          <div className="flex items-center gap-2 font-mono text-[10px]">
-            <span
-              className={`w-2 h-2 rounded-full ${
-                bridgeStatus.ok ? 'bg-fantasy-lime animate-pulse' : 'bg-slate-500'
-              }`}
-            />
-            <span className="text-slate-300">
-              PUENTE LOCAL:{' '}
-              <strong className={bridgeStatus.ok ? 'text-fantasy-lime' : 'text-slate-400'}>
-                {bridgeStatus.ok ? 'ACTIVO' : 'OFFLINE (OPCIONAL)'}
-              </strong>
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 font-mono text-[10px]">
-            <button
-              type="button"
-              onClick={refreshBridge}
-              disabled={isCheckingBridge}
-              className="text-slate-400 hover:text-white underline transition-colors disabled:opacity-50"
-              title="Comprobar conexión"
-            >
-              {isCheckingBridge ? '[Verificando...]' : '[Reintentar]'}
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowBridgeSettings(!showBridgeSettings)}
-              className="text-fantasy-sky hover:text-white underline transition-colors"
-            >
-              [Ajustes]
-            </button>
-          </div>
-        </div>
-
-        {/* Expandable Bridge Configuration / CLI instructions */}
-        {showBridgeSettings && (
-          <div className="mt-3 p-3 bg-[#080d16] rounded-xl border border-white/[0.08] text-xs space-y-2">
-            <p className="text-[11px] text-slate-300 font-sans">
-              Para habilitar la transferencia GetCroc en tu terminal Termux o servidor local, ejecuta:
-            </p>
-            <div className="p-2 bg-black/60 rounded-lg font-mono text-[11px] text-fantasy-sky flex items-center justify-between gap-2">
-              <code>pnpm run bridge</code>
-              <button
-                type="button"
-                onClick={() => copyToClipboard('pnpm run bridge', 'code')}
-                className="text-slate-400 hover:text-white"
-                title="Copiar comando"
-              >
-                <Copy className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            <div className="pt-2">
-              <label className="block font-mono text-[9px] uppercase text-slate-400 mb-1">
-                URL personalizada del puente (ej. para red local o túnel):
-              </label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  value={customBridge}
-                  onChange={(e) => setCustomBridge(e.target.value)}
-                  placeholder="http://localhost:3001/api/croc"
-                  className="flex-1 bg-[#040810] border border-white/[0.08] rounded-lg px-2.5 py-1.5 font-mono text-xs text-white placeholder-slate-600 focus:outline-none focus:border-fantasy-sky"
-                />
-                <button
-                  type="button"
-                  onClick={handleSaveCustomBridge}
-                  className="px-3 py-1.5 bg-fantasy-sky/20 border border-fantasy-sky/40 text-fantasy-sky font-mono text-xs rounded-lg font-bold"
-                >
-                  Guardar
-                </button>
-              </div>
             </div>
           </div>
         )}

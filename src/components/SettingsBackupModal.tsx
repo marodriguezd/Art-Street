@@ -211,7 +211,7 @@ export const SettingsBackupModal: React.FC<SettingsBackupModalProps> = ({
                 </div>
                 <div>
                   <p className="text-xs font-display font-bold text-white flex items-center gap-1.5">
-                    <span>Sincronización en la Nube con GetCroc</span>
+                    <span>Sincronización rápida con código y enlace</span>
                     <span className="font-mono text-[9px] px-1.5 py-0.5 rounded-md bg-fantasy-sky/20 text-fantasy-sky font-bold">1-CLIC</span>
                   </p>
                   <p className="text-[11px] font-sans text-slate-300">

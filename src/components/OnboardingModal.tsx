@@ -158,7 +158,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   </div>
                   <div className="min-w-0">
                     <p className="font-display text-xs font-bold text-white truncate">¿Tienes un respaldo o cuenta previa?</p>
-                    <p className="font-sans text-[10px] text-slate-300 truncate">Importa vía GetCroc o archivo JSON</p>
+                    <p className="font-sans text-[10px] text-slate-300 truncate">Importa vía código de sincronización o archivo JSON</p>
                   </div>
                 </div>
                 <button
@@ -266,7 +266,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                     className="w-full text-fantasy-sky hover:text-white font-mono text-xs uppercase tracking-wider py-1.5 transition-colors flex items-center justify-center gap-1.5"
                   >
                     <Cloud className="w-3.5 h-3.5" />
-                    <span>[ Importar desde JSON o Código GetCroc ]</span>
+                    <span>[ Importar desde JSON o código de sincronización ]</span>
                   </button>
                 )}
 
